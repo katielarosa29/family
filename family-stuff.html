@@ -1,0 +1,228 @@
+<style>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-secondary: #f9f8f5;
+      --text-primary: #1a1915;
+      --text-secondary: #6b6860;
+      --text-tertiary: #9a9890;
+      --border-light: rgba(26,25,21,0.1);
+      --teal:   #0F6E56;
+      --coral:  #993C1D;
+      --purple: #534AB7;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-secondary: #242320;
+        --text-primary: #f0ede6;
+        --text-secondary: #9a9890;
+        --text-tertiary: #6b6860;
+        --border-light: rgba(240,237,230,0.08);
+        --teal:   #5DCAA5;
+        --coral:  #F0997B;
+        --purple: #AFA9EC;
+      }
+    }
+    body {
+      font-family: 'Styrene A', ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem 4rem;
+    }
+    .container {
+      width: 100%;
+      max-width: 580px;
+    }
+    .header {
+      padding: 2rem 0 1.5rem;
+      border-bottom: 0.5px solid var(--border-light);
+      margin-bottom: 1.75rem;
+    }
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .eyebrow svg { width: 14px; height: 14px; opacity: 0.7; }
+    h1 {
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+    .links {
+      display: flex;
+      flex-direction: column;
+    }
+    .link-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      border-bottom: 0.5px solid var(--border-light);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .link-row:hover { opacity: 0.65; }
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .link-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-teal   { background: var(--teal); }
+    .dot-coral  { background: var(--coral); 
+    .dot-purple { background: var(--purple); }
+    .link-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .link-arrow {
+      font-size: 16px;
+      color: var(--text-tertiary);
+    }
+    footer {
+      margin-top: 2.5rem;
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }</style>
+<div class="container">
+  <header class="header">
+    <h1>&nbsp;</h1>
+    <table style="height: 72px; width: 108.448%; border-collapse: collapse;" border="0">
+      <tbody>
+        <tr>
+          <td style="width: 50%;">
+            <p class="eyebrow">
+              <span style="color: #ff00ff;">Larosas</span>
+            </p>
+            <h1>Family Stuff!</h1>
+            <p class="subtitle" style="text-align: left;">Quick links for things that help</p>
+          </td>
+          <td style="width: 50%; text-align: right;">
+            <span style="font-size: 8pt;">
+              <a href="https://calendar.google.com/calendar/u/0?cid=ZmFtaWx5MDU1NDIxMTE3MTQ1NzUyNDYxOThAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ" target="_blank" class="cloudHQ__gmail_elements_final_btn" style="background-color: #ffe8fe; color: #ed11d7; border: 1px solid #ed11d7; border-radius: 3px; box-sizing: border-box; font-weight: bold; line-height: 42px; padding: 12px 24px; text-align: center; text-decoration: none; text-transform: uppercase; vertical-align: middle;" rel="noopener">Family Calendar</a>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </header>
+  <p class="section-label">Resources 
+    <br>
+    <br>
+  </p>
+  <nav class="links" aria-label="Troop resources">
+    <span style="color: #6b6860;">
+      <span style="color: #6b6860;">
+        <span style="color: #999999;">
+          <span style="text-decoration: underline;">
+            <span style="color: #ff9900; text-decoration: underline;">
+              <a href="https://feelings-adhd.netlify.app/" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;">Big Feelings →</a> 
+              <br>
+              <br>
+              <a href="https://routines-adhd.netlify.app/" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;">Help with routines →</a>
+            </span> 
+            <br>
+            <a href="https://bridge-ceremony.netlify.app/" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;"></a> 
+            <br>
+            <span style="color: #ff9900; text-decoration: underline;">
+              <a href="#" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;">Chores →</a>
+            </span> 
+            <br>
+            <br>
+          </span>
+        </span>
+      </span>
+    </span>
+    <p class="section-label">
+      <br>
+      <br>Sports + activities 
+      <br>
+      <br>
+    </p>
+    <nav class="links" aria-label="Troop resources">
+      <span style="color: #6b6860;">
+        <span style="color: #999999;">
+          <span style="text-decoration: underline;">
+            <span style="color: #ff9900; text-decoration: underline;">
+              <a href="#" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;">LINK →</a> 
+              <br>
+              <br>
+              <a href="https://routines-adhd.netlify.app/" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;"></a> 
+              <a href="#" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;">LINK →</a>
+            </span>
+          </span>
+        </span>
+      </span>
+    </nav>
+    <span style="color: #6b6860;">
+      <span style="color: #6b6860;">
+        <span style="color: #999999;">
+          <span style="text-decoration: underline;">
+            <br>
+            <br>
+            <br>
+          </span>
+        </span>
+      </span>
+    </span>
+    <p class="section-label">Household 
+      <br>
+      <br>
+    </p>
+    <nav class="links" aria-label="Troop resources">
+      <span style="color: #6b6860;">
+        <span style="color: #999999;">
+          <span style="text-decoration: underline;">
+            <span style="color: #ff9900; text-decoration: underline;">
+              <a href="https://docs.google.com/spreadsheets/d/1B8iF3gW_K4oSugaZWpMo6nNItSJRC2Fnw-qGm3f1EH4/edit?gid=266508575#gid=266508575" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;">Budget →</a> 
+              <br>
+              <br>
+            </span>
+          </span>
+        </span>
+      </span> 
+      <span style="color: #ff9900;">
+        <span style="text-decoration: underline;">
+          <a href="https://larosa-recipes.netlify.app/" target="_blank" rel="noopener" style="color: #ff9900; text-decoration: underline;">Recipes →</a>
+        </span> 
+        <span style="text-decoration: underline;">
+          <br>
+        </span>
+      </span>
+    </nav>
+    <span style="color: #6b6860;">
+      <span style="color: #999999;">
+        <span style="text-decoration: underline;">
+          <br>
+        </span>
+      </span>
+    </span>
+  </nav>
+</div>
