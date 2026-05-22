@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Mom! 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #FFF8F0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 20%, #FFECD2 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 80%, #FFD6BA 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, #FFF0E8 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .page { position: relative; z-index: 1; width: 100%; max-width: 560px; }
+
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  @keyframes pop { 0%{transform:scale(0.8) translateY(20px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes shimmer { 0%,100%{opacity:0.6} 50%{opacity:1} }
+
+  .card {
+    background: #FFFCF9;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+      0 4px 6px rgba(180,100,40,0.06),
+      0 20px 60px rgba(180,100,40,0.12),
+      0 0 0 1px rgba(210,140,70,0.15);
+    animation: pop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  .card-top {
+    background: linear-gradient(160deg, #FFF0E0 0%, #FFE4CC 60%, #FFD8B8 100%);
+    padding: 3rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid rgba(210,140,70,0.2);
+    overflow: hidden;
+  }
+
+  .card-top::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(255,200,120,0.4) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .card-top::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -20px;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(255,180,100,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .dots-bg {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(210,130,50,0.12) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+  }
+
+  .balloons {
+    position: relative;
+    z-index: 1;
+    font-size: 2.4rem;
+    letter-spacing: 0.3rem;
+    margin-bottom: 1.25rem;
+  }
+  .b1 { display:inline-block; animation: float 3s ease-in-out infinite; }
+  .b2 { display:inline-block; animation: float 3s ease-in-out 0.4s infinite; }
+  .b3 { display:inline-block; animation: float 3s ease-in-out 0.8s infinite; }
+
+  .card-label {
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #B45309;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 400;
+    color: #92400E;
+    line-height: 1.15;
+  }
+
+  .card-title em {
+    font-style: italic;
+    color: #C2692A;
+  }
+
+  .card-body { padding: 2rem; }
+
+  .gift-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: linear-gradient(135deg, #FFFBF5 0%, #FFF5E8 100%);
+    border: 1px solid rgba(210,140,70,0.25);
+    border-radius: 16px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  .gift-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+    animation: float 4s ease-in-out 1s infinite;
+  }
+
+  .gift-text {
+    font-size: 15px;
+    color: #44403C;
+    line-height: 1.7;
+  }
+
+  .gift-text strong { font-weight: 500; color: #92400E; }
+
+  .message {
+    font-size: 14.5px;
+    color: #78716C;
+    line-height: 1.8;
+    margin-bottom: 1.75rem;
+    animation: fadeUp 0.5s ease 0.35s both;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #A8977A;
+    margin-bottom: 0.9rem;
+  }
+
+  .company-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+
+  .company-card {
+    background: #FFFCF9;
+    border: 1px solid rgba(210,160,100,0.25);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    animation: fadeUp 0.5s ease both;
+    text-align: left;
+  }
+
+  .company-card:nth-child(1){animation-delay:.4s}
+  .company-card:nth-child(2){animation-delay:.5s}
+  .company-card:nth-child(3){animation-delay:.6s}
+  .company-card:nth-child(4){animation-delay:.7s}
+
+  .company-card:hover {
+    border-color: #D97706;
+    background: #FFFBF0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(180,100,20,0.1);
+  }
+
+  .company-card.selected {
+    border-color: #D97706;
+    background: linear-gradient(135deg, #FFFBF0, #FFF5DC);
+    box-shadow: 0 0 0 2px rgba(217,119,6,0.2), 0 6px 20px rgba(180,100,20,0.12);
+  }
+
+  .company-name {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #44403C;
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  .company-vibe {
+    font-size: 12px;
+    color: #A8A29E;
+    line-height: 1.5;
+  }
+
+  .selected .company-name { color: #92400E; }
+  .selected .company-vibe { color: #B45309; }
+
+  .check {
+    display: none;
+    float: right;
+    font-size: 14px;
+    color: #D97706;
+  }
+
+  .selected .check { display: inline; }
+
+  .or-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .or-line { flex: 1; height: 1px; background: rgba(210,160,100,0.2); }
+  .or-text { font-size: 12px; color: #C4B09A; }
+
+  .trust-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background: transparent;
+    border: 1px solid rgba(210,160,100,0.3);
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #A8977A;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .trust-btn:hover {
+    background: #FFFBF0;
+    border-color: #D97706;
+    color: #92400E;
+  }
+
+  .trust-btn.selected {
+    background: linear-gradient(135deg, #FFFBF0, #FFF5DC);
+    border-color: #D97706;
+    color: #92400E;
+    font-weight: 500;
+    box-shadow: 0 0 0 2px rgba(217,119,6,0.2);
+  }
+
+  .confirm-msg {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.85rem 1.1rem;
+    background: linear-gradient(135deg, #FFFBF0, #FFF5DC);
+    border: 1px solid rgba(217,119,6,0.3);
+    border-radius: 12px;
+    font-size: 14px;
+    color: #92400E;
+    text-align: center;
+    line-height: 1.6;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .sign-off {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(210,160,100,0.2);
+    animation: fadeUp 0.5s ease 0.8s both;
+  }
+
+  .sign-off p { font-size: 13.5px; color: #A8A29E; margin-bottom: 0.4rem; line-height: 1.8; }
+
+  .love-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: #C2692A;
+    margin-top: 0.25rem;
+  }
+
+  .confetti-dot {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+
+  @media (max-width: 480px) {
+    .company-grid { grid-template-columns: 1fr; }
+    .card-title { font-size: 2rem; }
+    .balloons { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div class="card-top">
+      <div class="dots-bg"></div>
+      <div class="confetti-dot" style="width:8px;height:8px;background:#FCA5A5;top:18%;left:12%;animation-delay:0s"></div>
+      <div class="confetti-dot" style="width:6px;height:6px;background:#6EE7B7;top:60%;left:22%;animation-delay:0.4s"></div>
+      <div class="confetti-dot" style="width:7px;height:7px;background:#93C5FD;top:25%;right:15%;animation-delay:0.7s"></div>
+      <div class="confetti-dot" style="width:5px;height:5px;background:#FCD34D;top:70%;right:18%;animation-delay:0.2s"></div>
+      <div class="confetti-dot" style="width:9px;height:9px;background:#C4B5FD;top:10%;left:50%;animation-delay:0.9s"></div>
+      <div class="confetti-dot" style="width:6px;height:6px;background:#FCA5A5;top:80%;left:45%;animation-delay:0.5s"></div>
+
+      <div class="balloons">
+        <span class="b1">🎈</span>
+        <span class="b2">🎂</span>
+        <span class="b3">🎈</span>
+      </div>
+      <div class="card-label">Happy Birthday</div>
+      <div class="card-title"><em>Mom!</em> 🎉</div>
+    </div>
+
+    <div class="card-body">
+      <div class="gift-box">
+        <div class="gift-icon">🎁</div>
+        <div class="gift-text">
+          This year, we got you something special for the kitchen — a <strong>professional kitchen organizer</strong> to make your space feel calm, easy to navigate, and entirely yours.
+        </div>
+      </div>
+
+      <p class="message">We found four wonderful local companies in the Raleigh area. We thought you might enjoy picking the one that feels right to you — or if you'd rather just let us handle it, that's perfectly fine too! Every one of them is warm, caring, and works completely at your pace.</p>
+
+      <div class="section-label">Pick your favorite — or let us decide 💛</div>
+
+      <div class="company-grid">
+        <div class="company-card" onclick="selectCompany(this, 'The Arranged Abode')" tabindex="0" role="button" aria-label="Select The Arranged Abode">
+          <span class="check">✓</span>
+          <div class="company-name">The Arranged Abode</div>
+          <div class="company-vibe">Warm, judgment-free approach with a focus on finding what works for you</div>
+        </div>
+        <div class="company-card" onclick="selectCompany(this, &quot;Today's The Day&quot;)" tabindex="0" role="button" aria-label="Select Today's The Day Organizer">
+          <span class="check">✓</span>
+          <div class="company-name">Today's The Day</div>
+          <div class="company-vibe">Kind, quiet, and patient — they go at your pace, every step of the way</div>
+        </div>
+        <div class="company-card" onclick="selectCompany(this, 'Reclaim Professional Organizing')" tabindex="0" role="button" aria-label="Select Reclaim Professional Organizing">
+          <span class="check">✓</span>
+          <div class="company-name">Reclaim Professional Organizing</div>
+          <div class="company-vibe">All about helping you reclaim a space that feels like home again</div>
+        </div>
+        <div class="company-card" onclick="selectCompany(this, 'Simplify Studio')" tabindex="0" role="button" aria-label="Select Simplify Studio">
+          <span class="check">✓</span>
+          <div class="company-name">Simplify Studio</div>
+          <div class="company-vibe">Tailors everything to how you actually live — no one-size-fits-all</div>
+        </div>
+      </div>
+
+      <div class="or-row">
+        <div class="or-line"></div>
+        <div class="or-text">or</div>
+        <div class="or-line"></div>
+      </div>
+
+      <button class="trust-btn" id="trustBtn" onclick="selectTrust()">We'll pick for you — just say the word 💛</button>
+
+      <div class="confirm-msg" id="confirmMsg"></div>
+
+      <div class="sign-off">
+        <p>With so much love,</p>
+        <div class="love-text">Your family 💛</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function selectCompany(el, name) {
+    document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('trustBtn').classList.remove('selected');
+    el.classList.add('selected');
+    const msg = document.getElementById('confirmMsg');
+    msg.style.display = 'block';
+    msg.textContent = '✨ Great choice! We\'ll book ' + name + ' for you. Can\'t wait to see your kitchen shine!';
+  }
+
+  function selectTrust() {
+    document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
+    const btn = document.getElementById('trustBtn');
+    btn.classList.add('selected');
+    const msg = document.getElementById('confirmMsg');
+    msg.style.display = 'block';
+    msg.textContent = '💛 Perfect — we\'ve got it handled. Just sit back and enjoy your birthday!';
+  }
+
+  document.querySelectorAll('.company-card').forEach(card => {
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+    });
+  });
+</script>
+</body>
+</html>
