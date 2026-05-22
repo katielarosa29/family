@@ -125,9 +125,24 @@
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--text-light);
     font-weight: 700;
     margin-bottom: 2px;
+    padding-left: 10px;
+    border-left: 3px solid currentColor;
+  }
+
+  .section-school .section-label    { color: #6c63d1; }
+  .section-household .section-label { color: #0F6E56; }
+  .section-chores .section-label    { color: #b05c00; }
+  .section-resources .section-label { color: #993C1D; }
+  .section-sports .section-label    { color: #1565c0; }
+
+  @media (prefers-color-scheme: dark) {
+    .section-school .section-label    { color: #AFA9EC; }
+    .section-household .section-label { color: #5DCAA5; }
+    .section-chores .section-label    { color: #f0b060; }
+    .section-resources .section-label { color: #F0997B; }
+    .section-sports .section-label    { color: #64b5f6; }
   }
 
   .links { display: flex; flex-direction: column; }
@@ -201,8 +216,38 @@
       <a href="https://docs.google.com/spreadsheets/d/17dMh8vW7P8cyzbuZkbsnT7r9JxedIoqIX5YIbq7ob40/edit?gid=0#gid=0" target="_blank" class="Shopping-btn" rel="noopener">🛒 Shopping List</a>
     </div>
   </header>
+  <!-- School -->
+  <div class="section section-school">
+    <div class="section-label">School</div>
+    <nav class="links" aria-label="School">
+
+      <a href="https://accounts.veracross.com/fais/portals/login" target="_blank" class="link-row" rel="noopener">
+        <div class="link-left">
+          <div class="link-dot" style="background: #6c63d1;"></div>
+          <div class="link-meta">
+            <span class="link-label">Veracross</span>
+            <span class="link-desc">School portal login</span>
+          </div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+      <a href="https://apps.apple.com/us/app/schoolpass/id1522645864" target="_blank" class="link-row" rel="noopener">
+        <div class="link-left">
+          <div class="link-dot" style="background: #6c63d1;"></div>
+          <div class="link-meta">
+            <span class="link-label">SchoolPass</span>
+            <span class="link-desc">App Store</span>
+          </div>
+        </div>
+        <span class="link-arrow">→</span>
+      </a>
+
+    </nav>
+  </div>
+
   <!-- Household -->
-  <div class="section">
+  <div class="section section-household">
     <div class="section-label">Household</div>
     <nav class="links" aria-label="Household">
   <a href="https://current-meal-plan.netlify.app/" target="_blank" class="link-row" rel="noopener">
@@ -250,7 +295,7 @@
     </nav>
   </div>
   <!-- Chores -->
-  <div class="section">
+  <div class="section section-chores">
     <div class="section-label">Chores</div>
     <nav class="links" aria-label="Chores">
 
@@ -272,7 +317,7 @@
 
 
   <!-- Resources -->
-  <div class="section">
+  <div class="section section-resources">
     <div class="section-label">Resources</div>
     <nav class="links" aria-label="Resources">
 
@@ -324,13 +369,13 @@
   </div>
 
   <!-- Sports + Activities -->
-  <div class="section">
+  <div class="section section-sports">
     <div class="section-label">Sports + Activities</div>
     <nav class="links" aria-label="Sports and activities">
 
       <a href="#" class="link-row placeholder">
         <div class="link-left">
-          <div class="link-dot" style="background: var(--text-light);"></div>
+          <div class="link-dot" style="background: #1565c0;"></div>
           <div class="link-meta">
             <span class="link-label">Link coming soon</span>
           </div>
@@ -340,7 +385,7 @@
 
       <a href="#" class="link-row placeholder">
         <div class="link-left">
-          <div class="link-dot" style="background: var(--text-light);"></div>
+          <div class="link-dot" style="background: #1565c0;"></div>
           <div class="link-meta">
             <span class="link-label">Link coming soon</span>
           </div>
