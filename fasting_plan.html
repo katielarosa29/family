@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9-Day Fasting & Meal Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple-50: #EEEDFE; --purple-200: #AFA9EC; --purple-600: #534AB7; --purple-800: #3C3489; --purple-900: #26215C;
+    --teal-50: #E1F5EE; --teal-600: #0F6E56; --teal-800: #085041;
+    --gray-50: #F1EFE8; --gray-100: #D3D1C7; --gray-200: #B4B2A9; --gray-600: #5F5E5A; --gray-800: #444441; --gray-900: #2C2C2A;
+    --amber-50: #FAEEDA; --amber-800: #633806;
+    --bg: #ffffff; --bg-secondary: #f7f7f5; --bg-tertiary: #f0efe9;
+    --text: #1a1a1a; --text-muted: #5f5e5a; --text-hint: #888780;
+    --border: rgba(0,0,0,0.1); --border-strong: rgba(0,0,0,0.18);
+    --radius: 10px; --radius-lg: 14px;
+    --font: 'DM Sans', sans-serif; --font-mono: 'DM Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg-tertiary);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 0.5px solid var(--border-strong);
+    margin-bottom: 2rem;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--purple-600);
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--purple-800);
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .header-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+  }
+  .htag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-strong);
+    color: var(--text-muted);
+    background: var(--bg);
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--purple-800);
+    margin: 2.5rem 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .section-desc {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    line-height: 1.7;
+  }
+
+  /* ── SUMMARY TABLE ── */
+  .summary-table {
+    width: 100%;
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .summary-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-row:nth-child(even) { background: var(--bg-secondary); }
+  .summary-row:first-child { background: var(--purple-800); }
+  .summary-row:first-child .s-label,
+  .summary-row:first-child .s-val { color: white; font-weight: 500; }
+  .s-label {
+    padding: 9px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--purple-800);
+    border-right: 0.5px solid var(--border);
+  }
+  .s-val {
+    padding: 9px 14px;
+    font-size: 12.5px;
+    color: var(--text);
+  }
+
+  /* ── NAV TABS ── */
+  .tab-nav {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 1.25rem;
+    border-bottom: 0.5px solid var(--border-strong);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    padding: 7px 14px;
+    font-size: 12.5px;
+    font-family: var(--font);
+    font-weight: 400;
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    margin-bottom: -0.5px;
+    transition: color 0.15s;
+    border-radius: 4px 4px 0 0;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--purple-800); border-bottom-color: var(--purple-600); font-weight: 500; }
+
+  /* ── DAY CARDS ── */
+  .day-card {
+    background: var(--bg);
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .day-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 15px 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .day-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .day-card-meta { flex: 1; }
+  .day-card-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .day-card-sub { font-size: 12px; color: var(--text-muted); }
+  .chevron {
+    font-size: 16px;
+    color: var(--text-hint);
+    transition: transform 0.2s;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .chevron.open { transform: rotate(180deg); }
+
+  .day-card-body {
+    display: none;
+    padding: 0 15px 14px;
+    border-top: 0.5px solid var(--border);
+  }
+  .day-card-body.open { display: block; }
+
+  .fast-banner {
+    border-radius: 8px;
+    padding: 9px 13px;
+    margin: 12px 0 10px;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+  .fast-banner .fast-sub {
+    font-size: 11.5px;
+    font-weight: 400;
+    margin-top: 2px;
+    opacity: 0.8;
+  }
+  .fast-16 { background: var(--purple-50); color: var(--purple-800); }
+  .fast-18 { background: var(--purple-50); color: var(--purple-800); }
+  .fast-24 { background: var(--gray-100); color: var(--gray-900); }
+  .fast-36 { background: var(--gray-200); color: var(--gray-900); }
+  .fast-free { background: var(--teal-50); color: var(--teal-800); }
+
+  .day-notes {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── MEAL BOXES ── */
+  .meal-item {
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    padding: 10px 13px;
+    margin-bottom: 7px;
+    margin-top: 4px;
+  }
+  .meal-time-label {
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--purple-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 3px;
+  }
+  .meal-name { font-size: 13.5px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .meal-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
+  .meal-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .mtag {
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .mtag-anti { background: var(--teal-50); color: var(--teal-800); }
+  .mtag-protein { background: var(--purple-50); color: var(--purple-800); }
+  .mtag-light { background: var(--amber-50); color: var(--amber-800); }
+  .mtag-free { background: var(--gray-50); color: var(--gray-800); }
+  .mtag-training { background: #FAEEDA; color: #633806; }
+
+  .person-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 8px;
+    overflow: hidden;
+    width: fit-content;
+  }
+  .person-btn {
+    padding: 7px 22px;
+    font-size: 12.5px;
+    font-family: var(--font);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .person-btn:first-child { border-right: 0.5px solid var(--border-strong); }
+  .person-btn.active { background: var(--purple-800); color: white; }
+
+  .his-note {
+    background: #FAEEDA;
+    border-radius: 8px;
+    padding: 9px 13px;
+    margin: 8px 0 6px;
+    font-size: 12px;
+    color: #633806;
+    line-height: 1.6;
+  }
+
+  /* ── TIPS ── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 0.75rem;
+  }
+  .tip-card {
+    background: var(--bg);
+    border: 0.5px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .tip-label {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--purple-800);
+    margin-bottom: 4px;
+  }
+  .tip-text { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ── PHASE DIVIDERS ── */
+  .phase-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 1.25rem 0 0.75rem;
+  }
+  .phase-line { flex: 1; height: 0.5px; background: var(--border-strong); }
+  .phase-label { font-size: 11px; font-weight: 500; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid var(--border-strong);
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--text-hint);
+    font-style: italic;
+  }
+
+  /* ── VIEW TOGGLE ── */
+  .view-toggle {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 1.5rem;
+  }
+  .view-btn {
+    padding: 7px 18px;
+    font-size: 13px;
+    font-family: var(--font);
+    border: 0.5px solid var(--border-strong);
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .view-btn.active {
+    background: var(--purple-800);
+    color: white;
+    border-color: var(--purple-800);
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  @media (max-width: 520px) {
+    .tips-grid { grid-template-columns: 1fr; }
+    .summary-row { grid-template-columns: 140px 1fr; }
+    .header h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">Monday May 25 – Tuesday June 3</div>
+    <h1>9-Day Fasting &amp; Meal Plan</h1>
+    <div class="header-sub">Anti-inflammatory · Apoptosis-supporting · Weight-conscious</div>
+    <div class="header-tags">
+      <span class="htag">16–18h daily fast</span>
+      <span class="htag">Wed: 24h fast</span>
+      <span class="htag">Fri–Sat: 36h fast</span>
+      <span class="htag">Free weekends</span>
+    </div>
+  </div>
+
+  <!-- PERSON TOGGLE -->
+  <div class="person-toggle" style="margin-bottom:1rem;">
+    <button class="person-btn active" onclick="setPerson('her', this)">Your plan</button>
+    <button class="person-btn" onclick="setPerson('his', this)">His plan</button>
+  </div>
+
+  <!-- VIEW TOGGLE -->
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="showSection('fasting')">Fasting protocol</button>
+    <button class="view-btn" onclick="showSection('meals')">Meal plan</button>
+    <button class="view-btn" onclick="showSection('tips')">Tips</button>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- FASTING SECTION -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section active" id="section-fasting">
+
+    <p class="section-desc" id="fasting-desc-her">Each day has a fasting window and eating window. Two extended fasts bookend the week — Wednesday is 24h, and Friday dinner through Saturday morning is 36h. Weekends are completely free.</p>
+    <p class="section-desc" id="fasting-desc-his" style="display:none;">His plan follows the same structure, with two adjustments for jujutsu training: Wednesday and Friday he fasts overnight and through the morning, eats at 8am right after training, then eats normally through the day.</p>
+
+    <div class="summary-table">
+      <div class="summary-row"><div class="s-label">Item</div><div class="s-val">Detail</div></div>
+      <div class="summary-row"><div class="s-label">Start date</div><div class="s-val">Monday, May 25 — Tuesday, June 3</div></div>
+      <div class="summary-row"><div class="s-label">Daily window</div><div class="s-val">Noon–8pm most days (16h fast)</div></div>
+      <div class="summary-row his-her-row" id="sum-wed-her"><div class="s-label">Wednesday</div><div class="s-val">24-hour fast — dinner Tue → dinner Wed</div></div>
+      <div class="summary-row his-her-row" id="sum-wed-his" style="display:none;"><div class="s-label">Wednesday (his)</div><div class="s-val">Fast overnight → eat at 8am post-jujutsu → normal window rest of day</div></div>
+      <div class="summary-row his-her-row" id="sum-fri-her"><div class="s-label">Friday–Saturday</div><div class="s-val">36-hour fast — dinner Fri → breakfast Sat</div></div>
+      <div class="summary-row his-her-row" id="sum-fri-his" style="display:none;"><div class="s-label">Friday (his)</div><div class="s-val">Fast overnight → eat at 8am post-jujutsu → normal window rest of day</div></div>
+      <div class="summary-row"><div class="s-label">Sat + Sun</div><div class="s-val">Free eating — no window, enjoy the weekend</div></div>
+      <div class="summary-row"><div class="s-label">During fasts</div><div class="s-val">Water, black coffee, plain green tea, pinch of salt</div></div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">Phase 1 — ramp up</div><div class="phase-line"></div></div>
+
+    <!-- Mon -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#EEEDFE;color:#3C3489;">M</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Monday, May 25</div>
+          <div class="day-card-sub">16:8 intro fast · 8pm Sun → noon Mon</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="fast-banner fast-16">16:8 — Eat noon to 8pm <div class="fast-sub">Fast from 8pm Sunday through noon today</div></div>
+        <p class="day-notes">Ease in. Skip breakfast, eat noon to 8pm. Black coffee or plain green tea in the morning extends autophagy without breaking the fast. Cut starchy carbs to begin shifting toward fat-burning and set up the week.</p>
+      </div>
+    </div>
+
+    <!-- Tue -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#EEEDFE;color:#3C3489;">T</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Tuesday, May 26</div>
+          <div class="day-card-sub">16:8 + lower carbs · 8pm Mon → noon Tue</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="fast-banner fast-16">16:8 — Eat noon to 8pm <div class="fast-sub">Keep carbs low today to deplete glycogen</div></div>
+        <p class="day-notes">Second day of 16:8. Keep carbs low (no bread, rice, or pasta) — this depletes glycogen and primes the body for Wednesday's extended fast. Add a 20-minute walk after dinner to lower insulin and extend overnight fat-burning.</p>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">Phase 2 — extended fast</div><div class="phase-line"></div></div>
+
+    <!-- Wed -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#D3D1C7;color:#2C2C2A;">W</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Wednesday, May 27</div>
+          <div class="day-card-sub his-her-sub" id="wed-sub-her">24-hour extended fast · dinner Tue → dinner Wed</div>
+          <div class="day-card-sub his-her-sub" id="wed-sub-his" style="display:none;">Jujutsu morning · fast overnight → eat 8am post-training</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="her-content">
+          <div class="fast-banner fast-24">24h fast — no eating until dinner <div class="fast-sub">The week's biggest apoptosis signal</div></div>
+          <p class="day-notes">By hour 18–24, mTOR is suppressed, FOXO transcription factors are active, and pro-apoptotic genes are being expressed in damaged and aged cells. Electrolytes are critical — add a pinch of salt to water, or have a small cup of bone broth if needed. Rest; avoid intense exercise. Break the fast gently at dinner.</p>
+        </div>
+        <div class="his-content" style="display:none;">
+          <div class="fast-banner fast-16">Fast overnight → eat at 8am · 16h window rest of day <div class="fast-sub">Training fasted, then refuel properly post-jujutsu</div></div>
+          <div class="his-note">Jujutsu training morning: he fasts from Tuesday dinner through the morning, trains, then eats immediately after at ~8am. Training fasted amplifies AMPK — and the post-workout meal is perfectly timed for muscle recovery. He then eats normally through the day until ~8pm.</div>
+          <p class="day-notes">Post-training meal should be protein-rich: eggs, Greek yogurt, or a chicken bowl. He still gets strong fasting benefits overnight and through the training window — just without the full 24h extension.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thu -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#E1F5EE;color:#085041;">T</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Thursday, May 28</div>
+          <div class="day-card-sub">16:8 recovery · 8pm Wed → noon Thu</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="fast-banner fast-free">16:8 — Recovery day · Eat noon to 8pm <div class="fast-sub">Prioritize protein and fermented foods</div></div>
+        <p class="day-notes">Recovery day. Eat well — especially protein (0.7–1g per kg body weight). Include fermented foods (yogurt, kimchi) to support gut microbiome recovery. This is when cells cleared during the fast are replaced with healthy ones.</p>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">Phase 3 — peak &amp; consolidate</div><div class="phase-line"></div></div>
+
+    <!-- Fri -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#EEEDFE;color:#3C3489;">F</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Friday, May 30</div>
+          <div class="day-card-sub his-her-sub" id="fri-sub-her">18:6 — last meal starts 36h fast · 8pm Thu → 2pm Fri</div>
+          <div class="day-card-sub his-her-sub" id="fri-sub-his" style="display:none;">Jujutsu morning · fast overnight → eat 8am post-training</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="her-content">
+          <div class="fast-banner fast-18">18:6 — Eat 2pm to 7:30pm <div class="fast-sub">Dinner tonight starts the 36-hour fast</div></div>
+          <p class="day-notes">Push the window to 18 hours. Polyphenol-rich foods at dinner (berries, dark chocolate, turmeric) directly modulate apoptotic signaling. Make dinner satisfying — you won't eat again until Saturday breakfast. Light activity only.</p>
+        </div>
+        <div class="his-content" style="display:none;">
+          <div class="fast-banner fast-16">Fast overnight → eat at 8am · normal window rest of day <div class="fast-sub">Training fasted, then refuel — no 36h fast for him</div></div>
+          <div class="his-note">Jujutsu training morning: same as Wednesday — fasts overnight, trains, eats at 8am right after. He skips the 36h fast entirely this week given the training load. He still gets a solid 14–16h overnight fast plus the metabolic benefit of training fasted.</div>
+          <p class="day-notes">Post-training meal should be higher carb than usual — rice, oats, or fruit alongside protein. He needs glycogen replenishment after jujutsu. Then eats normally through the day.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sat -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#B4B2A9;color:#2C2C2A;">S</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Saturday, May 31</div>
+          <div class="day-card-sub">36h fast ends at breakfast · free eating after</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="fast-banner fast-36">36h fast ends ~8am · Free eating all day after <div class="fast-sub">Break gently, then the weekend is yours</div></div>
+        <p class="day-notes">The 36-hour fast — the week's peak apoptosis signal — ends Saturday morning. IGF-1 at its weekly low, beta-hydroxybutyrate elevated. Break the fast gently with something light (fruit, eggs, soup), then eat freely for the rest of the day. No rules.</p>
+      </div>
+    </div>
+
+    <!-- Sun -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#E1F5EE;color:#085041;">S</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Sunday, June 1</div>
+          <div class="day-card-sub">Free eating day — no fasting</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="fast-banner fast-free">Free day — eat what you love <div class="fast-sub">Rest, enjoy Sunday, prepare for next week</div></div>
+        <p class="day-notes">Full free day. Eat what you love. If you want a gentle nudge toward the week ahead, lean into anti-inflammatory foods (olive oil, fish, berries, greens) — but this is genuinely optional. Rest and enjoy.</p>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">Phase 4 — consolidate</div><div class="phase-line"></div></div>
+
+    <!-- Mon Jun 2 -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#EEEDFE;color:#3C3489;">M</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Monday, June 2</div>
+          <div class="day-card-sub">16:8 · back to the rhythm · 8pm Sun → noon Mon</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="fast-banner fast-16">16:8 — Eat noon to 8pm <div class="fast-sub">Step back into the weekly pattern after the free weekend</div></div>
+        <p class="day-notes">Back to the weekday rhythm. The weekend reset means glycogen is topped up — that's fine. The 16:8 window re-engages fat-burning and keeps mTOR cycling. Keep meals anti-inflammatory and protein-forward today.</p>
+      </div>
+    </div>
+
+    <!-- Tue Jun 3 -->
+    <div class="day-card">
+      <div class="day-card-header" onclick="toggle(this)">
+        <div class="day-badge" style="background:#EEEDFE;color:#3C3489;">T</div>
+        <div class="day-card-meta">
+          <div class="day-card-title">Tuesday, June 3</div>
+          <div class="day-card-sub">18:6 · push the window · 8pm Mon → 2pm Tue</div>
+        </div>
+        <div class="chevron">&#8964;</div>
+      </div>
+      <div class="day-card-body">
+        <div class="fast-banner fast-18">18:6 — Eat 2pm to 8pm <div class="fast-sub">Extended window to deepen the week's fat-burning signal</div></div>
+        <p class="day-notes">Push to 18 hours on the final day to end the plan on a strong metabolic note. Polyphenol-rich foods (berries, olive oil, turmeric, dark chocolate) help close the plan with peak anti-inflammatory signaling. You've done the work — this is the consolidation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- MEALS SECTION -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="section-meals">
+    <p class="section-desc">Weekday meals fit inside the daily fasting window. Weekend meals are open — suggestions given but optional. Everything is built around flavor and anti-inflammatory ingredients.</p>
+
+    <!-- Day tabs -->
+    <div class="tab-nav" id="mealTabs">
+      <button class="tab-btn active" onclick="showMeal('mon', this)">Mon 5/25</button>
+      <button class="tab-btn" onclick="showMeal('tue', this)">Tue 5/26</button>
+      <button class="tab-btn" onclick="showMeal('wed', this)">Wed 5/27</button>
+      <button class="tab-btn" onclick="showMeal('thu', this)">Thu 5/28</button>
+      <button class="tab-btn" onclick="showMeal('fri', this)">Fri 5/30</button>
+      <button class="tab-btn" onclick="showMeal('sat', this)">Sat 5/31</button>
+      <button class="tab-btn" onclick="showMeal('sun', this)">Sun 6/1</button>
+      <button class="tab-btn" onclick="showMeal('mon2', this)">Mon 6/2</button>
+      <button class="tab-btn" onclick="showMeal('tue2', this)">Tue 6/3</button>
+    </div>
+
+    <!-- MON -->
+    <div class="meal-day active" id="meal-mon">
+      <div class="fast-banner fast-16" style="margin-bottom:12px;">16:8 — Eat noon to 8pm</div>
+      <div class="meal-item">
+        <div class="meal-time-label">Lunch — noon</div>
+        <div class="meal-name">Lemon herb salmon with roasted asparagus</div>
+        <div class="meal-desc">Pan-seared salmon fillet, asparagus roasted in olive oil, fresh lemon. Anti-inflammatory, rich in omega-3s, and deeply satisfying.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Snack — 3pm</div>
+        <div class="meal-name">Walnuts + dark chocolate</div>
+        <div class="meal-desc">A small handful of walnuts and 1–2 squares of 70%+ dark chocolate. Both are polyphenol-rich.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Dinner — 7pm</div>
+        <div class="meal-name">Chicken thighs with roasted root vegetables</div>
+        <div class="meal-desc">Bone-in chicken thighs, roasted carrots, parsnips, red onion with thyme and olive oil. Hearty and warming.</div>
+        <div class="meal-tags"><span class="mtag mtag-protein">protein</span></div>
+      </div>
+    </div>
+
+    <!-- TUE -->
+    <div class="meal-day" id="meal-tue" style="display:none;">
+      <div class="fast-banner fast-16" style="margin-bottom:12px;">16:8 — Eat noon to 8pm · reduce carbs</div>
+      <div class="meal-item">
+        <div class="meal-time-label">Lunch — noon</div>
+        <div class="meal-name">Greek-style lentil salad</div>
+        <div class="meal-desc">Warm lentils, cucumber, tomato, kalamata olives, red onion, feta, olive oil and red wine vinegar dressing.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-light">light</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Snack — 3:30pm</div>
+        <div class="meal-name">Two hard-boiled eggs + sliced avocado</div>
+        <div class="meal-desc">Quick protein hit that keeps blood sugar stable through the afternoon.</div>
+        <div class="meal-tags"><span class="mtag mtag-protein">protein</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Dinner — 7pm</div>
+        <div class="meal-name">Miso-glazed cod with bok choy</div>
+        <div class="meal-desc">White miso, mirin, and ginger glaze on baked cod. Steamed bok choy on the side. No rice tonight — keep carbs low to set up Wednesday's fast.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+      </div>
+    </div>
+
+    <!-- WED -->
+    <div class="meal-day" id="meal-wed" style="display:none;">
+      <div class="her-content">
+        <div class="fast-banner fast-24" style="margin-bottom:12px;">24-hour fast · Break gently at 7pm</div>
+        <div class="meal-item">
+          <div class="meal-time-label">Breaking fast — 7pm</div>
+          <div class="meal-name">Miso soup + soft-boiled egg</div>
+          <div class="meal-desc">Break gently. Miso broth with tofu, green onion, and seaweed. One soft-boiled egg. Easy on the stomach after 24 hours.</div>
+          <div class="meal-tags"><span class="mtag mtag-light">light</span><span class="mtag mtag-protein">protein</span></div>
+        </div>
+        <div class="meal-item">
+          <div class="meal-time-label">30 minutes later</div>
+          <div class="meal-name">Salmon with steamed greens</div>
+          <div class="meal-desc">Baked salmon, steamed broccoli and kale, drizzle of olive oil and lemon. Once the soup settles, have a proper meal.</div>
+          <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+        </div>
+      </div>
+      <div class="his-content" style="display:none;">
+        <div class="fast-banner fast-16" style="margin-bottom:12px;">Fast overnight → eat 8am–8pm · full eating day after training <div class="fast-sub">~12h overnight fast, then eat like an athlete</div></div>
+        <div class="meal-item">
+          <div class="meal-time-label">Post-training — 8am</div>
+          <div class="meal-name">Eggs, rice, and avocado recovery bowl</div>
+          <div class="meal-desc">Three scrambled or fried eggs, a scoop of rice or oats, sliced avocado. High protein, moderate carbs — exactly what muscles need right after jujutsu training.</div>
+          <div class="meal-tags"><span class="mtag mtag-protein">protein</span><span class="mtag mtag-training">post-training</span></div>
+        </div>
+        <div class="meal-item">
+          <div class="meal-time-label">Lunch — noon–1pm</div>
+          <div class="meal-name">Greek-style chicken wrap</div>
+          <div class="meal-desc">Grilled chicken, tzatziki, cucumber, tomato, and arugula in a whole-grain wrap. Easy, filling, anti-inflammatory. Eat if hungry — he trained hard, he needs the fuel.</div>
+          <div class="meal-tags"><span class="mtag mtag-protein">protein</span><span class="mtag mtag-anti">anti-inflammatory</span></div>
+        </div>
+        <div class="meal-item">
+          <div class="meal-time-label">Dinner — 7pm</div>
+          <div class="meal-name">Salmon with steamed greens</div>
+          <div class="meal-desc">Same dinner as hers — baked salmon, steamed broccoli and kale, olive oil and lemon. Easy to cook together.</div>
+          <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- THU -->
+    <div class="meal-day" id="meal-thu" style="display:none;">
+      <div class="fast-banner fast-free" style="margin-bottom:12px;">16:8 — Recovery day · Eat noon to 8pm</div>
+      <div class="meal-item">
+        <div class="meal-time-label">Lunch — noon</div>
+        <div class="meal-name">White bean and vegetable soup</div>
+        <div class="meal-desc">Cannellini beans, zucchini, kale, carrot, and tomato in a light broth with olive oil. Nourishing, fiber-rich, and gentle.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-light">light</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Snack — 3pm</div>
+        <div class="meal-name">Apple slices with almond butter</div>
+        <div class="meal-desc">Classic fat-and-fiber combination that keeps blood sugar stable and feels genuinely satisfying.</div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Dinner — 7pm</div>
+        <div class="meal-name">Shrimp stir-fry with ginger and vegetables</div>
+        <div class="meal-desc">Shrimp with ginger, garlic, snap peas, bell peppers, and tamari. Serve over a small portion of brown rice — you've earned the carbs today.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+      </div>
+    </div>
+
+    <!-- FRI -->
+    <div class="meal-day" id="meal-fri" style="display:none;">
+      <div class="her-content">
+        <div class="fast-banner fast-18" style="margin-bottom:12px;">18:6 — Eat 2pm to 7:30pm · last meal starts 36h fast</div>
+        <div class="meal-item">
+          <div class="meal-time-label">Lunch — 2pm</div>
+          <div class="meal-name">Nicoise salad</div>
+          <div class="meal-desc">Tuna, hard-boiled eggs, green beans, olives, tomatoes, potatoes, and lettuce. Classic, filling, loaded with good fats.</div>
+          <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+        </div>
+        <div class="meal-item">
+          <div class="meal-time-label">Snack — 5pm</div>
+          <div class="meal-name">Hummus with cucumber and bell pepper</div>
+          <div class="meal-desc">A generous scoop of hummus with crunchy vegetables. High in fiber and plant protein.</div>
+          <div class="meal-tags"><span class="mtag mtag-light">light</span></div>
+        </div>
+        <div class="meal-item">
+          <div class="meal-time-label">Dinner — 7:30pm</div>
+          <div class="meal-name">Lamb kofta with roasted eggplant and tzatziki</div>
+          <div class="meal-desc">Spiced lamb kofta, roasted eggplant, cucumber-yogurt tzatziki, simple tomato salad. Make this dinner count — it starts the 36-hour fast.</div>
+          <div class="meal-tags"><span class="mtag mtag-protein">protein</span></div>
+        </div>
+      </div>
+      <div class="his-content" style="display:none;">
+        <div class="fast-banner fast-16" style="margin-bottom:12px;">Fast overnight → eat 8am–8pm · full eating day after training <div class="fast-sub">~12h overnight fast, then eat like an athlete</div></div>
+        <div class="meal-item">
+          <div class="meal-time-label">Post-training — 8am</div>
+          <div class="meal-name">Chicken rice bowl with greens and sesame</div>
+          <div class="meal-desc">Grilled chicken thigh over rice with steamed bok choy, sesame oil drizzle, and sliced scallions. Protein + carbs for full glycogen replenishment after jujutsu.</div>
+          <div class="meal-tags"><span class="mtag mtag-protein">protein</span><span class="mtag mtag-training">post-training</span></div>
+        </div>
+        <div class="meal-item">
+          <div class="meal-time-label">Lunch — noon–1pm</div>
+          <div class="meal-name">Nicoise salad</div>
+          <div class="meal-desc">Same lunch as hers — tuna, eggs, olives, green beans, tomatoes. Easy to share. Eat if hungry — on a training day, lunch is fuel, not a cheat.</div>
+          <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+        </div>
+        <div class="meal-item">
+          <div class="meal-time-label">Dinner — 7:30pm</div>
+          <div class="meal-name">Lamb kofta with roasted eggplant and tzatziki</div>
+          <div class="meal-desc">Same dinner — easy to cook together. He eats normally without the 36h fast constraint. Fast resumes after dinner as usual.</div>
+          <div class="meal-tags"><span class="mtag mtag-protein">protein</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAT -->
+    <div class="meal-day" id="meal-sat" style="display:none;">
+      <div class="fast-banner fast-free" style="margin-bottom:12px;">Fast ends at breakfast · Free eating all day</div>
+      <div class="meal-item">
+        <div class="meal-time-label">Breakfast — break the fast gently</div>
+        <div class="meal-name">Fruit, soft-boiled eggs, or light soup</div>
+        <div class="meal-desc">Start with something easy on the stomach. A bowl of berries, scrambled eggs, or miso broth. Let the body wake up before going bigger.</div>
+        <div class="meal-tags"><span class="mtag mtag-light">light</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Lunch — open</div>
+        <div class="meal-name">Whatever you want — sandwiches, brunch, restaurant</div>
+        <div class="meal-desc">It's Saturday and the fast is done. Eat what makes you happy. The weekend is genuinely free.</div>
+        <div class="meal-tags"><span class="mtag mtag-free">free day</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Dinner — open</div>
+        <div class="meal-name">Go out, cook something indulgent, order in</div>
+        <div class="meal-desc">No rules. Enjoy Saturday evening completely.</div>
+        <div class="meal-tags"><span class="mtag mtag-free">free day</span></div>
+      </div>
+    </div>
+
+    <!-- SUN -->
+    <div class="meal-day" id="meal-sun" style="display:none;">
+      <div class="fast-banner fast-free" style="margin-bottom:12px;">Free day — no fasting, eat what you love</div>
+      <div class="meal-item">
+        <div class="meal-time-label">Brunch — open</div>
+        <div class="meal-name">Sunday brunch, your way</div>
+        <div class="meal-desc">Pancakes, eggs Benedict, avocado toast — no restrictions. Sunday brunch is sacred.</div>
+        <div class="meal-tags"><span class="mtag mtag-free">free day</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Dinner — light suggestion (optional)</div>
+        <div class="meal-name">Roasted chicken with garlic green beans</div>
+        <div class="meal-desc">An optional gentle suggestion to ease back toward the week ahead. But genuinely — eat what you want. You've done the work this week.</div>
+        <div class="meal-tags"><span class="mtag mtag-protein">protein</span><span class="mtag mtag-anti">anti-inflammatory</span></div>
+      </div>
+    </div>
+
+    <!-- MON Jun 2 -->
+    <div class="meal-day" id="meal-mon2" style="display:none;">
+      <div class="fast-banner fast-16" style="margin-bottom:12px;">16:8 — Eat noon to 8pm · back to rhythm</div>
+      <div class="meal-item">
+        <div class="meal-time-label">Lunch — noon</div>
+        <div class="meal-name">Seared tuna with sesame cucumber salad</div>
+        <div class="meal-desc">Quick-seared tuna steak, thinly sliced cucumber with sesame oil, rice vinegar, and scallions. Light, protein-rich, and anti-inflammatory.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Snack — 3pm</div>
+        <div class="meal-name">Greek yogurt with blueberries and walnuts</div>
+        <div class="meal-desc">Full-fat Greek yogurt, a handful of blueberries, and a few walnuts. Probiotics, polyphenols, and good fats in one bowl.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Dinner — 7pm</div>
+        <div class="meal-name">Turkey and vegetable stuffed peppers</div>
+        <div class="meal-desc">Bell peppers stuffed with ground turkey, diced zucchini, tomato, and herbs. Baked until tender. High protein, low carb, genuinely satisfying.</div>
+        <div class="meal-tags"><span class="mtag mtag-protein">protein</span></div>
+      </div>
+    </div>
+
+    <!-- TUE Jun 3 -->
+    <div class="meal-day" id="meal-tue2" style="display:none;">
+      <div class="fast-banner fast-18" style="margin-bottom:12px;">18:6 — Eat 2pm to 8pm · final day, strong finish</div>
+      <div class="meal-item">
+        <div class="meal-time-label">Lunch — 2pm</div>
+        <div class="meal-name">Roasted beet and goat cheese salad with candied walnuts</div>
+        <div class="meal-desc">Roasted beets, creamy goat cheese, candied walnuts, arugula, and a honey-dijon vinaigrette. A celebratory salad for the final day.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Snack — 5pm</div>
+        <div class="meal-name">Dark chocolate + raspberries</div>
+        <div class="meal-desc">70%+ dark chocolate and a handful of fresh raspberries. A polyphenol-packed finish to the plan.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span></div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-time-label">Dinner — 7:30pm</div>
+        <div class="meal-name">Herb-crusted halibut with roasted cherry tomatoes and olives</div>
+        <div class="meal-desc">Halibut with a parsley-lemon-breadcrumb crust, roasted cherry tomatoes and kalamata olives, drizzle of olive oil. The best possible way to close nine days of eating well.</div>
+        <div class="meal-tags"><span class="mtag mtag-anti">anti-inflammatory</span><span class="mtag mtag-protein">protein</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════ -->
+  <!-- TIPS SECTION -->
+  <!-- ══════════════════════════════════ -->
+  <div class="section" id="section-tips">
+    <p class="section-desc">Practical guidance to make the week feel easy and sustainable — not like a diet.</p>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-label">Hydration</div>
+        <div class="tip-text">2–3L water daily. Black coffee, plain green tea, and sparkling water are fine during fasts. Avoid diet drinks — artificial sweeteners may trigger an insulin response.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">Electrolytes</div>
+        <div class="tip-text">During extended fasts, add a pinch of salt to water. Most fasting headaches are electrolyte depletion, not hunger. Bone broth also works.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">Sleep</div>
+        <div class="tip-text">Aim for 7–8 hours nightly. Growth hormone peaks during sleep and synergizes with fasting for cellular repair. Sleep counts as fasting time.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">Exercise</div>
+        <div class="tip-text">Light resistance exercise on regular days amplifies AMPK activation. Avoid intense workouts during the 24h and 36h extended fasts.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">Flexibility</div>
+        <div class="tip-text">The eating window can shift (10am–6pm vs noon–8pm) when social meals require it. Consistency matters more than precision.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">Weight loss</div>
+        <div class="tip-text">Fasting naturally reduces incidental calories without counting. Don't restrict food in the eating window — eat well and enjoy it. The reduction happens automatically.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">Coffee &amp; tea</div>
+        <div class="tip-text">Black coffee and plain green tea both extend autophagy signaling and are fine during any fast. They can help with hunger in the morning window.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-label">When to stop</div>
+        <div class="tip-text">Heart palpitations, confusion, or dizziness that electrolytes don't fix = break the fast immediately. Hunger, mild fatigue, and headache are normal and expected.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">For general wellness. Consult your doctor before beginning if you have a medical condition.</div>
+</div>
+
+<script>
+let currentPerson = 'her';
+
+function setPerson(person, btn) {
+  currentPerson = person;
+  document.querySelectorAll('.person-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const isHis = person === 'his';
+
+  document.getElementById('fasting-desc-her').style.display = isHis ? 'none' : '';
+  document.getElementById('fasting-desc-his').style.display = isHis ? '' : 'none';
+
+  document.getElementById('sum-wed-her').style.display = isHis ? 'none' : '';
+  document.getElementById('sum-wed-his').style.display = isHis ? '' : 'none';
+  document.getElementById('sum-fri-her').style.display = isHis ? 'none' : '';
+  document.getElementById('sum-fri-his').style.display = isHis ? '' : 'none';
+
+  document.getElementById('wed-sub-her').style.display = isHis ? 'none' : '';
+  document.getElementById('wed-sub-his').style.display = isHis ? '' : 'none';
+  document.getElementById('fri-sub-her').style.display = isHis ? 'none' : '';
+  document.getElementById('fri-sub-his').style.display = isHis ? '' : 'none';
+
+  document.querySelectorAll('.her-content').forEach(el => el.style.display = isHis ? 'none' : '');
+  document.querySelectorAll('.his-content').forEach(el => el.style.display = isHis ? '' : 'none');
+}
+
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showMeal(day, btn) {
+  document.querySelectorAll('.meal-day').forEach(d => d.style.display = 'none');
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('meal-' + day).style.display = 'block';
+  btn.classList.add('active');
+}
+
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.chevron');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>
