@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colorado Trip · July 25–Aug 5, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9f8f6;
+    --bg-tertiary: #f1efe8;
+    --text-primary: #1a1a18;
+    --text-secondary: #6b6b67;
+    --text-tertiary: #9f9f9a;
+    --border: rgba(0,0,0,0.1);
+    --border-soft: rgba(0,0,0,0.07);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --teal-bg: #E1F5EE;
+    --teal-dark: #085041;
+    --teal-mid: #0F6E56;
+    --purple-bg: #EEEDFE;
+    --purple-dark: #3C3489;
+    --purple-mid: #534AB7;
+    --amber-bg: #FAEEDA;
+    --amber-dark: #633806;
+    --amber-mid: #854F0B;
+    --gray-bg: #F1EFE8;
+    --gray-dark: #444441;
+    --gray-mid: #5F5E5A;
+    --green-bg: #E1F5EE;
+    --green-dark: #085041;
+    --green-mid: #0F6E56;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-primary: #1c1c1a;
+      --bg-secondary: #242422;
+      --bg-tertiary: #2c2c2a;
+      --text-primary: #f0ede8;
+      --text-secondary: #a0a09a;
+      --text-tertiary: #6b6b65;
+      --border: rgba(255,255,255,0.1);
+      --border-soft: rgba(255,255,255,0.06);
+      --teal-bg: #04342C;
+      --teal-dark: #9FE1CB;
+      --teal-mid: #5DCAA5;
+      --purple-bg: #26215C;
+      --purple-dark: #CECBF6;
+      --purple-mid: #AFA9EC;
+      --amber-bg: #412402;
+      --amber-dark: #FAC775;
+      --amber-mid: #EF9F27;
+      --gray-bg: #2C2C2A;
+      --gray-dark: #D3D1C7;
+      --gray-mid: #888780;
+      --green-bg: #04342C;
+      --green-dark: #9FE1CB;
+      --green-mid: #5DCAA5;
+    }
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 2rem 1rem 4rem;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .header-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--teal-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .header-icon i { font-size: 20px; color: var(--teal-mid); }
+  .page-title { font-size: 20px; font-weight: 500; color: var(--text-primary); margin-bottom: 3px; }
+  .page-sub { font-size: 13px; color: var(--text-secondary); }
+
+  /* Section label */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin: 1.75rem 0 .6rem;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 10px;
+  }
+  .card.dashed {
+    background: var(--bg-secondary);
+    border-style: dashed;
+  }
+  .card.highlighted {
+    border: 1px solid var(--purple-mid);
+    opacity: 0.85;
+  }
+
+  /* Day header */
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .date-box {
+    border-radius: 8px;
+    padding: 6px 10px;
+    text-align: center;
+    flex-shrink: 0;
+    min-width: 48px;
+  }
+  .date-mon { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+  .date-num { font-size: 20px; font-weight: 500; line-height: 1.1; }
+  .day-title { font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+  .day-sub { font-size: 13px; color: var(--text-secondary); }
+
+  /* Activity rows */
+  .row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 9px 0;
+    border-top: 0.5px solid var(--border-soft);
+  }
+  .row:first-of-type { border-top: none; padding-top: 0; }
+  .ico {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .ico i { font-size: 16px; }
+  .act-label { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+  .act-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-top: 6px;
+    text-decoration: none;
+  }
+  .badge i { font-size: 11px; }
+
+  /* Connector */
+  .connector {
+    width: 1px;
+    height: 18px;
+    background: var(--border);
+    margin: 0 0 10px 36px;
+  }
+
+  /* Home base */
+  .home-base {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+  .home-base i { font-size: 15px; color: var(--text-secondary); }
+  .home-base-title { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+  .home-base-sub { font-size: 12px; color: var(--text-secondary); }
+
+  /* Fanny box */
+  .fanny-box {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .fanny-header {
+    padding: .8rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .fanny-header i { font-size: 16px; }
+  .fanny-title { font-size: 14px; font-weight: 500; margin-bottom: 1px; }
+  .fanny-sub { font-size: 12px; }
+
+  /* Highlight pill */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+  .pill i { font-size: 11px; }
+
+  /* Adventure grid */
+  .adv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 10px;
+    padding: .75rem;
+  }
+  .adv-card {
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+  }
+  .adv-card.featured {
+    grid-column: 1 / -1;
+    border: 1.5px solid var(--purple-mid);
+  }
+  .adv-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .adv-ico {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .adv-ico i { font-size: 15px; }
+  .adv-title { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 1px; }
+  .adv-tag { font-size: 10px; font-weight: 500; }
+  .adv-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.55; }
+  .adv-details {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 0.5px solid var(--border-soft);
+  }
+  .detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .detail-row i { font-size: 13px; margin-top: 2px; flex-shrink: 0; }
+  .detail-row span { font-size: 12px; color: var(--text-secondary); line-height: 1.45; }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 1.75rem;
+  }
+  .stat {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    text-align: center;
+  }
+  .stat-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .05em; font-weight: 500; margin-bottom: 4px; }
+  .stat-val { font-size: 20px; font-weight: 500; color: var(--text-primary); }
+
+  /* Responsive */
+  @media (max-width: 520px) {
+    .adv-grid { grid-template-columns: 1fr; }
+    .adv-card.featured { grid-column: 1; }
+    body { padding: 1.25rem .75rem 3rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <div class="header-icon"><i class="ti ti-map-pin"></i></div>
+    <div>
+      <div class="page-title">Colorado Road Trip</div>
+      <div class="page-sub">July 25 – August 5, 2026 &nbsp;·&nbsp; 12 days &nbsp;·&nbsp; kid + dog friendly</div>
+    </div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="section-label">Phase 1 — cabin · Lake George, CO</div>
+
+  <div class="card">
+    <div class="day-header">
+      <div class="date-box" style="background:var(--teal-bg)">
+        <div class="date-mon" style="color:var(--teal-mid)">Jul</div>
+        <div class="date-num" style="color:var(--teal-dark)">25</div>
+      </div>
+      <div>
+        <div class="day-title">Arrive — cabin near Lake George</div>
+        <div class="day-sub">July 25–29 · 4 nights · Pike National Forest country</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--teal-bg)"><i class="ti ti-fish" style="color:var(--teal-mid)"></i></div>
+      <div>
+        <div class="act-label">Eleven Mile Canyon &amp; reservoir</div>
+        <div class="act-desc">World-class trout fishing on the South Platte, scenic canyon driving, and easy hikes along the river. Only a short drive from the cabin.</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--teal-bg)"><i class="ti ti-leaf" style="color:var(--teal-mid)"></i></div>
+      <div>
+        <div class="act-label">Florissant Fossil Beds National Monument</div>
+        <div class="act-desc">Petrified redwoods and ancient fossils just down the road — surprisingly kid-friendly and very cool.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="section-label" style="margin-top:1.75rem">Phase 2 — Boulder home base</div>
+
+  <div class="card dashed">
+    <div class="home-base">
+      <i class="ti ti-home"></i>
+      <span class="home-base-title">Home base — friends' place in Boulder</span>
+    </div>
+    <div class="home-base-sub">July 29–Aug 5 · Return here between adventures and after the van days</div>
+  </div>
+
+  <div class="connector"></div>
+
+  <div class="card">
+    <div class="day-header">
+      <div class="date-box" style="background:var(--purple-bg)">
+        <div class="date-mon" style="color:var(--purple-mid)">Jul</div>
+        <div class="date-num" style="color:var(--purple-dark)">29</div>
+      </div>
+      <div>
+        <div class="day-title">Arrive Boulder, pick up the van</div>
+        <div class="day-sub">~3 hrs from Lake George · Settle in with friends</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--purple-bg)"><i class="ti ti-car-garage" style="color:var(--purple-mid)"></i></div>
+      <div>
+        <div class="act-label">Van rental pickup</div>
+        <div class="act-desc">Try Outdoorsy or RVezy — both have dog-friendly camper vans available out of Boulder. RVezy hosts can even deliver to your friend's driveway.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <div class="card">
+    <div class="day-header">
+      <div class="date-box" style="background:var(--purple-bg)">
+        <div class="date-mon" style="color:var(--purple-mid)">Jul</div>
+        <div class="date-num" style="color:var(--purple-dark)">30</div>
+      </div>
+      <div>
+        <div class="day-title">Boulder day — Fanny's choice + classics</div>
+        <div class="day-sub">With friends · Kid + dog friendly</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--purple-bg)"><i class="ti ti-star" style="color:var(--purple-mid)"></i></div>
+      <div>
+        <div class="act-label">Fanny chooses the morning activity</div>
+        <div class="act-desc">Let Fanny pick — whether it's a hike at Chautauqua Park with Flatirons views, the Boulder Creek Path for biking and wading, or something from her local knowledge.</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--purple-bg)"><i class="ti ti-building-store" style="color:var(--purple-mid)"></i></div>
+      <div>
+        <div class="act-label">Afternoon — Pearl Street Mall</div>
+        <div class="act-desc">Pop-jet fountain, climbable bronze animal sculptures, street performers, and tons of lunch spots. Free Tebo Train runs weekday mornings for kids 10 and under through Sept 4.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="section-label" style="margin-top:1.75rem">Phase 3 — van adventure · 2 nights out</div>
+
+  <div class="card">
+    <div class="day-header">
+      <div class="date-box" style="background:var(--amber-bg)">
+        <div class="date-mon" style="color:var(--amber-mid)">Jul</div>
+        <div class="date-num" style="color:var(--amber-dark)">31</div>
+      </div>
+      <div>
+        <div class="day-title">Depart on van adventure</div>
+        <div class="day-sub">July 31–Aug 1 · 2 nights out · return Aug 2 morning</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--amber-bg)"><i class="ti ti-route" style="color:var(--amber-mid)"></i></div>
+      <div>
+        <div class="act-label">Pick one of four adventures below</div>
+        <div class="act-desc">All are 2-night, dog-friendly, and kid-appropriate. Return to Boulder the morning of Aug 2 to prep for polo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fanny-box">
+    <div class="fanny-header" style="background:var(--amber-bg)">
+      <i class="ti ti-sparkles" style="color:var(--amber-mid)"></i>
+      <div>
+        <div class="fanny-title" style="color:var(--amber-dark)">Adventure options</div>
+        <div class="fanny-sub" style="color:var(--amber-mid)">2 nights out · July 31–Aug 1 · all dog + kid friendly</div>
+      </div>
+    </div>
+    <div class="adv-grid">
+
+      <div class="adv-card featured">
+        <div class="pill" style="background:var(--purple-bg);color:var(--purple-mid)">
+          <i class="ti ti-sparkles"></i> Fanny's pick
+        </div>
+        <div class="adv-card-header">
+          <div class="adv-ico" style="background:var(--amber-bg)"><i class="ti ti-beach" style="color:var(--amber-mid)"></i></div>
+          <div>
+            <div class="adv-title">Option A — Great Sand Dunes</div>
+            <div class="adv-tag" style="color:var(--amber-mid)">~4 hrs south of Boulder</div>
+          </div>
+        </div>
+        <div class="adv-desc">Colorado's wildest surprise — the tallest sand dunes in North America rising out of the mountains. Kids can run wild, sled down the dunes, and splash in Medano Creek. Dogs are allowed on the dunes and in the park on leash. Nothing else like it in the country.</div>
+        <div class="adv-details">
+          <div class="detail-row"><i class="ti ti-paw" style="color:var(--amber-mid)"></i><span>Dogs allowed on dunes + throughout park</span></div>
+          <div class="detail-row"><i class="ti ti-tent" style="color:var(--amber-mid)"></i><span>Pinon Flats Campground inside the park, or dog-friendly private sites 30 min away with dark skies and disc golf</span></div>
+          <div class="detail-row"><i class="ti ti-sun" style="color:var(--amber-mid)"></i><span>Hit the dunes early — afternoon sand gets extremely hot for paws</span></div>
+        </div>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-card-header">
+          <div class="adv-ico" style="background:var(--green-bg)"><i class="ti ti-ripple" style="color:var(--green-mid)"></i></div>
+          <div>
+            <div class="adv-title">Option B — Black Canyon</div>
+            <div class="adv-tag" style="color:var(--green-mid)">of the Gunnison · ~3.5 hrs</div>
+          </div>
+        </div>
+        <div class="adv-desc">One of Colorado's most dramatic and underrated parks. Canyon walls nearly 3,000 ft deep, far less crowded than other national parks.</div>
+        <div class="adv-details">
+          <div class="detail-row"><i class="ti ti-paw" style="color:var(--green-mid)"></i><span>Dogs allowed on rim trails + campgrounds</span></div>
+          <div class="detail-row"><i class="ti ti-tent" style="color:var(--green-mid)"></i><span>South Rim Campground (van hookups) or Hipcamp nearby</span></div>
+          <div class="detail-row"><i class="ti ti-arrow-right" style="color:var(--green-mid)"></i><span>Stop in Crested Butte on the way</span></div>
+        </div>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-card-header">
+          <div class="adv-ico" style="background:var(--purple-bg)"><i class="ti ti-mountain" style="color:var(--purple-mid)"></i></div>
+          <div>
+            <div class="adv-title">Option C — Indian Peaks</div>
+            <div class="adv-tag" style="color:var(--purple-mid)">+ Nederland · 30 min away</div>
+          </div>
+        </div>
+        <div class="adv-desc">The close-to-home option — alpine lakes, wildflowers in peak August bloom, and no long driving days. Up Boulder Canyon.</div>
+        <div class="adv-details">
+          <div class="detail-row"><i class="ti ti-paw" style="color:var(--purple-mid)"></i><span>Dogs on leash in most of the wilderness area</span></div>
+          <div class="detail-row"><i class="ti ti-tent" style="color:var(--purple-mid)"></i><span>Free dispersed camping in Roosevelt National Forest</span></div>
+          <div class="detail-row"><i class="ti ti-coffee" style="color:var(--purple-mid)"></i><span>Nederland has great coffee + quirky mountain town energy</span></div>
+        </div>
+      </div>
+
+      <div class="adv-card">
+        <div class="adv-card-header">
+          <div class="adv-ico" style="background:var(--teal-bg)"><i class="ti ti-tree" style="color:var(--teal-mid)"></i></div>
+          <div>
+            <div class="adv-title">Option D — Buena Vista</div>
+            <div class="adv-tag" style="color:var(--teal-mid)">+ Collegiate Peaks · ~2.5 hrs</div>
+          </div>
+        </div>
+        <div class="adv-desc">A sweet spot between drive time and scenery. Surrounded by more 14ers than anywhere in the US, with the Arkansas River running through town.</div>
+        <div class="adv-details">
+          <div class="detail-row"><i class="ti ti-paw" style="color:var(--teal-mid)"></i><span>Dog-friendly trails throughout Collegiate Peaks Wilderness</span></div>
+          <div class="detail-row"><i class="ti ti-tent" style="color:var(--teal-mid)"></i><span>Tons of National Forest dispersed camping nearby</span></div>
+          <div class="detail-row"><i class="ti ti-droplet" style="color:var(--teal-mid)"></i><span>Kids can do a mellow float or wade on the Arkansas River</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="section-label" style="margin-top:1.75rem">Phase 4 — polo + Denver</div>
+
+  <div class="card highlighted">
+    <div class="pill" style="background:var(--purple-bg);color:var(--purple-mid)">
+      <i class="ti ti-star"></i> trip highlight
+    </div>
+    <div class="day-header">
+      <div class="date-box" style="background:var(--purple-bg)">
+        <div class="date-mon" style="color:var(--purple-mid)">Aug</div>
+        <div class="date-num" style="color:var(--purple-dark)">2</div>
+      </div>
+      <div>
+        <div class="day-title">Disco Sunday — Denver Polo Club</div>
+        <div class="day-sub">Sedalia · ~1 hr from Boulder · Back to Boulder after</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--purple-bg)"><i class="ti ti-horse" style="color:var(--purple-mid)"></i></div>
+      <div>
+        <div class="act-label">Sunday Funday tailgate</div>
+        <div class="act-desc">Polo matches, DJ all day, gourmet food trucks, best dressed contest, and equestrian performances. Bring chairs, shade, and tailgate décor — admission covers parking for your whole car.</div>
+        <a class="badge" href="https://www.denverpoloclub.com/events" target="_blank" style="background:var(--purple-bg);color:var(--purple-mid)">
+          <i class="ti ti-ticket"></i> From $35/person · denverpoloclub.com
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <div class="card">
+    <div class="day-header">
+      <div class="date-box" style="background:var(--gray-bg)">
+        <div class="date-mon" style="color:var(--gray-mid)">Aug</div>
+        <div class="date-num" style="color:var(--gray-dark)">3</div>
+      </div>
+      <div>
+        <div class="day-title">Denver day — dinner out</div>
+        <div class="day-sub">Day trip from Boulder · ~45 min drive · Back in the evening</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--gray-bg)"><i class="ti ti-building-skyscraper" style="color:var(--gray-mid)"></i></div>
+      <div>
+        <div class="act-label">Explore Denver</div>
+        <div class="act-desc">RiNo Art District for murals and galleries, Denver Botanic Gardens (dog-friendly Chatfield campus), or the Denver Art Museum during the day.</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--gray-bg)"><i class="ti ti-tools-kitchen-2" style="color:var(--gray-mid)"></i></div>
+      <div>
+        <div class="act-label">Dinner in Denver</div>
+        <div class="act-desc">Make a night of it before heading back to Boulder. RiNo has some of the best restaurants in the city — Tavernetta, Mercantile, or a lively spot on Larimer Street.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector"></div>
+
+  <div class="card">
+    <div class="day-header">
+      <div class="date-box" style="background:var(--gray-bg)">
+        <div class="date-mon" style="color:var(--gray-mid)">Aug</div>
+        <div class="date-num" style="color:var(--gray-dark)">4</div>
+      </div>
+      <div>
+        <div class="day-title">Last night in Boulder</div>
+        <div class="day-sub">Return van · slow morning · depart Aug 5</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="ico" style="background:var(--gray-bg)"><i class="ti ti-moon" style="color:var(--gray-mid)"></i></div>
+      <div>
+        <div class="act-label">Wind down at friends' place</div>
+        <div class="act-desc">Return the van, have a final dinner together, and get ready for a Tuesday morning departure.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Duration</div>
+      <div class="stat-val">12 days</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Van nights out</div>
+      <div class="stat-val">2 nights</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Depart</div>
+      <div class="stat-val">Aug 5</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
