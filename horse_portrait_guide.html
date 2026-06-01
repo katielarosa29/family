@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horse Head Portrait — Oil Painting Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1C1510;
+    --paper: #F7F2EA;
+    --warm: #C97B3A;
+    --sienna: #A84C28;
+    --ochre: #C8A44A;
+    --shadow: #5B3020;
+    --sage: #7A8A6A;
+    --muted: #8A7A6A;
+    --rule: #D4C8B4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* Header */
+  header {
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 2rem;
+    margin-bottom: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 1rem;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: .5rem;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--sienna);
+  }
+
+  .header-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--warm);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 2px;
+    margin-bottom: .4rem;
+  }
+
+  /* Intro strip */
+  .intro {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    border-radius: 3px;
+  }
+
+  .intro-stat { text-align: center; flex-shrink: 0; }
+  .intro-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    display: block;
+    line-height: 1;
+    color: var(--ochre);
+  }
+  .intro-stat .lbl { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; opacity: .6; margin-top: 3px; }
+  .intro-divider { width: 1px; background: rgba(255,255,255,.15); align-self: stretch; flex-shrink: 0; }
+  .intro-text { font-size: 13px; opacity: .8; line-height: 1.65; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 2px; }
+
+  .step {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .step-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    cursor: pointer;
+    background: #fff;
+    transition: background .15s;
+    user-select: none;
+    list-style: none;
+  }
+
+  .step-head:hover { background: #faf6f0; }
+
+  .step[open] .step-head { border-bottom: 1px solid var(--rule); }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .step-title-wrap { flex: 1; }
+  .step-title { font-weight: 500; font-size: 15px; line-height: 1.2; }
+  .step-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  .step-arrow {
+    font-size: 14px;
+    color: var(--muted);
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+  .step[open] .step-arrow { transform: rotate(90deg); }
+
+  .step-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+    background: #fdf9f4;
+  }
+
+  /* Content bits */
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 1rem 0 .5rem;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .swatch-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .swatch {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--ink);
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 3px 10px 3px 5px;
+  }
+  .swatch-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.12);
+    flex-shrink: 0;
+  }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill {
+    font-size: 12px;
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-weight: 400;
+    background: rgba(201,123,58,.12);
+    color: var(--sienna);
+    border: 1px solid rgba(201,123,58,.25);
+  }
+
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+  }
+
+  .mini-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .mini-card b {
+    color: var(--ink);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+    font-size: 13px;
+  }
+
+  .tip {
+    margin-top: 1rem;
+    background: rgba(90,128,106,.1);
+    border-left: 3px solid var(--sage);
+    border-radius: 0 4px 4px 0;
+    padding: 10px 14px;
+    font-size: 12.5px;
+    color: #3d5040;
+    line-height: 1.6;
+  }
+
+  .prose { font-size: 13.5px; color: #4A3A2A; line-height: 1.7; margin-bottom: .75rem; }
+  .prose b { font-weight: 500; color: var(--ink); }
+
+  /* Color palette strip (step 1) */
+  .palette-strip {
+    display: flex;
+    gap: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 32px;
+    margin: .75rem 0;
+    border: 1px solid var(--rule);
+  }
+  .palette-strip div { flex: 1; }
+
+  /* Footer */
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .04em;
+  }
+  footer span { font-family: 'Playfair Display', serif; font-style: italic; font-size: 13px; color: var(--warm); }
+
+  @media print {
+    .step { page-break-inside: avoid; }
+    details[open] summary .step-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div>
+      <div class="eyebrow">Book Club Workshop · Beginner Oil Painting</div>
+      <h1>Horse Head <em>Portrait</em><br>on 8×10 Canvas</h1>
+    </div>
+    <div class="header-meta">
+      <div class="badge">8 steps</div><br>
+      Oils · Beginner<br>
+      ~2–3 hrs session
+    </div>
+  </header>
+
+  <div class="intro">
+    <div class="intro-stat">
+      <span class="num">8×10</span>
+      <div class="lbl">Canvas</div>
+    </div>
+    <div class="intro-divider"></div>
+    <div class="intro-stat">
+      <span class="num">6</span>
+      <div class="lbl">Colors</div>
+    </div>
+    <div class="intro-divider"></div>
+    <div class="intro-stat">
+      <span class="num">5</span>
+      <div class="lbl">Brushes</div>
+    </div>
+    <div class="intro-divider"></div>
+    <div class="intro-text">
+      Oil paint stays wet for hours — mistakes are always fixable. Print a side-profile horse photo for reference. Bay or chestnut coats work best for beginners.
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <!-- STEP 1 -->
+    <details class="step" open>
+      <summary class="step-head">
+        <div class="step-num" style="background:#F5E2CB;color:#7A4010">1</div>
+        <div class="step-title-wrap">
+          <div class="step-title">Gather your supplies</div>
+          <div class="step-sub">Everything you need for an 8×10 session</div>
+        </div>
+        <span class="step-arrow">›</span>
+      </summary>
+      <div class="step-body">
+        <div class="section-label">The 6 paints</div>
+        <div class="palette-strip">
+          <div style="background:#E8C87A" title="Yellow ochre"></div>
+          <div style="background:#C0592A" title="Burnt sienna"></div>
+          <div style="background:#5B3020" title="Burnt umber"></div>
+          <div style="background:#1C1C1C" title="Ivory black"></div>
+          <div style="background:#F5F0E0" title="Titanium white"></div>
+          <div style="background:#C5472A" title="Cadmium red (opt)"></div>
+        </div>
+        <div class="swatch-row">
+          <div class="swatch"><div class="swatch-dot" style="background:#E8C87A"></div>Yellow ochre</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#C0592A"></div>Burnt sienna</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#5B3020"></div>Burnt umber</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#1C1C1C"></div>Ivory black</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#F5F0E0;border-color:#ccc"></div>Titanium white</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#C5472A"></div>Cadmium red (opt)</div>
+        </div>
+
+        <div class="section-label">Brushes</div>
+        <div class="mini-grid">
+          <div class="mini-card"><b>Flat #8–10</b>Big background strokes</div>
+          <div class="mini-card"><b>Flat #4–6</b>Main body shapes</div>
+          <div class="mini-card"><b>Round #2</b>Eyes, nostrils, fine details</div>
+          <div class="mini-card"><b>Fan brush</b>Mane &amp; tail (optional)</div>
+        </div>
+
+        <div class="section-label">Other</div>
+        <div class="pill-row">
+          <span class="pill">Linseed or walnut oil</span>
+          <span class="pill">Odorless mineral spirits</span>
+          <span class="pill">Palette knife</span>
+          <span class="pill">Paper towels</span>
+          <span class="pill">Palette</span>
+        </div>
+
+        <div class="tip">💡 Print a side-profile horse photo for reference. Have it at arm's reach the whole session.</div>
+      </div>
+    </details>
+
+    <!-- STEP 2 -->
+    <details class="step">
+      <summary class="step-head">
+        <div class="step-num" style="background:#D6E8F5;color:#1A4A72">2</div>
+        <div class="step-title-wrap">
+          <div class="step-title">Tone the canvas</div>
+          <div class="step-sub">Start with a warm ground — no scary white</div>
+        </div>
+        <span class="step-arrow">›</span>
+      </summary>
+      <div class="step-body">
+        <p class="prose">Cover the whole canvas with a thin, wiped-back layer of <b>burnt sienna</b> thinned with mineral spirits. Use a rag or big flat brush.</p>
+        <div class="mini-grid">
+          <div class="mini-card"><b>Why?</b>Warms shadows automatically and makes mistakes far less visible</div>
+          <div class="mini-card"><b>How thin?</b>The canvas weave should faintly show through the color</div>
+          <div class="mini-card"><b>Drying time</b>15–30 min, or use a hairdryer on low before you sketch</div>
+          <div class="mini-card"><b>Color?</b>Burnt sienna is traditional. Warm grey or raw umber also work</div>
+        </div>
+        <div class="tip">💡 Toning the canvas is the single biggest beginner tip in oil painting. The warm undertone unifies everything painted on top.</div>
+      </div>
+    </details>
+
+    <!-- STEP 3 -->
+    <details class="step">
+      <summary class="step-head">
+        <div class="step-num" style="background:#EAEBF8;color:#3B2E82">3</div>
+        <div class="step-title-wrap">
+          <div class="step-title">Sketch the structure</div>
+          <div class="step-sub">Loose lines in thinned burnt umber — no pencil</div>
+        </div>
+        <span class="step-arrow">›</span>
+      </summary>
+      <div class="step-body">
+        <p class="prose">Use a thin round brush with <b>burnt umber + spirits</b> to sketch basic shapes. Keep it light — you're mapping, not drawing.</p>
+        <div class="section-label">Six shapes to place</div>
+        <div class="mini-grid">
+          <div class="mini-card"><b>1. Skull oval</b>Fills most of the canvas, slightly tilted</div>
+          <div class="mini-card"><b>2. Muzzle box</b>Extends down-forward from the oval</div>
+          <div class="mini-card"><b>3. Eye placement</b>About halfway down the skull — not too high</div>
+          <div class="mini-card"><b>4. Ear triangles</b>Top of skull, pointing up or slightly forward</div>
+          <div class="mini-card"><b>5. Neck curve</b>Flows down and off the bottom of the canvas</div>
+          <div class="mini-card"><b>6. Nostril marks</b>Low on the muzzle, slightly flared ovals</div>
+        </div>
+        <div class="tip">💡 Coach your friends: "Horses have surprisingly long faces — the muzzle takes the lower third." Most beginners draw the head too small.</div>
+      </div>
+    </details>
+
+    <!-- STEP 4 -->
+    <details class="step">
+      <summary class="step-head">
+        <div class="step-num" style="background:#D6EFE4;color:#1A5A3A">4</div>
+        <div class="step-title-wrap">
+          <div class="step-title">Block in the darks</div>
+          <div class="step-sub">Establish shadow shapes first — the foundation</div>
+        </div>
+        <span class="step-arrow">›</span>
+      </summary>
+      <div class="step-body">
+        <p class="prose">Mix <b>burnt umber + ivory black</b> for your darkest shadow color. Use a flat #4–6 brush to fill in all shadow areas.</p>
+        <div class="section-label">Main dark areas</div>
+        <div class="pill-row">
+          <span class="pill">Inside the ear</span>
+          <span class="pill">Under the jaw</span>
+          <span class="pill">Around the nostril</span>
+          <span class="pill">Below the cheekbone</span>
+          <span class="pill">Eye socket</span>
+          <span class="pill">Neck underside</span>
+        </div>
+        <div class="tip">💡 Don't blend yet — just flat dark shapes. At this stage it should look "wrong." That's completely normal and part of the process!</div>
+      </div>
+    </details>
+
+    <!-- STEP 5 -->
+    <details class="step">
+      <summary class="step-head">
+        <div class="step-num" style="background:#F8E8D0;color:#7A4010">5</div>
+        <div class="step-title-wrap">
+          <div class="step-title">Add midtones</div>
+          <div class="step-sub">The color that makes it look like a horse</div>
+        </div>
+        <span class="step-arrow">›</span>
+      </summary>
+      <div class="step-body">
+        <p class="prose">Mix <b>burnt sienna + yellow ochre</b> with a tiny bit of white. Paint the mid-value areas between darks and the lights you'll add next.</p>
+        <div class="section-label">Mix guide by coat color</div>
+        <div class="mini-grid">
+          <div class="mini-card"><b>Bay</b>More burnt sienna, less ochre</div>
+          <div class="mini-card"><b>Chestnut</b>Heavy sienna, hint of cadmium red</div>
+          <div class="mini-card"><b>Palomino</b>More ochre + generous white</div>
+          <div class="mini-card"><b>Grey / roan</b>Black + white + touch of sienna</div>
+        </div>
+        <div class="tip">💡 Stroke in the direction hair grows — down the face, along the jaw. Even beginners get natural-looking texture this way.</div>
+      </div>
+    </details>
+
+    <!-- STEP 6 -->
+    <details class="step">
+      <summary class="step-head">
+        <div class="step-num" style="background:#F5DADA;color:#6A1A1A">6</div>
+        <div class="step-title-wrap">
+          <div class="step-title">Blend &amp; add lights</div>
+          <div class="step-sub">Soft edges + bright highlights bring it to life</div>
+        </div>
+        <span class="step-arrow">›</span>
+      </summary>
+      <div class="step-body">
+        <p class="prose">While paint is still wet, use a clean dry flat brush to <b>gently blend</b> where darks meet midtones. Then place highlights.</p>
+        <div class="section-label">Where to place light</div>
+        <div class="mini-grid">
+          <div class="mini-card"><b>Forehead</b>Titanium white + tiny ochre, placed boldly</div>
+          <div class="mini-card"><b>Cheekbone</b>Catches the most direct light</div>
+          <div class="mini-card"><b>Muzzle bridge</b>Soft warm white strip along the top</div>
+          <div class="mini-card"><b>Eye highlight</b>Tiny bright white dot — makes it feel alive</div>
+        </div>
+        <div class="tip">💡 Less blending = more energy and character. Over-blended paintings go muddy. Visible brushstrokes are beautiful — leave them.</div>
+      </div>
+    </details>
+
+    <!-- STEP 7 -->
+    <details class="step">
+      <summary class="step-head">
+        <div class="step-num" style="background:#D6EAD6;color:#1A4A1A">7</div>
+        <div class="step-title-wrap">
+          <div class="step-title">Paint the background</div>
+          <div class="step-sub">Simple is best — don't compete with the horse</div>
+        </div>
+        <span class="step-arrow">›</span>
+      </summary>
+      <div class="step-body">
+        <p class="prose">Fill the background with one muted color. Work carefully around the horse's outline, refining edges as you go.</p>
+        <div class="section-label">Good beginner background colors</div>
+        <div class="swatch-row">
+          <div class="swatch"><div class="swatch-dot" style="background:#7A8A6A"></div>Muted sage green</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#8A8A7A"></div>Warm grey</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#5A6A7A"></div>Muted blue-grey</div>
+          <div class="swatch"><div class="swatch-dot" style="background:#4A3A2A"></div>Deep warm brown</div>
+        </div>
+        <div class="tip">💡 A slightly darker or cooler background makes the horse "pop." Avoid bright colors — they fight the subject.</div>
+      </div>
+    </details>
+
+    <!-- STEP 8 -->
+    <details class="step">
+      <summary class="step-head">
+        <div class="step-num" style="background:#E8E6E0;color:#2C2C2A">8</div>
+        <div class="step-title-wrap">
+          <div class="step-title">Details &amp; finishing</div>
+          <div class="step-sub">Mane, eyes, nostrils — the final touches</div>
+        </div>
+        <span class="step-arrow">›</span>
+      </summary>
+      <div class="step-body">
+        <p class="prose">Switch to a small round brush. These small marks have the biggest impact on the final result.</p>
+        <div class="mini-grid">
+          <div class="mini-card"><b>Eye</b>Dark iris + white highlight dot. Add a warm rim of color at the edge</div>
+          <div class="mini-card"><b>Nostril</b>Dark oval, hint of warm pink-red inside</div>
+          <div class="mini-card"><b>Mane</b>Long flowing strokes — lighter color first, then dark lines on top</div>
+          <div class="mini-card"><b>Whiskers</b>Optional: thin white/cream lines on the muzzle with a liner brush</div>
+        </div>
+        <div class="tip">💡 Step back often! At arm's length you'll spot what needs adjusting better than up close. And then — sign it. You made art.</div>
+      </div>
+    </details>
+
+  </div><!-- .steps -->
+
+  <footer>
+    <div>Beginner Oil Painting · 8×10 Canvas · Book Club Workshop</div>
+    <span>Paint something beautiful.</span>
+  </footer>
+
+</div>
+</body>
+</html>
