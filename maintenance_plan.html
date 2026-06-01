@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fasting Maintenance Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+  @import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple-50: #EEEDFE; --purple-600: #534AB7; --purple-800: #3C3489;
+    --teal-50: #E1F5EE; --teal-800: #085041;
+    --gray-50: #F1EFE8; --gray-100: #D3D1C7; --gray-200: #B4B2A9; --gray-800: #444441; --gray-900: #2C2C2A;
+    --amber-50: #FAEEDA; --amber-800: #633806;
+    --bg: #ffffff; --bg-secondary: #f7f7f5; --bg-tertiary: #f0efe9;
+    --text: #1a1a1a; --text-muted: #5f5e5a; --text-hint: #888780;
+    --border: rgba(0,0,0,0.1); --border-strong: rgba(0,0,0,0.18);
+    --radius: 10px; --radius-lg: 14px;
+    --font: 'DM Sans', sans-serif;
+  }
+
+  body { font-family: var(--font); background: var(--bg-tertiary); color: var(--text); font-size: 14px; line-height: 1.65; min-height: 100vh; }
+  .page { max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  /* HEADER */
+  .header { padding: 2.5rem 0 2rem; border-bottom: 0.5px solid var(--border-strong); margin-bottom: 2rem; }
+  .header-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--purple-600); margin-bottom: 8px; }
+  .header h1 { font-size: 28px; font-weight: 500; color: var(--purple-800); letter-spacing: -0.02em; margin-bottom: 6px; line-height: 1.2; }
+  .header-sub { font-size: 13px; color: var(--text-muted); font-style: italic; }
+  .header-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .htag { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 0.5px solid var(--border-strong); color: var(--text-muted); background: var(--bg); }
+
+  /* VIEW TOGGLE */
+  .view-toggle { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .view-btn { padding: 7px 18px; font-size: 13px; font-family: var(--font); border: 0.5px solid var(--border-strong); background: transparent; border-radius: 8px; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+  .view-btn.active { background: var(--purple-800); color: white; border-color: var(--purple-800); }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* SHARED */
+  .section-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.7; }
+  .phase-divider { display: flex; align-items: center; gap: 10px; margin: 1.5rem 0 .75rem; }
+  .phase-line { flex: 1; height: 0.5px; background: var(--border-strong); }
+  .phase-label { font-size: 11px; font-weight: 500; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+
+  /* STAT ROW */
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 1.25rem; }
+  .stat { background: var(--bg-secondary); border-radius: var(--radius); padding: .75rem 1rem; }
+  .stat-val { font-size: 22px; font-weight: 500; color: var(--text); }
+  .stat-lbl { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
+
+  /* WEEK GRID */
+  .week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 12px; }
+  .day-label { font-size: 10px; color: var(--text-hint); text-align: center; margin-bottom: 3px; }
+  .day-cell { border-radius: 6px; padding: 7px 4px; text-align: center; font-size: 11px; font-weight: 500; }
+  .dc-fast { background: var(--purple-50); color: var(--purple-800); }
+  .dc-ext { background: var(--gray-100); color: var(--gray-900); }
+  .dc-free { background: var(--teal-50); color: var(--teal-800); }
+  .dc-light { background: var(--amber-50); color: var(--amber-800); }
+
+  /* BADGES */
+  .badge { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 20px; font-weight: 500; margin-right: 5px; margin-top: 5px; }
+  .b-purple { background: var(--purple-50); color: var(--purple-800); }
+  .b-teal { background: var(--teal-50); color: var(--teal-800); }
+  .b-amber { background: var(--amber-50); color: var(--amber-800); }
+  .b-gray { background: var(--gray-50); color: var(--gray-800); }
+
+  /* CARDS */
+  .card { background: var(--bg); border: 0.5px solid var(--border-strong); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .card-title { font-size: 13.5px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .card-body { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  /* HABIT ROWS */
+  .habit-row { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 0.5px solid var(--border); }
+  .habit-row:last-child { border-bottom: none; }
+  .habit-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .habit-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .habit-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.65; }
+
+  /* MONTH CARDS */
+  .month-card { background: var(--bg); border: 0.5px solid var(--border-strong); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .month-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .month-badge { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .month-title { font-size: 14px; font-weight: 500; color: var(--text); }
+  .month-sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+  .progress-track { height: 4px; background: var(--border); border-radius: 2px; margin: 8px 0 10px; }
+  .progress-fill { height: 100%; border-radius: 2px; background: var(--purple-600); }
+
+  /* EXPECTATIONS */
+  .expectation-block { margin-bottom: 10px; }
+  .expectation-label { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .expectation-text { font-size: 12.5px; color: var(--text-muted); line-height: 1.65; }
+
+  /* FOOTER */
+  .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border-strong); text-align: center; font-size: 11.5px; color: var(--text-hint); font-style: italic; }
+
+  @media (max-width: 520px) {
+    .header h1 { font-size: 22px; }
+    .week-grid { gap: 3px; }
+    .day-cell { padding: 5px 2px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">After the 9-day kickstart</div>
+    <h1>Fasting Maintenance Plan</h1>
+    <div class="header-sub">Long-term rhythm · Daily habits · 12-week progression</div>
+    <div class="header-tags">
+      <span class="htag">16:8 daily baseline</span>
+      <span class="htag">1× 24h fast per week</span>
+      <span class="htag">1× 36h fast per month</span>
+      <span class="htag">Free weekends</span>
+    </div>
+  </div>
+
+  <!-- VIEW TOGGLE -->
+  <div class="view-toggle">
+    <button class="view-btn active" onclick="showSection('rhythm', this)">Weekly rhythm</button>
+    <button class="view-btn" onclick="showSection('habits', this)">Daily habits</button>
+    <button class="view-btn" onclick="showSection('progression', this)">12-week plan</button>
+  </div>
+
+  <!-- ══════════════════ RHYTHM ══════════════════ -->
+  <div class="section active" id="section-rhythm">
+
+    <p class="section-desc">After the 9-day kickstart, this is your sustainable maintenance rhythm. The weekday 16:8 becomes automatic within 2–3 weeks. The Wednesday 24h fast is the weekly anchor that keeps the apoptosis and anti-inflammatory benefits running without the intensity of the 36h fast.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-val">16:8</div><div class="stat-lbl">Daily baseline</div></div>
+      <div class="stat"><div class="stat-val">1×</div><div class="stat-lbl">24h fast / week</div></div>
+      <div class="stat"><div class="stat-val">1×</div><div class="stat-lbl">36h fast / month</div></div>
+      <div class="stat"><div class="stat-val">Free</div><div class="stat-lbl">Weekends</div></div>
+    </div>
+
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">maintenance week template</div><div class="phase-line"></div></div>
+
+    <div class="week-grid">
+      <div><div class="day-label">Mon</div><div class="day-cell dc-fast">16:8</div></div>
+      <div><div class="day-label">Tue</div><div class="day-cell dc-fast">16:8</div></div>
+      <div><div class="day-label">Wed</div><div class="day-cell dc-ext">24h</div></div>
+      <div><div class="day-label">Thu</div><div class="day-cell dc-light">recover</div></div>
+      <div><div class="day-label">Fri</div><div class="day-cell dc-fast">16:8</div></div>
+      <div><div class="day-label">Sat</div><div class="day-cell dc-free">free</div></div>
+      <div><div class="day-label">Sun</div><div class="day-cell dc-free">free</div></div>
+    </div>
+
+    <div style="margin-bottom: 1.25rem;">
+      <span class="badge b-purple">16:8 = noon–8pm</span>
+      <span class="badge b-gray">24h = dinner → dinner</span>
+      <span class="badge b-amber">recover = protein + fermented foods</span>
+      <span class="badge b-teal">free = no window</span>
+    </div>
+
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">once a month — deeper reset</div><div class="phase-line"></div></div>
+
+    <div class="week-grid">
+      <div><div class="day-label">Mon</div><div class="day-cell dc-fast">16:8</div></div>
+      <div><div class="day-label">Tue</div><div class="day-cell dc-fast">16:8</div></div>
+      <div><div class="day-label">Wed</div><div class="day-cell dc-ext">24h</div></div>
+      <div><div class="day-label">Thu</div><div class="day-cell dc-light">recover</div></div>
+      <div><div class="day-label">Fri</div><div class="day-cell dc-ext">36h</div></div>
+      <div><div class="day-label">Sat</div><div class="day-cell dc-free">break fast</div></div>
+      <div><div class="day-label">Sun</div><div class="day-cell dc-free">free</div></div>
+    </div>
+
+    <div style="margin-bottom: 1.25rem;">
+      <span class="badge b-gray">36h = dinner Fri → Sat breakfast</span>
+      <span class="badge b-teal">everything else stays the same</span>
+    </div>
+
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">when life gets in the way</div><div class="phase-line"></div></div>
+
+    <div class="card">
+      <div class="card-title">Travel, holidays, social weeks</div>
+      <div class="card-body">Drop back to 16:8 only — no extended fasts. Even a 12-hour overnight fast (finish dinner by 8pm, don't eat until 8am) maintains the baseline metabolic rhythm. Skip a week of 24h fasting without guilt; consistency over months matters more than any single week.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">If you feel run down or sick</div>
+      <div class="card-body">Cancel the extended fast that week, no negotiation. Your immune system needs fuel when fighting something. Resume the 24h fast the following week when you feel well.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">If Justin has jujutsu training</div>
+      <div class="card-body">His Wednesday adjustment is permanent: fast overnight, eat at 8am post-training, eat normally (including lunch) through the day until 8pm. He skips the extended 24h fast on training mornings. Same pattern applies any week he trains on a fast day.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ HABITS ══════════════════ -->
+  <div class="section" id="section-habits">
+
+    <p class="section-desc">These daily habits compound the fasting benefits on every day — not just fast days. Once they're automatic they require no willpower, and they meaningfully extend the anti-inflammatory and apoptotic effects of the fasting protocol.</p>
+
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">morning</div><div class="phase-line"></div></div>
+
+    <div class="card">
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--purple-50)"><i class="ti ti-droplet" style="color:var(--purple-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">16oz water with a pinch of salt on waking</div>
+          <div class="habit-desc">Rehydrates after overnight fasting, replaces sodium lost through fasting-related urination, and reduces morning hunger. Do it before coffee — it takes 10 seconds and makes a real difference on fast days.</div>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--amber-50)"><i class="ti ti-coffee" style="color:var(--amber-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">Black coffee or green tea before noon</div>
+          <div class="habit-desc">Both extend autophagy signaling into the morning and blunt hunger during the fast window. Green tea's EGCG is independently anti-inflammatory. Keep it black — milk or sweeteners break the fast.</div>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--teal-50)"><i class="ti ti-walk" style="color:var(--teal-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">10–20 min fasted walk after waking</div>
+          <div class="habit-desc">Fasted morning movement amplifies AMPK activation and extends fat-burning. Doesn't need to be intense — a neighborhood walk is enough. Also dramatically improves mood and focus for the rest of the morning.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">eating window</div><div class="phase-line"></div></div>
+
+    <div class="card">
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--teal-50)"><i class="ti ti-fish" style="color:var(--teal-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">Omega-3s 3–4× per week</div>
+          <div class="habit-desc">Fatty fish (salmon, mackerel, sardines), walnuts, or flaxseed. Omega-3s directly suppress NFκB — one of the main inflammatory transcription factors. This is the single highest-impact dietary habit for inflammation.</div>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--purple-50)"><i class="ti ti-leaf" style="color:var(--purple-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">Polyphenols daily</div>
+          <div class="habit-desc">Berries, dark chocolate (70%+), green tea, olive oil, turmeric, red onion. These directly modulate Bcl-2/Bax ratios and support healthy apoptosis even on non-fasting days. Aim for color variety on the plate.</div>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--amber-50)"><i class="ti ti-plant-2" style="color:var(--amber-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">Fermented food daily</div>
+          <div class="habit-desc">Greek yogurt, kimchi, kefir, miso, or sauerkraut. Gut microbiome diversity directly influences systemic inflammation levels. One serving a day makes a measurable difference in 4–6 weeks.</div>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--gray-50)"><i class="ti ti-clock" style="color:var(--gray-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">Stop eating 2–3h before bed</div>
+          <div class="habit-desc">Late eating blunts growth hormone release during sleep and disrupts circadian signaling. If dinner is at 7pm and the eating window opens at noon, that's already 17 hours fasted. The window practically closes itself.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">evening &amp; general</div><div class="phase-line"></div></div>
+
+    <div class="card">
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--purple-50)"><i class="ti ti-moon" style="color:var(--purple-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">7–8 hours sleep, consistent bedtime</div>
+          <div class="habit-desc">Growth hormone peaks in deep sleep and directly complements apoptotic cellular cleanup. Inconsistent schedules disrupt this even if total hours are fine. Same bedtime ±30 min makes a real measurable difference.</div>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--teal-50)"><i class="ti ti-dumbbell" style="color:var(--teal-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">Resistance training 2–3× per week</div>
+          <div class="habit-desc">Muscle contraction independently triggers AMPK and promotes healthy apoptosis in damaged muscle cells. Bodyweight training counts (push-ups, squats, lunges). Schedule on non-extended-fast days.</div>
+        </div>
+      </div>
+      <div class="habit-row">
+        <div class="habit-icon" style="background:var(--amber-50)"><i class="ti ti-bottle" style="color:var(--amber-800);font-size:17px" aria-hidden="true"></i></div>
+        <div>
+          <div class="habit-title">2–3L water daily</div>
+          <div class="habit-desc">Especially important during extended fasts. Add electrolytes (pinch of salt, or a small cup of bone broth) on 24h and 36h fast days — you're flushing more sodium than usual and most fasting headaches are actually dehydration or electrolyte depletion.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ PROGRESSION ══════════════════ -->
+  <div class="section" id="section-progression">
+
+    <p class="section-desc">How to build from the 9-day kickstart into a sustainable long-term practice. Each phase has a different goal — don't rush the progression. Consistency over 12 weeks beats intensity for 3 weeks then stopping.</p>
+
+    <div class="month-card">
+      <div class="month-header">
+        <div class="month-badge" style="background:var(--purple-50);color:var(--purple-800);">1</div>
+        <div>
+          <div class="month-title">Weeks 1–2 — consolidate</div>
+          <div class="month-sub">Goal: make 16:8 automatic · You are here</div>
+        </div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:20%"></div></div>
+      <div class="card-body">Finish the 9-day kickstart. Start the maintenance rhythm: 16:8 weekdays, one 24h fast on Wednesday, free weekends. Don't try to be perfect — just keep the window. The main adaptation is your body stopping the cortisol spike it uses to raise blood sugar in the morning. Once that settles (~10–14 days), morning hunger disappears.</div>
+      <div style="margin-top:8px"><span class="badge b-purple">16:8 daily</span><span class="badge b-gray">1× 24h/week</span><span class="badge b-teal">free weekends</span></div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-header">
+        <div class="month-badge" style="background:var(--gray-100);color:var(--gray-900);">2</div>
+        <div>
+          <div class="month-title">Weeks 3–4 — deepen</div>
+          <div class="month-sub">Goal: optimize the eating window</div>
+        </div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:40%"></div></div>
+      <div class="card-body">16:8 should feel natural by now. Start paying more attention to what's inside the window — shift toward anti-inflammatory foods, reduce refined sugar and ultra-processed snacks. Try pushing 2 weekdays to 18:6. Add the monthly 36h fast if feeling strong and well-rested.</div>
+      <div style="margin-top:8px"><span class="badge b-purple">16:8 + 2× 18:6</span><span class="badge b-gray">1× 24h/week</span><span class="badge b-amber">optional 36h</span></div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-header">
+        <div class="month-badge" style="background:var(--gray-200);color:var(--gray-900);">3</div>
+        <div>
+          <div class="month-title">Weeks 5–8 — find the rhythm</div>
+          <div class="month-sub">Goal: sustainable long-term pattern</div>
+        </div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:70%"></div></div>
+      <div class="card-body">This is where compounding starts. The weekly 24h fast keeps mTOR suppressed in a meaningful rhythm. You should notice inflammation markers subjectively — less joint stiffness, better skin, more consistent energy. Add resistance training if not already doing it. The monthly 36h fast is now the deeper reset.</div>
+      <div style="margin-top:8px"><span class="badge b-purple">16:8 daily</span><span class="badge b-gray">1× 24h/week</span><span class="badge b-gray">1× 36h/month</span><span class="badge b-teal">resistance training</span></div>
+    </div>
+
+    <div class="month-card">
+      <div class="month-header">
+        <div class="month-badge" style="background:var(--teal-50);color:var(--teal-800);">4</div>
+        <div>
+          <div class="month-title">Weeks 9–12 — evaluate and adjust</div>
+          <div class="month-sub">Goal: tune for your life</div>
+        </div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+      <div class="card-body">By now you'll have a clear sense of what's working. Some people thrive with just the weekly 24h fast and never need more. Others prefer two shorter extended fasts. If weight loss has plateaued and that matters, tighten the eating window 1–2 days per week. If energy is low, add more food in the window — not more fasting.</div>
+      <div style="margin-top:8px"><span class="badge b-teal">personalize the rhythm</span><span class="badge b-purple">keep 16:8 as the floor</span></div>
+    </div>
+
+    <div class="phase-divider"><div class="phase-line"></div><div class="phase-label">honest expectations</div><div class="phase-line"></div></div>
+
+    <div class="card">
+      <div class="expectation-block">
+        <div class="expectation-label">Weight</div>
+        <div class="expectation-text">0.5–1kg per month steadily, more in the first 2 weeks (mostly water from glycogen depletion). Don't weigh daily — weekly at the same time of day is more meaningful. The scale moving slowly is the sustainable version.</div>
+      </div>
+      <div style="height:10px"></div>
+      <div class="expectation-block">
+        <div class="expectation-label">Inflammation</div>
+        <div class="expectation-text">Subjective improvements (energy, skin, joint comfort) often show within 3–4 weeks. Blood markers (CRP, IL-6) take 8–12 weeks of consistency to shift meaningfully — worth asking your doctor for a panel at the 3-month mark.</div>
+      </div>
+      <div style="height:10px"></div>
+      <div class="expectation-block">
+        <div class="expectation-label">Cellular health and apoptosis</div>
+        <div class="expectation-text">This is a long game — the benefits accumulate over months and years, not weeks. Think of the weekly 24h fast as maintenance for your cells, not a quick fix. The evidence is strongest at the 6–12 month mark.</div>
+      </div>
+      <div style="height:10px"></div>
+      <div class="expectation-block">
+        <div class="expectation-label">The main thing</div>
+        <div class="expectation-text">80% consistency over 12 weeks beats 100% for 3 weeks then stopping. Build the rhythm, not the streak. A missed fast day doesn't undo anything — just pick up the next window and keep going.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">For general wellness. Consult your doctor before beginning if you have a medical condition.</div>
+</div>
+
+<script>
+function showSection(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
