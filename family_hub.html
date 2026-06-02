@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Stuff — LaRosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF8F4;
+    --ink: #1C1C1A;
+    --muted: #888680;
+    --border: #E6E3DC;
+    --card: #FFFFFF;
+    --green: #27AE60;
+    --pink: #E91E8C;
+    --navy: #1A3A5C;
+    --amber: #D35400;
+    --teal: #0E7C7B;
+    --plum: #6C3483;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 2rem 1rem 5rem;
+  }
+
+  .page { max-width: 680px; margin: 0 auto; }
+
+  /* Header */
+  header { margin-bottom: 2.5rem; }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  h1 em { font-style: italic; }
+
+  /* Quick links bar */
+  .quick-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .quick-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--ink);
+    color: #FAF8F4;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .quick-btn:hover { opacity: 0.8; }
+  .quick-btn .icon { font-size: 15px; }
+
+  /* Section */
+  section { margin-bottom: 2rem; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  /* Card grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+  /* Link card */
+  .card {
+    display: block;
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+    border-color: #ccc;
+  }
+  .card-accent {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card-icon { font-size: 22px; margin-bottom: 0.5rem; display: block; }
+  .card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 3px;
+  }
+  .card-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .card-arrow {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 14px;
+    color: var(--border);
+    transition: color 0.15s, transform 0.15s;
+  }
+  .card:hover .card-arrow { color: var(--muted); transform: translate(2px, -2px); }
+
+  /* Soon badge */
+  .soon {
+    display: inline-block;
+    font-size: 10px;
+    background: #F1EFE8;
+    color: #888;
+    padding: 2px 7px;
+    border-radius: 100px;
+    margin-top: 4px;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 3rem;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+  }
+
+  /* Kid badges */
+  .kid-row { display: flex; gap: 8px; margin-bottom: 0.6rem; }
+  .kid-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 100px;
+    padding: 5px 12px 5px 8px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .kid-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <p class="eyebrow">LaRosa Family</p>
+    <h1>Family <em>Stuff</em> 🏠</h1>
+    <p style="font-size:13px; color: var(--muted); margin-top: 0.4rem;">Quick links for things that help</p>
+
+    <div class="quick-bar">
+      <a class="quick-btn" href="https://calendar.google.com/calendar/u/0?cid=ZmFtaWx5MDU1NDIxMTE3MTQ1NzUyNDYxOThAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ">
+        <span class="icon">📅</span> Family Calendar
+      </a>
+      <a class="quick-btn" href="https://docs.google.com/spreadsheets/d/17dMh8vW7P8cyzbuZkbsnT7r9JxedIoqIX5YIbq7ob40/edit?gid=0#gid=0">
+        <span class="icon">🛒</span> Shopping List
+      </a>
+    </div>
+  </header>
+
+  <!-- Kids -->
+  <section>
+    <div class="section-label">Kids</div>
+    <div class="kid-row">
+      <div class="kid-badge"><div class="kid-dot" style="background:#27AE60"></div> Joey · 3rd grade</div>
+      <div class="kid-badge"><div class="kid-dot" style="background:#E91E8C"></div> Kit · 1st grade</div>
+    </div>
+    <div class="grid grid-2">
+      <a class="card" href="https://jk-chore-chart.netlify.app/">
+        <div class="card-accent" style="background: var(--amber)"></div>
+        <span class="card-icon">✅</span>
+        <div class="card-title">Chore Chart</div>
+        <div class="card-desc">Daily checklist for Joey and Kit</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="#">
+        <div class="card-accent" style="background: var(--muted)"></div>
+        <span class="card-icon">🏃</span>
+        <div class="card-title">Sports & Activities</div>
+        <div class="card-desc">Coming soon</div>
+        <span class="soon">soon</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- School -->
+  <section>
+    <div class="section-label">School</div>
+    <div class="grid">
+      <a class="card" href="https://accounts.veracross.com/fais/portals/login">
+        <div class="card-accent" style="background: var(--navy)"></div>
+        <span class="card-icon">🏫</span>
+        <div class="card-title">Veracross Portal</div>
+        <div class="card-desc">School login</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://apps.apple.com/us/app/schoolpass/id1522645864">
+        <div class="card-accent" style="background: var(--navy)"></div>
+        <span class="card-icon">📲</span>
+        <div class="card-title">SchoolPass</div>
+        <div class="card-desc">App Store download</div>
+        <span class="card-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Household -->
+  <section>
+    <div class="section-label">Household</div>
+    <div class="grid">
+      <a class="card" href="https://family-stuff.netlify.app/fasting_plan">
+        <div class="card-accent" style="background: var(--teal)"></div>
+        <span class="card-icon">🍽️</span>
+        <div class="card-title">Meal Plan</div>
+        <div class="card-desc">Recipes planned for the next few days</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://family-stuff.netlify.app/maintenance_plan">
+        <div class="card-accent" style="background: var(--teal)"></div>
+        <span class="card-icon">⏱️</span>
+        <div class="card-title">Fasting Plans</div>
+        <div class="card-desc">A guide to keep fasting going</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://family-stuff.netlify.app/todo_list">
+        <div class="card-accent" style="background: var(--teal)"></div>
+        <span class="card-icon">📋</span>
+        <div class="card-title">To Do</div>
+        <div class="card-desc">Running list of family to-dos</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://docs.google.com/spreadsheets/d/1B8iF3gW_K4oSugaZWpMo6nNItSJRC2Fnw-qGm3f1EH4/edit?gid=266508575#gid=266508575">
+        <div class="card-accent" style="background: var(--teal)"></div>
+        <span class="card-icon">💰</span>
+        <div class="card-title">Budget</div>
+        <div class="card-desc">Google Sheets</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://family-recipes-2.netlify.app/">
+        <div class="card-accent" style="background: var(--teal)"></div>
+        <span class="card-icon">👨‍🍳</span>
+        <div class="card-title">Recipes</div>
+        <div class="card-desc">Family favorites</div>
+        <span class="card-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section>
+    <div class="section-label">Resources</div>
+    <div class="grid">
+      <a class="card" href="https://feelings-adhd.netlify.app/">
+        <div class="card-accent" style="background: var(--plum)"></div>
+        <span class="card-icon">💜</span>
+        <div class="card-title">Big Feelings</div>
+        <div class="card-desc">Scripts for spirals, shutdowns & hard moments</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://routines-adhd.netlify.app/">
+        <div class="card-accent" style="background: var(--plum)"></div>
+        <span class="card-icon">🔄</span>
+        <div class="card-title">Routines</div>
+        <div class="card-desc">Getting dressed, homework, transitions & more</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://adhd-arguing-guide.netlify.app/">
+        <div class="card-accent" style="background: var(--plum)"></div>
+        <span class="card-icon">🤝</span>
+        <div class="card-title">Arguments</div>
+        <div class="card-desc">Scripts for pushback, negotiating & shutdowns</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://family-stuff.netlify.app/screen_free_summer_guide">
+        <div class="card-accent" style="background: var(--plum)"></div>
+        <span class="card-icon">☀️</span>
+        <div class="card-title">Screen-Free Summer</div>
+        <div class="card-desc">Activities for when we're bored</div>
+        <span class="card-arrow">↗</span>
+      </a>
+      <a class="card" href="https://family-stuff.netlify.app/horse_portrait_guide">
+        <div class="card-accent" style="background: var(--plum)"></div>
+        <span class="card-icon">🐴</span>
+        <div class="card-title">Painting Guide</div>
+        <div class="card-desc">Horse painting guide for book club</div>
+        <span class="card-arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>LaRosa family · updated as needed</footer>
+
+</div>
+</body>
+</html>
