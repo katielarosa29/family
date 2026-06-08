@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screens & ADHD Kids — A Balanced Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --violet-50: #F3F0FD;
+    --violet-100: #D8CFFA;
+    --violet-200: #BCAEF6;
+    --violet-400: #8F78EE;
+    --violet-600: #6248D8;
+    --violet-800: #3D2AA8;
+    --amber-50: #FDF3E3;
+    --amber-600: #9A5D0A;
+    --amber-800: #6B3E07;
+    --green-50: #EAF3DE;
+    --green-600: #3B6D11;
+    --teal-50: #E2F4F0;
+    --teal-600: #1A7F78;
+    --teal-800: #0D5C57;
+    --purple-50: #F2EEFB;
+    --purple-600: #6A4BB5;
+    --purple-800: #452E8A;
+    --red-50: #FCEBEB;
+    --red-600: #A32D2D;
+    --bg: #F6F4FD;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --border-mid: rgba(0,0,0,0.15);
+    --text: #140E2A;
+    --text-muted: #52407A;
+    --text-light: #A090C8;
+    --accent: #6248D8;
+    --accent-soft: #F3F0FD;
+    --accent-dark: #3D2AA8;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+  }
+
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .container { max-width: 720px; margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 1.5rem; padding: 2rem 1.5rem 1.75rem; background: var(--surface); border-radius: var(--radius-xl); border: 0.5px solid var(--border); }
+  .header-badge { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; background: var(--violet-50); color: var(--violet-600); padding: 5px 14px; border-radius: 20px; margin-bottom: 12px; }
+  header h1 { font-size: 26px; font-weight: 900; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+
+  .explainer { background: var(--amber-50); border-radius: var(--radius-md); padding: 12px 16px; margin: 14px auto 0; max-width: 560px; text-align: left; }
+  .explainer-label { font-size: 11px; font-weight: 800; color: var(--amber-600); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+  .explainer-text { font-size: 13px; color: var(--amber-800); line-height: 1.7; font-weight: 500; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tab-btn { font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 20px; border: 0.5px solid var(--border-mid); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+  .tab-btn:hover { border-color: var(--violet-400); color: var(--violet-600); }
+  .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 12px; }
+  .card-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 0.5px solid var(--border); }
+
+  .script-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .script-tag { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-top: 1px; flex-shrink: 0; letter-spacing: 0.02em; }
+  .tag-try { background: var(--green-50); color: var(--green-600); }
+  .tag-why { background: var(--violet-50); color: var(--violet-800); }
+  .tag-also { background: var(--teal-50); color: var(--teal-800); }
+  .tag-avoid { background: var(--red-50); color: var(--red-600); }
+  .script-text { font-size: 14px; color: var(--text); line-height: 1.55; }
+
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 12px; align-items: flex-start; }
+  .step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-content { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .step-content strong { font-weight: 800; color: var(--violet-800); }
+
+  /* Traffic light — good/okay/watch */
+  .traffic-grid { display: flex; flex-direction: column; gap: 8px; }
+  .traffic-row { display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; border-radius: var(--radius-md); }
+  .traffic-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; margin-top: 3px; }
+  .dot-green { background: #3B6D11; }
+  .dot-amber { background: #9A5D0A; }
+  .dot-red { background: #A32D2D; }
+  .traffic-green { background: var(--green-50); }
+  .traffic-amber { background: var(--amber-50); }
+  .traffic-red { background: var(--red-50); }
+  .traffic-content { font-size: 13px; line-height: 1.55; font-weight: 500; }
+  .traffic-green .traffic-content { color: #3B6D11; }
+  .traffic-amber .traffic-content { color: #6B3E07; }
+  .traffic-red .traffic-content { color: #8A1F1F; }
+  .traffic-title { font-weight: 800; display: block; margin-bottom: 2px; }
+
+  .idea-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+  @media (max-width: 480px) { .idea-grid { grid-template-columns: 1fr; } }
+  .idea-card { background: var(--violet-50); border-radius: var(--radius-md); padding: 12px 14px; border: 0.5px solid var(--violet-100); }
+  .idea-emoji { font-size: 20px; margin-bottom: 5px; }
+  .idea-title { font-size: 13px; font-weight: 800; color: var(--violet-800); margin-bottom: 3px; }
+  .idea-desc { font-size: 12px; color: var(--violet-600); line-height: 1.5; font-weight: 500; }
+
+  .decode-box { background: var(--violet-50); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 4px; }
+  .decode-label { font-size: 11px; font-weight: 800; color: var(--violet-800); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .decode-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+  .decode-says { font-size: 12px; font-weight: 700; color: var(--violet-600); background: var(--surface); border: 0.5px solid var(--violet-200); border-radius: 20px; padding: 3px 10px; white-space: nowrap; flex-shrink: 0; }
+  .decode-means { font-size: 13px; color: var(--violet-800); line-height: 1.5; font-weight: 500; padding-top: 3px; }
+
+  .tip-box { background: var(--violet-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 16px; }
+  .tip-label { font-size: 11px; font-weight: 800; color: var(--violet-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tip-text { font-size: 13px; color: var(--violet-600); line-height: 1.6; font-weight: 500; }
+
+  .warm-box { background: var(--teal-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 12px; }
+  .warm-label { font-size: 11px; font-weight: 800; color: var(--teal-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .warm-text { font-size: 13px; color: var(--teal-600); line-height: 1.6; font-weight: 500; }
+
+  .reframe-box { background: var(--purple-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 12px; }
+  .reframe-label { font-size: 11px; font-weight: 800; color: var(--purple-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reframe-text { font-size: 13px; color: var(--purple-600); line-height: 1.6; font-weight: 500; }
+
+  #content { display: none; }
+  #content.ready { display: block; }
+  footer { text-align: center; margin-top: 2.5rem; font-size: 13px; color: var(--text-light); }
+
+  @media (max-width: 500px) {
+    header h1 { font-size: 20px; }
+    .script-row { flex-direction: column; gap: 4px; }
+    .script-tag { align-self: flex-start; }
+    .decode-row { flex-direction: column; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-badge">ADHD Parent Guide</div>
+    <h1>Screens & kids who love them 📱</h1>
+    <div class="explainer">
+      <div class="explainer-label">The honest headline</div>
+      <div class="explainer-text">A thriving kid who loves screens in their downtime is not a problem. Screens are neurologically irresistible to ADHD brains — they deliver constant novelty, immediate feedback, and instant reward. That pull is real and it makes sense. This guide isn't about eliminating screens. It's about understanding why they're so appealing, what actually matters to watch for, and how to build a family approach that doesn't make screens more powerful by making them forbidden.</div>
+    </div>
+  </header>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="content"></div>
+
+  <footer>Made with care &nbsp;·&nbsp; Save or print to keep handy</footer>
+</div>
+
+<script>
+const scenarios = [
+  {
+    id: "why",
+    label: "💡 Why ADHD kids love screens",
+    cards: [
+      {
+        type: "decode",
+        title: "What screens give an ADHD brain that everyday life often doesn't",
+        rows: [
+          { says: "Constant novelty", means: "The ADHD brain is always hunting for something new. Screens deliver it in an endless, frictionless stream." },
+          { says: "Immediate reward", means: "Points, levels, responses, likes — the feedback loop is instant. Real life rarely works that fast, which makes it feel less satisfying by comparison." },
+          { says: "Clear rules and goals", means: "Games especially have obvious structure: do this, get that. The ambiguity of unstructured time is much harder for ADHD brains to navigate." },
+          { says: "Hyperfocus trigger", means: "Screens are one of the easiest ways an ADHD brain enters hyperfocus — the state of intense, effortless concentration that feels deeply satisfying." },
+          { says: "Regulation and calm", means: "For emotionally intense kids, screens are genuinely regulating. They quiet the nervous system. That's not laziness — it's the brain finding something that works." },
+          { says: "Social connection", means: "Gaming with friends online is real socializing. For kids who find in-person social dynamics tiring, this can be genuinely restorative." },
+        ],
+        tip: "The pull toward screens isn't a character flaw or a parenting failure. It's a neurological match. Understanding that changes how you approach limits — from 'stop wanting that' to 'let's make sure the rest of life is rich enough to compete.'"
+      }
+    ]
+  },
+  {
+    id: "whatmatters",
+    label: "✅ What actually matters",
+    cards: [
+      {
+        type: "traffic",
+        title: "What to watch for — and what to relax about",
+        rows: [
+          { color: "green", title: "Not a concern", text: "Loves screens during downtime but engages fully when busy with other things. Thriving at school, in sports, and socially. Screens are one good thing among many." },
+          { color: "green", title: "Not a concern", text: "Uses screens to decompress after a hard day. This is regulating behavior, not avoidance. It's the equivalent of an adult unwinding with TV." },
+          { color: "green", title: "Not a concern", text: "Plays games with friends online. This is genuine socializing and often how friendships are maintained at this age." },
+          { color: "green", title: "Not a concern", text: "Watches shows, plays creative or building games, gets absorbed in a game world. Engagement with rich content has real value." },
+          { color: "amber", title: "Worth watching", text: "Screens are the only thing that brings joy or relief. If he can't find pleasure or calm in anything else, that's worth noting — not with alarm, but with curiosity." },
+          { color: "amber", title: "Worth watching", text: "Significant mood crash when screens end — beyond normal frustration. Some resistance to stopping is normal. Rage, extended shutdown, or inability to recover is worth paying attention to." },
+          { color: "amber", title: "Worth watching", text: "Screens creeping into sleep time. This is the one to protect most firmly — poor sleep makes every ADHD symptom measurably worse." },
+          { color: "red", title: "Address this", text: "Screens consistently replacing sleep, physical activity, homework, or face-to-face relationships. Not occasionally — consistently." },
+          { color: "red", title: "Address this", text: "Secretive screen use — hiding devices, lying about time spent. This is usually a sign that the rules feel too rigid and he's found a workaround." },
+          { color: "red", title: "Address this", text: "Real relationships — friends, family — being actively avoided in favor of screens. Preference for screens is normal. Withdrawal from people is different." },
+        ],
+        tip: "Most kids who love screens and are otherwise thriving fall squarely in the green zone. The fact that he has great grades, plays competitive soccer, and is emotionally engaged with his family puts him there."
+      }
+    ]
+  },
+  {
+    id: "rules",
+    label: "📋 What good limits look like",
+    cards: [
+      {
+        type: "steps",
+        title: "A simple framework that actually works",
+        steps: [
+          { head: "Sequence, not punishment.", body: "Screens come after the things that matter — homework, outdoor time, dinner. Not as a reward they have to earn, just as a natural order. 'Screens are great — after the other stuff is done' is different from 'you have to earn screen time.'" },
+          { head: "Protect sleep above everything else.", body: "No screens within an hour of bedtime. This is the one rule worth being firm about. Blue light and stimulation directly disrupt sleep onset, and poor sleep makes every ADHD challenge significantly harder the next day." },
+          { head: "Screen-free anchors, not screen-free hours.", body: "The dinner table. Family time in the evenings. The car sometimes. A few moments that stay human — not whole swaths of the day. Anchored moments are easier to hold than arbitrary time limits." },
+          { head: "Notice what he's doing, not just how long.", body: "Gaming with friends online is social. Creative and building games have genuine value. Passive scrolling is the lowest value. An hour of Minecraft is different from an hour of YouTube shorts. Content matters." },
+          { head: "Don't make screens the villain or the prize.", body: "When screens become the thing taken away as punishment or handed out as reward, they become more charged and more desirable than they need to be. Kids with the most obsessive screen relationships often have the strictest rules — scarcity drives craving." },
+          { head: "Involve him in the rules.", body: "\"How do you think we should handle screen time on school nights?\" A 9-year-old can have this conversation. When he's part of making the rules, he's more likely to follow them — and it builds the internal regulation he'll need as a teen." }
+        ],
+        tip: "The goal isn't a perfect system. It's a household where screens are normal, finite, and one good thing among many — not a forbidden fruit or the only thing worth wanting."
+      }
+    ]
+  },
+  {
+    id: "transitions",
+    label: "⏱️ Stopping screens",
+    cards: [
+      {
+        type: "scripts",
+        title: "Getting off screens without a meltdown",
+        rows: [
+          { tag: "avoid", text: "\"Turn it off right now.\"" },
+          { tag: "try", text: "\"Ten more minutes, then we're done. Can you find a good stopping point?\"" },
+          { tag: "why", text: "Advance notice plus agency over when to stop makes the transition feel less like a seizure and more like a choice. The ADHD brain needs time to disengage." },
+          { tag: "avoid", text: "\"You've been on that for hours.\" (Said with frustration, mid-session.)" },
+          { tag: "try", text: "\"Okay, we said 6:30 — it's 6:30. Time to wrap up.\" Calm, matter-of-fact, expected." },
+          { tag: "why", text: "When stopping time is known in advance and stated neutrally, there's nothing to fight. The clock decided, not you." },
+          { tag: "avoid", text: "Pulling the plug or taking the device mid-game without warning." },
+          { tag: "try", text: "A visual timer nearby so he can see time winding down. What he can see, he can prepare for." },
+          { tag: "why", text: "Surprise endings are the most common trigger for screen meltdowns. Remove the surprise and you remove most of the meltdown." },
+          { tag: "also", text: "Have something ready to transition into — a snack, a question about his day, Scruffy needing attention. The transition away from screens is easier when something fills the gap immediately." },
+        ],
+        tip: "Some resistance when screens end is completely normal — for all kids, not just ADHD kids. The bar isn't 'he stops happily every time.' It's 'he stops, and recovers within a few minutes.' That's success."
+      }
+    ]
+  },
+  {
+    id: "alternatives",
+    label: "🎯 Filling the gap",
+    cards: [
+      {
+        type: "ideas",
+        title: "Things that compete with screens for ADHD brains",
+        ideas: [
+          { emoji: "⚽", title: "Physical activity", desc: "Soccer, shooting hoops, biking — movement regulates the ADHD brain better than almost anything else. Already in his life. Protect it." },
+          { emoji: "🎮", title: "Social gaming", desc: "Gaming with friends in person is screens plus socializing plus play. Higher value than solo screen time and worth encouraging." },
+          { emoji: "🧱", title: "Building & making", desc: "LEGO, crafting, woodworking, coding projects — anything where he makes something real. The hyperfocus that goes into screens can go here too." },
+          { emoji: "🐶", title: "Animals", desc: "Time with Scruffy is genuinely regulating. Movement, warmth, no demands. Hard to replicate with a screen." },
+          { emoji: "📖", title: "Audiobooks & podcasts", desc: "For a kid who loves story and stimulation, audio content is a screen-free alternative that his brain will actually enjoy." },
+          { emoji: "🎵", title: "Music", desc: "Playing an instrument, making playlists, listening with headphones. Regulating, creative, and something that grows with him." },
+          { emoji: "🍳", title: "Cooking", desc: "Hands-on, immediate results, clear steps. Hits several of the same notes that games do, minus the screen." },
+          { emoji: "🌳", title: "Unstructured outside time", desc: "Even 20 minutes outside with no agenda resets the nervous system. Harder to sell than screens, but the payoff is real." },
+        ]
+      }
+    ]
+  },
+  {
+    id: "longterm",
+    label: "🌱 The bigger picture",
+    cards: [
+      {
+        type: "steps",
+        title: "What you're actually building — over years, not days",
+        steps: [
+          { head: "The goal is internal regulation, not external control.", body: "Right now, you're managing his screen time. By 12 or 13, he needs to be starting to manage it himself. Every conversation about why the rules exist — rather than just what they are — builds that capacity." },
+          { head: "His relationship with screens will evolve.", body: "What matters at 9 is different from what matters at 13. A kid who has a healthy, non-obsessive relationship with screens at 9 is much better positioned for the teen years, when parental control drops and self-regulation has to take over." },
+          { head: "A rich life is the best screen limit.", body: "Kids who are deeply invested in sports, friendships, creative pursuits, and family naturally spend less time on screens — not because of rules, but because other things are competing. You're already building that life for him." },
+          { head: "Talk about screens openly and without drama.", body: "What does he love about gaming? What games is he into? What do his friends play? Genuine curiosity about his screen life keeps the relationship open and gives you information. Parents who never engage with the content are the last to know when something's worth addressing." },
+          { head: "You're already doing this well.", body: "A thriving student, a competitive athlete, a kid with real friendships and a loving family who loves screens in his downtime — that's not a screen problem. That's a well-rounded kid. Trust what you're seeing." }
+        ],
+        warm: "The families who struggle most with screens are the ones where screens became the battleground. You haven't let that happen. Keep it that way — stay curious, stay connected, keep the rules light and consistent — and you'll be fine. 💙"
+      }
+    ]
+  }
+];
+
+let active = 'why';
+
+function renderTabs() {
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = '';
+  scenarios.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (s.id === active ? ' active' : '');
+    btn.textContent = s.label;
+    btn.onclick = () => { active = s.id; renderTabs(); renderContent(); };
+    tabsEl.appendChild(btn);
+  });
+}
+
+function renderContent() {
+  const contentEl = document.getElementById('content');
+  contentEl.className = 'ready';
+  const scene = scenarios.find(s => s.id === active);
+  contentEl.innerHTML = '';
+
+  scene.cards.forEach(card => {
+    const el = document.createElement('div');
+    el.className = 'card';
+    let html = `<div class="card-title">${card.title}</div>`;
+
+    if (card.type === 'decode') {
+      html += '<div class="decode-box"><div class="decode-label">What screens give ADHD brains</div>';
+      card.rows.forEach(r => {
+        html += `<div class="decode-row"><span class="decode-says">${r.says}</span><span class="decode-means">${r.means}</span></div>`;
+      });
+      html += '</div>';
+    } else if (card.type === 'steps') {
+      html += '<div class="steps">';
+      card.steps.forEach((s, i) => {
+        html += `<div class="step"><div class="step-num">${i+1}</div><div class="step-content"><strong>${s.head}</strong> ${s.body}</div></div>`;
+      });
+      html += '</div>';
+    } else if (card.type === 'traffic') {
+      html += '<div class="traffic-grid">';
+      card.rows.forEach(r => {
+        const colorClass = r.color === 'green' ? 'traffic-green' : r.color === 'amber' ? 'traffic-amber' : 'traffic-red';
+        const dotClass = r.color === 'green' ? 'dot-green' : r.color === 'amber' ? 'dot-amber' : 'dot-red';
+        html += `<div class="traffic-row ${colorClass}"><div class="traffic-dot ${dotClass}"></div><div class="traffic-content"><span class="traffic-title">${r.title}</span>${r.text}</div></div>`;
+      });
+      html += '</div>';
+    } else if (card.type === 'ideas') {
+      html += '<div class="idea-grid">';
+      card.ideas.forEach(idea => {
+        html += `<div class="idea-card"><div class="idea-emoji">${idea.emoji}</div><div class="idea-title">${idea.title}</div><div class="idea-desc">${idea.desc}</div></div>`;
+      });
+      html += '</div>';
+    } else {
+      card.rows.forEach(r => {
+        const tagClass = r.tag === 'avoid' ? 'tag-avoid' : r.tag === 'try' ? 'tag-try' : r.tag === 'also' ? 'tag-also' : 'tag-why';
+        const tagLabel = r.tag === 'avoid' ? 'Avoid' : r.tag === 'try' ? 'Try this' : r.tag === 'also' ? 'Also try' : 'Why it works';
+        html += `<div class="script-row"><span class="script-tag ${tagClass}">${tagLabel}</span><span class="script-text">${r.text}</span></div>`;
+      });
+    }
+
+    if (card.tip) html += `<div class="tip-box"><div class="tip-label">Keep in mind</div><div class="tip-text">${card.tip}</div></div>`;
+    if (card.warm) html += `<div class="warm-box"><div class="warm-label">Remember</div><div class="warm-text">${card.warm}</div></div>`;
+    if (card.reframe) html += `<div class="reframe-box"><div class="reframe-label">Reframe</div><div class="reframe-text">${card.reframe}</div></div>`;
+
+    el.innerHTML = html;
+    contentEl.appendChild(el);
+  });
+}
+
+renderTabs();
+renderContent();
+</script>
+</body>
+</html>
