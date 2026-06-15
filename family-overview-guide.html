@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Family Guide — LaRosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --warm-50: #FBF8F2;
+    --warm-100: #F0E8D8;
+    --warm-200: #E0D0B0;
+    --warm-400: #C0A870;
+    --warm-600: #907040;
+    --warm-800: #604828;
+    --amber-50: #FDF3E3;
+    --amber-600: #9A5D0A;
+    --amber-800: #6B3E07;
+    --green-50: #EAF3DE;
+    --green-600: #3B6D11;
+    --teal-50: #E2F4F0;
+    --teal-600: #1A7F78;
+    --teal-800: #0D5C57;
+    --purple-50: #F2EEFB;
+    --purple-600: #6A4BB5;
+    --purple-800: #452E8A;
+    --blue-50: #E8F2FD;
+    --blue-600: #2060C0;
+    --blue-800: #143E88;
+    --red-50: #FCEBEB;
+    --red-600: #A32D2D;
+    --bg: #FAF7F2;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --border-mid: rgba(0,0,0,0.15);
+    --text: #1E1608;
+    --text-muted: #6B5030;
+    --text-light: #B09870;
+    --accent: #907040;
+    --accent-soft: #FBF8F2;
+    --accent-dark: #604828;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+  }
+
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .container { max-width: 720px; margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 1.5rem; padding: 2rem 1.5rem 1.75rem; background: var(--surface); border-radius: var(--radius-xl); border: 0.5px solid var(--border); }
+  .header-badge { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; background: var(--warm-50); color: var(--warm-600); padding: 5px 14px; border-radius: 20px; margin-bottom: 12px; }
+  header h1 { font-size: 26px; font-weight: 900; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+
+  .explainer { background: var(--amber-50); border-radius: var(--radius-md); padding: 12px 16px; margin: 14px auto 0; max-width: 560px; text-align: left; }
+  .explainer-label { font-size: 11px; font-weight: 800; color: var(--amber-600); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+  .explainer-text { font-size: 13px; color: var(--amber-800); line-height: 1.7; font-weight: 500; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tab-btn { font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 20px; border: 0.5px solid var(--border-mid); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+  .tab-btn:hover { border-color: var(--warm-400); color: var(--warm-600); }
+  .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 12px; }
+  .card-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 0.5px solid var(--border); }
+
+  .script-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .script-tag { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-top: 1px; flex-shrink: 0; letter-spacing: 0.02em; }
+  .tag-try { background: var(--green-50); color: var(--green-600); }
+  .tag-why { background: var(--warm-50); color: var(--warm-800); }
+  .tag-also { background: var(--teal-50); color: var(--teal-800); }
+  .tag-avoid { background: var(--red-50); color: var(--red-600); }
+  .script-text { font-size: 14px; color: var(--text); line-height: 1.55; }
+
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 12px; align-items: flex-start; }
+  .step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-content { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .step-content strong { font-weight: 800; color: var(--warm-800); }
+
+  .tool-grid { display: flex; flex-direction: column; gap: 10px; }
+  .tool-card { background: var(--warm-50); border-radius: var(--radius-md); padding: 13px 16px; border: 0.5px solid var(--warm-100); }
+  .tool-header { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .tool-emoji { font-size: 18px; }
+  .tool-title { font-size: 14px; font-weight: 800; color: var(--warm-800); }
+  .tool-body { font-size: 13px; color: var(--warm-600); line-height: 1.6; font-weight: 500; }
+  .tool-example { font-size: 12px; color: var(--warm-800); font-weight: 700; margin-top: 5px; font-style: italic; }
+
+  /* Principle cards */
+  .principle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 480px) { .principle-grid { grid-template-columns: 1fr; } }
+  .principle-card { background: var(--warm-50); border-radius: var(--radius-md); padding: 14px 16px; border: 0.5px solid var(--warm-100); }
+  .principle-num { font-size: 22px; font-weight: 900; color: var(--warm-200); margin-bottom: 4px; line-height: 1; }
+  .principle-title { font-size: 13px; font-weight: 800; color: var(--warm-800); margin-bottom: 4px; }
+  .principle-body { font-size: 12px; color: var(--warm-600); line-height: 1.55; font-weight: 500; }
+
+  /* Guide links */
+  .guide-links { display: flex; flex-direction: column; gap: 0; }
+  .guide-link-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 0.5px solid var(--border); gap: 12px; }
+  .guide-link-row:last-child { border-bottom: none; }
+  .guide-link-left { display: flex; align-items: center; gap: 12px; }
+  .guide-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .guide-meta { display: flex; flex-direction: column; gap: 2px; }
+  .guide-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .guide-desc { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+  .guide-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--warm-50); color: var(--warm-600); border: 0.5px solid var(--warm-200); }
+
+  /* Sequence */
+  .sequence-box { display: flex; flex-direction: column; gap: 3px; }
+  .seq-step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; background: var(--warm-50); border-radius: var(--radius-md); }
+  .seq-badge { font-size: 11px; font-weight: 800; color: #fff; background: var(--accent); border-radius: 20px; padding: 3px 10px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+  .seq-content { font-size: 13px; color: var(--warm-800); line-height: 1.55; font-weight: 500; }
+  .seq-content strong { font-weight: 800; }
+
+  .decode-box { background: var(--warm-50); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 4px; }
+  .decode-label { font-size: 11px; font-weight: 800; color: var(--warm-800); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .decode-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+  .decode-says { font-size: 12px; font-weight: 700; color: var(--warm-600); background: var(--surface); border: 0.5px solid var(--warm-200); border-radius: 20px; padding: 3px 10px; white-space: nowrap; flex-shrink: 0; }
+  .decode-means { font-size: 13px; color: var(--warm-800); line-height: 1.5; font-weight: 500; padding-top: 3px; }
+
+  .tip-box { background: var(--warm-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 16px; }
+  .tip-label { font-size: 11px; font-weight: 800; color: var(--warm-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tip-text { font-size: 13px; color: var(--warm-600); line-height: 1.6; font-weight: 500; }
+
+  .warm-box { background: var(--teal-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 12px; }
+  .warm-label { font-size: 11px; font-weight: 800; color: var(--teal-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .warm-text { font-size: 13px; color: var(--teal-600); line-height: 1.6; font-weight: 500; }
+
+  .reframe-box { background: var(--purple-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 12px; }
+  .reframe-label { font-size: 11px; font-weight: 800; color: var(--purple-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reframe-text { font-size: 13px; color: var(--purple-600); line-height: 1.6; font-weight: 500; }
+
+  #content { display: none; }
+  #content.ready { display: block; }
+  footer { text-align: center; margin-top: 2.5rem; font-size: 13px; color: var(--text-light); }
+
+  @media (max-width: 500px) {
+    header h1 { font-size: 20px; }
+    .script-row { flex-direction: column; gap: 4px; }
+    .script-tag { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-badge">LaRosa Family</div>
+    <h1>Our family guide 🌿</h1>
+    <div class="explainer">
+      <div class="explainer-label">About this guide</div>
+      <div class="explainer-text">This is a family overview — the core principles and tools that run through everything else we've built. These strategies work for emotionally intense, sensitive, big-feeling kids regardless of diagnosis. They work for adults too. They're just good ways to be with people you love when things get hard.</div>
+    </div>
+  </header>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="content"></div>
+
+  <footer>LaRosa family &nbsp;·&nbsp; made with love</footer>
+</div>
+
+<script>
+const scenarios = [
+  {
+    id: "principles",
+    label: "🌿 Our principles",
+    cards: [
+      {
+        type: "principles",
+        title: "The beliefs that run through everything",
+        items: [
+          { num: "01", title: "Connection before correction", body: "Always. A connected child can hear you. A disconnected one cannot. The correction still happens — just after the relationship is intact." },
+          { num: "02", title: "Regulate first", body: "A flooded brain cannot learn. Cannot hear reason. Cannot genuinely change. Wait for the window. It always comes." },
+          { num: "03", title: "Behavior is communication", body: "The meltdown, the shutdown, the arguing, the 'I hate you' — all of it is a child saying something they don't have better words for yet." },
+          { num: "04", title: "Feelings are allowed", body: "All of them. The goal is never fewer feelings — it's more tools for what to do with them." },
+          { num: "05", title: "The relationship is the whole thing", body: "Rules, consequences, routines — all of it only works inside a relationship the child trusts. Protect the relationship first." },
+          { num: "06", title: "Repair matters more than perfection", body: "You will get it wrong sometimes. The repair — done warmly and genuinely — teaches more than getting it right would have." },
+          { num: "07", title: "Intensity is not a flaw", body: "Big feelings, deep sensitivity, fierce passion — these are the same traits that will make them extraordinary adults. Help them carry it well." },
+          { num: "08", title: "You are enough", body: "Not perfect. Enough. Consistently warm, consistently present, consistently trying — that's what they'll remember." },
+        ]
+      }
+    ]
+  },
+  {
+    id: "inmoment",
+    label: "🌊 In the moment",
+    cards: [
+      {
+        type: "sequence",
+        title: "What to do when it's actively hard",
+        intro: "This works for both kids — any age, any situation. The sequence is always the same.",
+        steps: [
+          { label: "First", text: "<strong>Regulate yourself.</strong> Your nervous system sets the tone for the room. Take a breath before you speak. Lower your voice. Get calm first — then go to them." },
+          { label: "Then", text: "<strong>Get close and stay.</strong> Sit near them. Don't loom. Soft presence without demand. If they say go away — stay nearby anyway. They need to know you won't leave." },
+          { label: "Then", text: "<strong>Name what you see.</strong> 'I can see you're really overwhelmed right now.' Not what they did wrong — just what you see. Witnessing without judgment lowers the temperature fast." },
+          { label: "Then", text: "<strong>Offer one small choice.</strong> 'Do you need space or do you want me close?' Choice gives them a tiny piece of control back. That's often all they need." },
+          { label: "Then", text: "<strong>Wait for the window.</strong> It always comes. Five minutes, twenty minutes — the storm passes. Don't rush it. Don't re-open the topic yet. Just stay warm." },
+          { label: "After", text: "<strong>Reconnect first, then address behavior.</strong> 'You okay?' before anything else. Once reconnected, then — calmly, briefly — come back to what happened." },
+        ],
+        tip: "The goal in the moment is not to teach a lesson. It's to lower the temperature enough that their brain comes back online. Everything else comes after."
+      }
+    ]
+  },
+  {
+    id: "tools",
+    label: "🛠️ Tools for any kid",
+    cards: [
+      {
+        type: "tools",
+        title: "Ways to reach a child who's struggling — regardless of age or diagnosis",
+        tools: [
+          {
+            emoji: "🔢",
+            title: "Rate it 1–10",
+            body: "Skip the feeling words. 'On a scale of 1–10, how bad does that feel?' Numbers are easier than emotion names, especially for kids who go blank when asked 'how do you feel?' Once you have a number, you have something to work with.",
+            example: "\"That sounds like maybe a 7? What would you say?\""
+          },
+          {
+            emoji: "🎯",
+            title: "Give two options",
+            body: "'Are you more frustrated or more sad?' Two choices is manageable. Open-ended is often overwhelming. You do the work of generating the options — they just pick one.",
+            example: "\"Is it more angry or more hurt?\""
+          },
+          {
+            emoji: "🧠",
+            title: "What's the worst part?",
+            body: "This question almost always gets an answer. It's concrete, specific, and doesn't require emotional vocabulary. The answer tells you everything you need to know about the feeling underneath.",
+            example: "\"You don't have to explain the whole thing. Just tell me the worst part.\""
+          },
+          {
+            emoji: "🚗",
+            title: "Sideways conversations",
+            body: "Face-to-face, full attention, 'let's talk' — this is the hardest setup for a sensitive kid. Side-by-side doing something else — car, walk, shooting hoops — is where feelings actually come out.",
+            example: "\"Anything been bugging you lately?\" — said on a walk, not at a table."
+          },
+          {
+            emoji: "🫁",
+            title: "Body first",
+            body: "Before emotions come sensations. 'Where do you feel it in your body?' Stomach, chest, throat, jaw. A physical location is often more accessible than a feeling word — and it's still a feeling.",
+            example: "\"Where do you feel it right now — in your chest? Your stomach?\""
+          },
+          {
+            emoji: "✅",
+            title: "Needs before feelings",
+            body: "'I need space.' 'I need you to just listen.' 'I need help.' Naming a need is more concrete than naming an emotion. Start there and feelings often follow naturally.",
+            example: "\"Do you need space or do you need company right now?\""
+          },
+          {
+            emoji: "🎭",
+            title: "Name it — let them correct you",
+            body: "Say what you see: 'You look more defeated than angry.' They might say 'no, I'm more angry than defeated' — and that IS the conversation. You generated the word; they just reacted. Much lower bar.",
+            example: "\"You look more embarrassed than angry to me. Am I reading that right?\""
+          },
+          {
+            emoji: "🌙",
+            title: "Bedtime",
+            body: "Kids say things at bedtime they don't say any other time. The dark, the quiet, the tiredness — something opens. Two minutes sitting on the edge of the bed, no agenda, is worth more than any structured conversation.",
+            example: "\"Best part and worst part of today?\""
+          },
+        ]
+      }
+    ]
+  },
+  {
+    id: "correction",
+    label: "✅ Correction that works",
+    cards: [
+      {
+        type: "sequence",
+        title: "The sequence — every time",
+        intro: "Behavior still has consequences. Correction still happens. This approach just makes it actually land.",
+        steps: [
+          { label: "Step 1", text: "<strong>Regulate.</strong> Wait until they're calm. Not 5 minutes after — genuinely calm. A flooded brain cannot process correction. Trying to correct too early is the most common reason it doesn't work." },
+          { label: "Step 2", text: "<strong>Reconnect.</strong> 'You okay?' A snack, sitting together, a gentle re-entry. Make sure they feel the relationship is intact before anything else is said." },
+          { label: "Step 3", text: "<strong>Correct — once, calmly, briefly.</strong> Name what happened. Why it wasn't okay. What you need instead. Two or three sentences. Then stop. No lecture." },
+          { label: "Step 4", text: "<strong>Problem solve together.</strong> 'What could you do differently next time?' Let them come up with something. Ownership of the solution matters more than a perfect answer." },
+          { label: "Close", text: "<strong>End warm.</strong> 'I love you. We're good.' The last thing they should feel after a correction is loved — not shamed." },
+        ]
+      },
+      {
+        type: "tools",
+        title: "What good correction sounds and looks like",
+        tools: [
+          {
+            emoji: "🎯",
+            title: "Short and specific",
+            body: "Long lectures get tuned out — especially by sensitive, ADHD-wired brains. Two to three sentences. Name what happened, why it wasn't okay, what you need instead. Then stop talking.",
+            example: "\"When you said that, it was unkind and it hurt. That's not how we talk to each other. Next time, walk away until you're calm.\""
+          },
+          {
+            emoji: "🧍",
+            title: "Behavior, not character",
+            body: "'What you did was unkind' is correctable. 'You are an unkind person' is a verdict. For kids who already worry about whether they're enough, the distinction is enormous.",
+            example: "\"That choice wasn't kind\" — not \"you're being mean.\""
+          },
+          {
+            emoji: "👁️",
+            title: "Name the impact",
+            body: "Tell them specifically how the behavior affected someone. Sensitive kids often genuinely miss the impact in the moment. Naming it afterward builds the empathy their brain couldn't access in real time.",
+            example: "\"When you said that, your sister felt really hurt. I could see it on her face.\""
+          },
+          {
+            emoji: "🔄",
+            title: "Give them something to do instead",
+            body: "Don't just name what was wrong — name what to do instead. 'Next time you feel that way, I need you to...' They can't improve a behavior they haven't been given a replacement for.",
+            example: "\"Next time you're that frustrated, say 'I need a minute' and come find me.\""
+          },
+        ]
+      }
+    ]
+  },
+  {
+    id: "nextday",
+    label: "🌅 The next day",
+    cards: [
+      {
+        type: "sequence",
+        title: "Revisiting something after everyone's had time to settle",
+        intro: "Sometimes the right conversation doesn't happen in the moment. That's okay. Here's how to come back to it.",
+        steps: [
+          { label: "Timing", text: "Pick a calm, unhurried moment. Not first thing in the morning. Not right after school. After dinner, on a walk, before bed. The right moment makes a real difference in how it lands." },
+          { label: "Open", text: "'Hey — can I talk to you about something from yesterday? It'll be quick.' Ask what they remember first. Let them tell their version before you say anything." },
+          { label: "One thing", text: "Name one specific thing that still needs addressing. Not everything — one thing. Keep it brief. You're not relitigating. You're following up." },
+          { label: "Repair", text: "'Is there anything you feel like you still need to do to make that right?' Forward-facing, not backward-dwelling. An apology owed, something to fix, a relationship to repair." },
+          { label: "Agreement", text: "'So next time you're going to [specific thing]. Right?' One concrete agreement. They say it, you confirm it. One thing they own will stick more than ten things they were told." },
+          { label: "Close", text: "'We're good. That's done. I love you.' Clear, warm, final. Don't let it hang. Kids carry guilt long after parents have moved on — a clean close matters." },
+        ],
+        tip: "The next-day conversation works best when it feels like problem-solving together, not a second punishment. You're on the same team figuring out how to handle hard moments better."
+      }
+    ]
+  },
+  {
+    id: "guides",
+    label: "📚 All our guides",
+    cards: [
+      {
+        type: "guidelist",
+        title: "Everything we've built — and what it covers",
+        sections: [
+          {
+            label: "For both kids",
+            links: [
+              { color: "#2E7D3A", name: "Ways to help with big feelings", desc: "Spirals, shutdowns, de-escalation", file: "adhd_feelings_guide.html" },
+              { color: "#1090A8", name: "Help with routines", desc: "Getting dressed, homework, transitions", file: "adhd_routine_guide.html" },
+              { color: "#3C6888", name: "Helping a child who argues back", desc: "Pushback, negotiating, shutdowns", file: "adhd_arguing_guide.html" },
+              { color: "#6248D8", name: "Screens & kids who love them", desc: "What actually matters, limits that work", file: "screens-guide.html" },
+              { color: "#2E7D3A", name: "Hygiene without the battle", desc: "Showers, hair, teeth — sensory-friendly", file: "hygiene-guide.html" },
+              { color: "#2E7D3A", name: "Helping your child say how he feels", desc: "Tools, correction, the next day", file: "expressing-feelings-guide-v2.html" },
+            ]
+          },
+          {
+            label: "Sibling connection",
+            links: [
+              { color: "#6A4BB5", name: "Joey & Kit — big brother, little sister", desc: "Building their bond, when it falls apart", file: "joey-kit-bond.html" },
+              { color: "#B83232", name: "When the kids fight", desc: "Name-calling, after school, making it right", file: "sibling-fighting-guide.html" },
+              { color: "#1A7F78", name: "When a sibling's birthday is hard", desc: "Jealousy, feeling left out, what to say", file: "birthday-hard-guide.html" },
+            ]
+          },
+          {
+            label: "Parent-child connection",
+            links: [
+              { color: "#A07010", name: "Building a strong dad & daughter bond", desc: "For Kit — going slow, activities that work", file: "dad-daughter-bond.html" },
+              { color: "#4B46B0", name: "Building a strong mom & son bond", desc: "For Joey — the push-pull, meltdowns, connection", file: "mom-son-bond.html" },
+            ]
+          },
+          {
+            label: "Hard moments",
+            links: [
+              { color: "#B83232", name: "When your child excluded someone", desc: "Restorative approach, small school, repair", file: "exclusion-guide.html" },
+            ]
+          },
+        ]
+      }
+    ]
+  },
+  {
+    id: "foryou",
+    label: "💛 For you both",
+    cards: [
+      {
+        type: "steps",
+        title: "A note for the parents reading all of this",
+        steps: [
+          { head: "You built something remarkable here.", body: "A library of guides for your specific children, your specific dynamics, your specific hard moments. Most families navigate all of this without any of this. You chose to understand." },
+          { head: "These strategies work for you too.", body: "Everything here — regulation before reaction, naming feelings, the repair conversation, needs before feelings — applies to adults just as much as kids. The family you're building is one where all of this is just how you do things." },
+          { head: "The fact that ADHD runs in the family is actually an asset.", body: "You understand this from the inside. You know what it feels like to have a big nervous system, to be flooded, to need more time. That empathy is something most parents have to work hard to develop. You already have it." },
+          { head: "You will get it wrong sometimes.", body: "You'll correct at the wrong moment. You'll lose your patience. You'll say the thing you wished you hadn't. That's not failure — that's parenting. The repair is always available. Use it." },
+          { head: "Consistency over perfection.", body: "They don't need perfect parents. They need parents who show up warmly and consistently, who repair when things go sideways, and who make them feel — most of the time — deeply known and deeply loved. That's what you're doing." },
+          { head: "They are extraordinary kids.", body: "Intense, creative, emotional, passionate, loving. The same traits that make them hard to parent sometimes are the ones that will make them remarkable adults. You're not trying to change who they are. You're helping them learn to carry it." },
+        ],
+        warm: "Everything you've built here — the guides, the thinking, the care — that's the love made visible. They'll feel it long before they understand it. And someday they'll understand it too. 💛"
+      }
+    ]
+  }
+];
+
+let active = 'principles';
+
+function renderTabs() {
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = '';
+  scenarios.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (s.id === active ? ' active' : '');
+    btn.textContent = s.label;
+    btn.onclick = () => { active = s.id; renderTabs(); renderContent(); };
+    tabsEl.appendChild(btn);
+  });
+}
+
+function renderContent() {
+  const contentEl = document.getElementById('content');
+  contentEl.className = 'ready';
+  const scene = scenarios.find(s => s.id === active);
+  contentEl.innerHTML = '';
+
+  scene.cards.forEach(card => {
+    const el = document.createElement('div');
+    el.className = 'card';
+    let html = `<div class="card-title">${card.title}</div>`;
+
+    if (card.type === 'principles') {
+      html += '<div class="principle-grid">';
+      card.items.forEach(p => {
+        html += `<div class="principle-card"><div class="principle-num">${p.num}</div><div class="principle-title">${p.title}</div><div class="principle-body">${p.body}</div></div>`;
+      });
+      html += '</div>';
+    } else if (card.type === 'sequence') {
+      if (card.intro) html += `<p style="font-size:13px;color:var(--text-muted);font-weight:500;line-height:1.6;margin-bottom:12px;">${card.intro}</p>`;
+      html += '<div class="sequence-box">';
+      card.steps.forEach(s => {
+        html += `<div class="seq-step"><span class="seq-badge">${s.label}</span><div class="seq-content">${s.text}</div></div>`;
+      });
+      html += '</div>';
+    } else if (card.type === 'steps') {
+      html += '<div class="steps">';
+      card.steps.forEach((s, i) => {
+        html += `<div class="step"><div class="step-num">${i+1}</div><div class="step-content"><strong>${s.head}</strong> ${s.body}</div></div>`;
+      });
+      html += '</div>';
+    } else if (card.type === 'tools') {
+      html += '<div class="tool-grid">';
+      card.tools.forEach(t => {
+        html += `<div class="tool-card"><div class="tool-header"><span class="tool-emoji">${t.emoji}</span><span class="tool-title">${t.title}</span></div><div class="tool-body">${t.body}</div><div class="tool-example">${t.example}</div></div>`;
+      });
+      html += '</div>';
+    } else if (card.type === 'guidelist') {
+      card.sections.forEach(section => {
+        html += `<div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-light);padding:12px 0 4px;">${section.label}</div>`;
+        html += '<div class="guide-links">';
+        section.links.forEach(link => {
+          html += `<div class="guide-link-row">
+            <div class="guide-link-left">
+              <div class="guide-dot" style="background:${link.color};"></div>
+              <div class="guide-meta">
+                <span class="guide-name">${link.name}</span>
+                <span class="guide-desc">${link.desc}</span>
+              </div>
+            </div>
+            <a href="${link.file}" style="font-size:13px;font-weight:700;color:${link.color};text-decoration:none;">Open →</a>
+          </div>`;
+        });
+        html += '</div>';
+      });
+    } else {
+      card.rows.forEach(r => {
+        const tagClass = r.tag === 'avoid' ? 'tag-avoid' : r.tag === 'try' ? 'tag-try' : r.tag === 'also' ? 'tag-also' : 'tag-why';
+        const tagLabel = r.tag === 'avoid' ? 'Avoid' : r.tag === 'try' ? 'Try this' : r.tag === 'also' ? 'Also' : 'Why it works';
+        html += `<div class="script-row"><span class="script-tag ${tagClass}">${tagLabel}</span><span class="script-text">${r.text}</span></div>`;
+      });
+    }
+
+    if (card.tip) html += `<div class="tip-box"><div class="tip-label">Keep in mind</div><div class="tip-text">${card.tip}</div></div>`;
+    if (card.warm) html += `<div class="warm-box"><div class="warm-label">Remember</div><div class="warm-text">${card.warm}</div></div>`;
+    if (card.reframe) html += `<div class="reframe-box"><div class="reframe-label">Reframe</div><div class="reframe-text">${card.reframe}</div></div>`;
+
+    el.innerHTML = html;
+    contentEl.appendChild(el);
+  });
+}
+
+renderTabs();
+renderContent();
+</script>
+</body>
+</html>
