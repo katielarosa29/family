@@ -2,217 +2,188 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>To-Do List</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@400;500;600&display=swap');
+
+  :root {
+    --parchment: #f3efe7;
+    --ink: #2b2b28;
+    --terracotta: #c1633d;
+    --line: #e8e3d8;
+    --card: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: #f5f5f0;
-    min-height: 100vh;
-    padding: 32px 16px;
-    color: #1a1a1a;
+    margin: 0;
+    padding: 40px 20px;
+    background: var(--parchment);
+    font-family: 'Geist', sans-serif;
+    color: var(--ink);
+    display: flex;
+    justify-content: center;
   }
 
-  .container {
-    max-width: 640px;
-    margin: 0 auto;
-  }
+  .wrap { width: 100%; max-width: 640px; }
 
   h1 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    color: #1a1a1a;
-  }
-
-  .todo-count {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 20px;
+    font-family: 'Geist', sans-serif;
+    font-weight: 600;
+    font-size: 2.1rem;
+    margin: 0 0 28px 0;
+    letter-spacing: 0.5px;
   }
 
   .section {
+    background: var(--card);
+    border: 1px solid var(--line);
     border-radius: 14px;
-    border: 1.5px solid #e0e0d8;
-    padding: 14px 14px 6px;
-    margin-bottom: 18px;
-    background: #fff;
+    margin-bottom: 22px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
-  .section.soccer {
-    border-color: #27500A40;
-    background: #f4faf0;
-  }
+  .section.main { border-color: var(--terracotta); }
 
   .section-header {
+    padding: 14px 18px;
+    font-family: 'Geist', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--line);
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
   }
 
-  .section-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a1a1a;
-    flex: 1;
-  }
+  .section.main .section-header { color: var(--terracotta); }
+  .section.joey .section-header { color: #3b6fa0; }
+  .section.kit .section-header { color: #2f8f7e; }
+  .section.logge .section-header { color: #b5562f; }
 
-  .section.soccer .section-title { color: #27500A; }
-
-  .section-badge {
-    font-size: 11px;
-    color: #888;
-    background: #f0f0eb;
-    border-radius: 99px;
-    padding: 2px 9px;
+  .count {
+    font-family: 'Geist', sans-serif;
+    font-size: 0.78rem;
+    color: #9a9488;
     font-weight: 500;
+    background: var(--parchment);
+    padding: 3px 10px;
+    border-radius: 20px;
   }
 
-  .section.soccer .section-badge {
-    background: #dff0d0;
-    color: #27500A;
-  }
+  ul { list-style: none; margin: 0; padding: 6px 0; }
 
-  .section-divider {
-    font-size: 11px;
-    font-weight: 700;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin: 12px 0 8px 0;
-    padding-top: 8px;
-    border-top: 1px solid #ebebeb;
-  }
-
-  .todo-item {
+  li {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #ebebeb;
-    background: #fff;
-    margin-bottom: 7px;
+    padding: 10px 18px;
+    border-bottom: 1px solid #f1ede3;
+    font-size: 0.97rem;
+  }
+
+  li:last-child { border-bottom: none; }
+
+  li.done span { text-decoration: line-through; color: #b3ad9f; }
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #2f8f7e;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
-    user-select: none;
+    flex-shrink: 0;
   }
 
-  .todo-item:hover { background: #fafaf7; border-color: #d8d8d0; }
-
-  .section.soccer .todo-item { background: #fafff7; }
-  .section.soccer .todo-item:hover { background: #f0fae8; }
-
-  .todo-item.done .todo-label {
-    text-decoration: line-through;
-    color: #aaa;
-  }
-
-  .todo-check {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid #ccc;
+  .add-row {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: background 0.15s, border-color 0.15s;
+    padding: 10px 14px;
+    gap: 8px;
+    border-top: 1px solid var(--line);
+    background: #fafafa;
   }
 
-  .todo-item.done .todo-check {
-    background: #4a7c3f;
-    border-color: #4a7c3f;
-  }
-
-  .todo-check i { font-size: 11px; color: #fff; display: none; }
-  .todo-item.done .todo-check i { display: block; }
-
-  .todo-icon {
-    font-size: 16px;
-    color: #999;
-    flex-shrink: 0;
-    width: 20px;
-    text-align: center;
-  }
-
-  .todo-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #1a1a1a;
+  .add-row input[type="text"] {
     flex: 1;
-    line-height: 1.4;
+    border: 1px solid var(--line);
+    background: var(--card);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-family: 'Geist', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
   }
 
-  .todo-sub {
-    font-size: 12px;
-    color: #aaa;
-    display: block;
-    margin-top: 2px;
-    font-weight: 400;
+  .add-row button {
+    border: none;
+    background: #2f8f7e;
+    color: white;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Geist', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .add-row button:hover { opacity: 0.9; }
+
+  .empty {
+    padding: 16px 18px;
+    color: #b3ad9f;
+    font-size: 0.9rem;
+    font-style: italic;
   }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="wrap">
   <h1>To-Do List</h1>
-  <p class="todo-count" id="count">0 of 27 done</p>
-
-  <!-- General -->
-  <div class="section general">
-    <div class="section-header">
-      <i class="ti ti-list-check" style="font-size:17px; color:#888;"></i>
-      <span class="section-title">General</span>
-      <span class="section-badge">17 items</span>
-    </div>
-
-
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-trees todo-icon"></i><span class="todo-label">Stuff for Robin</span></div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-trees todo-icon"></i><span class="todo-label">Stuff for Savonn</span></div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-trees todo-icon"></i><span class="todo-label">Pay Angus by Phone</span></div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-trees todo-icon"></i><span class="todo-label">Print book for MF sale Lulu</span></div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-trees todo-icon"></i><span class="todo-label">Get Billing Info from Providence</span></div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-trees todo-icon"></i><span class="todo-label">Logge Book Spiral Bind</span></div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-book todo-icon"></i><span class="todo-label">Dad's VI book</span></div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-briefcase todo-icon"></i><span class="todo-label">Apply for jobs</span></div>
-  </div>
-
-
-    </div>
-
-    <div class="section-divider">Kids</div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-shopping-bag todo-icon"></i>
-      <div style="flex:1"><span class="todo-label">Shop at Tursi Soccer</span><span class="todo-sub">On or after May 28</span></div>
-    </div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-shirt todo-icon"></i>
-      <div style="flex:1"><span class="todo-label">Check if existing gear still fits</span><span class="todo-sub">Shorts, socks, sweatpants & backpack</span></div>
-    </div>
-
-    <div class="section-divider">Logge</div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-mail todo-icon"></i>
-      <div style="flex:1"><span class="todo-label">Watch for All Academy Meeting date</span><span class="todo-sub">In email this week</span></div>
-    </div>
-    <div class="todo-item" onclick="toggle(this)"><div class="todo-check"><i class="ti ti-check"></i></div><i class="ti ti-mail todo-icon"></i>
-      <div style="flex:1"><span class="todo-label">Watch for AGC intro email</span><span class="todo-sub">Team-specific summer plans</span></div>
-    </div>
-  </div>
+  <div id="sections"></div>
 </div>
 
- 
-
 <script>
-function toggle(el) {
-  el.classList.toggle('done');
-  const total = document.querySelectorAll('.todo-item').length;
-  const done = document.querySelectorAll('.todo-item.done').length;
-  document.getElementById('count').textContent = done + ' of ' + total + ' done';
-}
+  const data = {
+    main: { label: "Main", items: [{ text: "Stuff for Pacific Advisors", done: false }] },
+    joey: { label: "Joey", items: [{ text: "Get water bottle", done: false }] },
+    kit: { label: "Kit", items: [{ text: "Finish room", done: false }] },
+    logge: { label: "Logge", items: [{ text: "Sew curtains", done: false }, { text: "Bind house manual", done: false }] }
+  };
+
+  function render() {
+    const container = document.getElementById('sections');
+    container.innerHTML = '';
+    Object.entries(data).forEach(([key, section]) => {
+      const done = section.items.filter(i => i.done).length;
+      const div = document.createElement('div');
+      div.className = `section ${key}`;
+      div.innerHTML = `
+        <div class="section-header">
+          <span>${section.label}</span>
+          <span class="count">${done}/${section.items.length}</span>
+        </div>
+        <ul id="list-${key}">
+          ${section.items.length === 0 ? '<li class="empty" style="border:none;">Nothing yet</li>' : ''}
+        </ul>
+      `;
+      container.appendChild(div);
+      const ul = div.querySelector(`#list-${key}`);
+      section.items.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.className = item.done ? 'done' : '';
+        li.innerHTML = `<input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItem('${key}', ${idx})"><span>${item.text}</span>`;
+        ul.appendChild(li);
+      });
+    });
+  }
+
+  function toggleItem(key, idx) {
+    data[key].items[idx].done = !data[key].items[idx].done;
+    render();
+  }
+
+  render();
 </script>
 </body>
 </html>
