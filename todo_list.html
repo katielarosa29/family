@@ -4,186 +4,160 @@
 <meta charset="UTF-8">
 <title>To-Do List</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@400;500;600&display=swap');
-
-  :root {
-    --parchment: #f3efe7;
-    --ink: #2b2b28;
-    --terracotta: #c1633d;
-    --line: #e8e3d8;
-    --card: #ffffff;
-  }
+  @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
 
   * { box-sizing: border-box; }
 
   body {
     margin: 0;
     padding: 40px 20px;
-    background: var(--parchment);
+    background: #f3efe7;
     font-family: 'Geist', sans-serif;
-    color: var(--ink);
+    color: #1f1f1d;
     display: flex;
     justify-content: center;
   }
 
-  .wrap { width: 100%; max-width: 640px; }
+  .wrap { width: 100%; max-width: 700px; }
 
   h1 {
-    font-family: 'Geist', sans-serif;
+    font-size: 1.6rem;
     font-weight: 600;
-    font-size: 2.1rem;
-    margin: 0 0 28px 0;
-    letter-spacing: 0.5px;
+    margin: 0 0 4px 0;
+  }
+
+  .subtitle {
+    color: #9a958a;
+    font-size: 1rem;
+    margin-bottom: 28px;
   }
 
   .section {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    margin-bottom: 22px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    background: #ffffff;
+    border: 1px solid #e8e3d8;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
   }
 
-  .section.main { border-color: var(--terracotta); }
-
   .section-header {
-    padding: 14px 18px;
-    font-family: 'Geist', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-bottom: 1px solid var(--line);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 16px;
   }
 
-  .section.main .section-header { color: var(--terracotta); }
-  .section.joey .section-header { color: #3b6fa0; }
-  .section.kit .section-header { color: #2f8f7e; }
-  .section.logge .section-header { color: #b5562f; }
+  .section-header h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+  }
 
-  .count {
-    font-family: 'Geist', sans-serif;
-    font-size: 0.78rem;
-    color: #9a9488;
+  .item-count {
+    background: #f0ece2;
+    color: #9a958a;
+    font-size: 0.8rem;
     font-weight: 500;
-    background: var(--parchment);
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
   }
 
-  ul { list-style: none; margin: 0; padding: 6px 0; }
-
-  li {
+  /* ====== ITEM ROW ======
+     To add an item, copy a whole <label class="item">...</label> block
+     and change the text. To remove one, delete the block.
+  */
+  .item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 18px;
-    border-bottom: 1px solid #f1ede3;
-    font-size: 0.97rem;
-  }
-
-  li:last-child { border-bottom: none; }
-
-  li.done span { text-decoration: line-through; color: #b3ad9f; }
-
-  input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: #2f8f7e;
+    gap: 14px;
+    border: 1px solid #ece7db;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
     cursor: pointer;
+  }
+  .item:last-child { margin-bottom: 0; }
+
+  .item input[type="checkbox"] {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #cfc8b8;
+    border-radius: 50%;
     flex-shrink: 0;
-  }
-
-  .add-row {
-    display: flex;
-    padding: 10px 14px;
-    gap: 8px;
-    border-top: 1px solid var(--line);
-    background: #fafafa;
-  }
-
-  .add-row input[type="text"] {
-    flex: 1;
-    border: 1px solid var(--line);
-    background: var(--card);
-    border-radius: 6px;
-    padding: 7px 10px;
-    font-family: 'Geist', sans-serif;
-    font-size: 0.9rem;
-    color: var(--ink);
-  }
-
-  .add-row button {
-    border: none;
-    background: #2f8f7e;
-    color: white;
-    padding: 7px 14px;
-    border-radius: 6px;
     cursor: pointer;
-    font-family: 'Geist', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
+    position: relative;
   }
 
-  .add-row button:hover { opacity: 0.9; }
+  .item input[type="checkbox"]:checked {
+    border-color: #2f8f7e;
+    background: #2f8f7e;
+  }
 
-  .empty {
-    padding: 16px 18px;
+  .item input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .item span {
+    font-size: 0.92rem;
+  }
+
+  .item input[type="checkbox"]:checked ~ span {
+    text-decoration: line-through;
     color: #b3ad9f;
-    font-size: 0.9rem;
-    font-style: italic;
   }
 </style>
 </head>
 <body>
 <div class="wrap">
+
   <h1>To-Do List</h1>
-  <div id="sections"></div>
+
+  <!-- ===== MAIN ===== -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Main</h2>
+    </div>
+    <label class="item"><input type="checkbox"><span>Stuff for Pacific Advisors</span></label>
+  </div>
+
+  <!-- ===== JOEY ===== -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Joey</h2>
+    </div>
+    <label class="item"><input type="checkbox"><span>Get water bottle</span></label>
+  </div>
+
+  <!-- ===== KIT ===== -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Kit</h2>
+    </div>
+    <label class="item"><input type="checkbox"><span>Finish room</span></label>
+  </div>
+
+  <!-- ===== LOGGE ===== -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Logge</h2>
+    </div>
+    <label class="item"><input type="checkbox"><span>Sew curtains</span></label>
+    <label class="item"><input type="checkbox"><span>Bind house manual</span></label>
+  </div>
+
 </div>
 
 <script>
-  const data = {
-    main: { label: "Main", items: [{ text: "Stuff for Pacific Advisors", done: false }, { text: "Fix taxes", done: false },{ text: "Pay Angus", done: false },{ text: "Portfolio, Writing Grant, Side Hustles", done: false },{ text: "Upload new book, print new MF book", done: false },{ text: "Dad's VI book", done: false },{ text: "Health Insurance and Art Proj Reimbursement", done: false },
-    joey: { label: "Joey", items: [{ text: "Get water bottle", done: false }] },
-    kit: { label: "Kit", items: [{ text: "Finish room", done: false }] },
-    logge: { label: "Logge", items: [{ text: "Sew curtains", done: false }, { text: "Bind house manual", done: false },{ text: "Fix drywall ceiling", done: false }, { text: "Art for bathroom and queen room", done: false }] }
-  };
-
-  function render() {
-    const container = document.getElementById('sections');
-    container.innerHTML = '';
-    Object.entries(data).forEach(([key, section]) => {
-      const done = section.items.filter(i => i.done).length;
-      const div = document.createElement('div');
-      div.className = `section ${key}`;
-      div.innerHTML = `
-        <div class="section-header">
-          <span>${section.label}</span>
-          <span class="count">${done}/${section.items.length}</span>
-        </div>
-        <ul id="list-${key}">
-          ${section.items.length === 0 ? '<li class="empty" style="border:none;">Nothing yet</li>' : ''}
-        </ul>
-      `;
-      container.appendChild(div);
-      const ul = div.querySelector(`#list-${key}`);
-      section.items.forEach((item, idx) => {
-        const li = document.createElement('li');
-        li.className = item.done ? 'done' : '';
-        li.innerHTML = `<input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItem('${key}', ${idx})"><span>${item.text}</span>`;
-        ul.appendChild(li);
-      });
-    });
-  }
-
-  function toggleItem(key, idx) {
-    data[key].items[idx].done = !data[key].items[idx].done;
-    render();
-  }
-
-  render();
+  // Strikes through items when checked.
 </script>
 </body>
 </html>
