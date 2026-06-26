@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beefy Skillet Lasagna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4ef;
+      --surface: #ffffff;
+      --surface-2: #f9f8f5;
+      --border: #e5e2db;
+      --border-light: #eeebe4;
+      --text-primary: #1c1b18;
+      --text-secondary: #6b6860;
+      --text-tertiary: #a09d98;
+      --accent: #b8501e;
+      --accent-bg: #fdeee5;
+      --accent-border: #f0c4a4;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Geist', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+    }
+
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .header-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Meta row */
+    .meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 16px 0 0;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.05s forwards;
+    }
+    .meta-chip {
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* Servings control */
+    .servings-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin: 24px 0;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.08s forwards;
+    }
+    .servings-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .servings-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .servings-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-primary);
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .servings-btn:hover { background: var(--text-primary); color: white; border-color: var(--text-primary); }
+    .servings-count {
+      font-size: 15px;
+      font-weight: 600;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    /* Section blocks */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+    .section:nth-of-type(1) { animation-delay: 0.12s; }
+    .section:nth-of-type(2) { animation-delay: 0.18s; }
+    .section-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Ingredients */
+    .ingredient-list { list-style: none; }
+    .ingredient-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 13.5px;
+    }
+    .ingredient-row:last-child { border-bottom: none; }
+    .ing-amount {
+      font-weight: 600;
+      color: var(--accent);
+      min-width: 64px;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .ing-name { color: var(--text-primary); }
+    .swap-note {
+      margin-top: 14px;
+      font-size: 12px;
+      line-height: 1.6;
+      padding: 10px 13px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-bg);
+      color: var(--accent);
+      border-left: 3px solid var(--accent-border);
+    }
+
+    /* Steps */
+    .step-list { list-style: none; counter-reset: step; }
+    .step-row {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .step-row:last-child { border-bottom: none; }
+    .step-num {
+      counter-increment: step;
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--text-primary);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-num::before { content: counter(step); }
+    .step-content { flex: 1; padding-top: 1px; }
+    .step-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 3px;
+    }
+    .step-text {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+    .timer-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+    }
+
+    .note-box {
+      margin-top: 18px;
+      font-size: 12.5px;
+      line-height: 1.65;
+      padding: 12px 15px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .footer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.3s forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 540px) {
+      body { padding: 24px 14px 60px; }
+      .header h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="eyebrow">One pan · 30 minutes</div>
+    <h1>Beefy Skillet Lasagna</h1>
+    <p class="header-desc">All the cozy flavor of lasagna, no layering required — everything cooks in one pan.</p>
+    <div class="meta-row">
+      <span class="meta-chip">⏱ ~30 min</span>
+      <span class="meta-chip">🍳 One pan</span>
+      <span class="meta-chip">🧒 Kid approved</span>
+    </div>
+  </div>
+
+  <div class="servings-bar">
+    <span class="servings-label">Servings</span>
+    <div class="servings-controls">
+      <button class="servings-btn" onclick="changeServings(-1)">−</button>
+      <span class="servings-count" id="servingsCount">4</span>
+      <button class="servings-btn" onclick="changeServings(1)">+</button>
+    </div>
+  </div>
+
+  <!-- Ingredients -->
+  <div class="section">
+    <div class="section-title">🛒 Ingredients</div>
+    <ul class="ingredient-list" id="ingredientList">
+      <li class="ingredient-row"><span class="ing-amount" data-base="1">1 lb</span><span class="ing-name">ground beef</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="0.5">½</span><span class="ing-name">yellow onion, diced</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="2">2</span><span class="ing-name">garlic cloves, minced</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="24">24 oz</span><span class="ing-name">jarred marinara sauce</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="1.5">1½ cups</span><span class="ing-name">water or chicken broth</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="8">8</span><span class="ing-name">lasagna noodles, broken into pieces</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="1">1 tsp</span><span class="ing-name">Italian seasoning</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="0.5">½ tsp</span><span class="ing-name">salt</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="0.25">¼ tsp</span><span class="ing-name">black pepper</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="0.75">¾ cup</span><span class="ing-name">plain whole-milk Greek yogurt <em style="color:var(--text-tertiary); font-style:italic;">(swapped for ricotta)</em></span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="1.5">1½ cups</span><span class="ing-name">shredded mozzarella</span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="0.25">¼ cup</span><span class="ing-name">parmesan, grated <em style="color:var(--text-tertiary); font-style:italic;">(plus extra for the yogurt)</em></span></li>
+      <li class="ingredient-row"><span class="ing-amount" data-base="2">2 tbsp</span><span class="ing-name">fresh basil or parsley, chopped <em style="color:var(--text-tertiary); font-style:italic;">(optional)</em></span></li>
+    </ul>
+    <div class="swap-note">🥄 Yogurt swap: stir a spoonful of parmesan into the Greek yogurt before dolloping it on — rounds out the tang so it reads more like a cheese filling. Add off the heat so it doesn't split.</div>
+  </div>
+
+  <!-- Steps -->
+  <div class="section">
+    <div class="section-title">👩‍🍳 Instructions</div>
+    <ol class="step-list">
+      <li class="step-row">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Brown the beef</div>
+          <div class="step-text">In a large deep skillet or pot, brown the ground beef with onion and garlic over medium-high heat, breaking it up as it cooks, about 6–8 minutes until no longer pink. Drain excess grease if needed.</div>
+          <div class="timer-tag">⏱ 8 min</div>
+        </div>
+      </li>
+      <li class="step-row">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Add sauce and liquid</div>
+          <div class="step-text">Stir in marinara, water or broth, Italian seasoning, salt, and pepper. Bring to a simmer.</div>
+        </div>
+      </li>
+      <li class="step-row">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Cook the noodles in the sauce</div>
+          <div class="step-text">Add the broken lasagna noodles directly into the simmering sauce, stirring to submerge them. Cover and simmer, stirring occasionally so they don't stick, until noodles are tender, about 12–15 minutes.</div>
+          <div class="timer-tag">⏱ 15 min</div>
+        </div>
+      </li>
+      <li class="step-row">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Add the cheese</div>
+          <div class="step-text">Reduce heat to low. Dollop spoonfuls of the parmesan-stirred yogurt over the top, then sprinkle with mozzarella and parmesan. Cover and let sit off heat (or on very low heat) for 3–5 minutes until cheese is melted.</div>
+          <div class="timer-tag">⏱ 5 min</div>
+        </div>
+      </li>
+      <li class="step-row">
+        <div class="step-num"></div>
+        <div class="step-content">
+          <div class="step-title">Serve</div>
+          <div class="step-text">Garnish with fresh basil or parsley if using. Serve hot straight from the pan.</div>
+        </div>
+      </li>
+    </ol>
+    <div class="note-box">💡 Kid tip: this is endlessly customizable — leave out the yogurt dollops if your kids prefer it more "saucy," or stir the cheese in completely instead of leaving pockets. Leftovers reheat great with a splash of water to loosen the sauce.</div>
+  </div>
+
+  <div class="footer">Beefy Skillet Lasagna · Made with Claude</div>
+
+</div>
+
+<script>
+  let servings = 4;
+  const baseServings = 4;
+
+  function formatAmount(value) {
+    // Convert decimal to a nice fraction display where possible
+    const whole = Math.floor(value);
+    const frac = value - whole;
+    let fracStr = '';
+    if (Math.abs(frac - 0.25) < 0.01) fracStr = '¼';
+    else if (Math.abs(frac - 0.5) < 0.01) fracStr = '½';
+    else if (Math.abs(frac - 0.75) < 0.01) fracStr = '¾';
+    else if (frac > 0.01) fracStr = (Math.round(frac * 100) / 100).toString();
+
+    if (whole === 0 && fracStr) return fracStr;
+    if (whole > 0 && fracStr) return whole + ' ' + fracStr;
+    return whole.toString();
+  }
+
+  function changeServings(delta) {
+    const newVal = servings + delta;
+    if (newVal < 1 || newVal > 12) return;
+    servings = newVal;
+    document.getElementById('servingsCount').textContent = servings;
+    updateIngredients();
+  }
+
+  function updateIngredients() {
+    const ratio = servings / baseServings;
+    document.querySelectorAll('.ing-amount').forEach(el => {
+      const base = parseFloat(el.dataset.base);
+      const scaled = base * ratio;
+      const originalText = el.textContent;
+      // Extract unit (non-numeric trailing text) from original
+      const unitMatch = originalText.match(/[a-zA-Z½¼¾]+.*$/);
+      let unit = '';
+      // Determine unit by removing the leading number/fraction part
+      const numPattern = /^[\d½¼¾.\s]+/;
+      const stripped = originalText.replace(numPattern, '').trim();
+      unit = stripped ? ' ' + stripped : '';
+      el.textContent = formatAmount(scaled) + unit;
+    });
+  }
+</script>
+</body>
+</html>
