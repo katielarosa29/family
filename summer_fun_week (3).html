@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summer Fun Week Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4ef;
+      --surface: #ffffff;
+      --surface-2: #f9f8f5;
+      --border: #e5e2db;
+      --border-light: #eeebe4;
+      --text-primary: #1c1b18;
+      --text-secondary: #6b6860;
+      --text-tertiary: #a09d98;
+      --radius: 14px;
+      --radius-sm: 8px;
+
+      --mon-bg: #eef5ee; --mon-t: #1a5230; --mon-b: #b0d4b8;
+      --tue-bg: #eef0ff; --tue-t: #2a3080; --tue-b: #b8bff0;
+      --wed-bg: #fff0f0; --wed-t: #801a1a; --wed-b: #f0b8b8;
+      --thu-bg: #f5eeff; --thu-t: #4a1a80; --thu-b: #d0b8f0;
+      --fri-bg: #fff8ee; --fri-t: #8b4d10; --fri-b: #f0d4b0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Geist', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; }
+
+    /* Header */
+    .header { margin-bottom: 24px; animation: fadeUp 0.5s ease both; }
+    .eyebrow {
+      font-size: 11px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-tertiary); margin-bottom: 8px;
+    }
+    .header h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 32px; font-weight: 400; color: var(--text-primary);
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .header h1 em { font-style: italic; color: var(--text-secondary); }
+    .header-sub { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Budget bar */
+    .budget-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0 28px;
+      animation: fadeUp 0.5s ease 0.05s both;
+    }
+    .budget-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-tertiary); margin-bottom: 2px; }
+    .budget-amount { font-size: 24px; font-weight: 600; color: var(--text-primary); }
+    .budget-sub { font-size: 11.5px; color: var(--text-tertiary); text-align: right; }
+
+    /* Cards */
+    .cards { display: flex; flex-direction: column; gap: 14px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp 0.5s ease both;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); transform: translateY(-1px); }
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.17s; }
+    .card:nth-child(3) { animation-delay: 0.24s; }
+    .card:nth-child(4) { animation-delay: 0.31s; }
+    .card:nth-child(5) { animation-delay: 0.38s; }
+
+    .card-header { padding: 14px 18px 12px; border-bottom: 1px solid var(--border-light); }
+    .card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+    .day-pill {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 3px 10px; border-radius: 20px;
+      border: 1px solid; white-space: nowrap; margin-top: 3px; flex-shrink: 0;
+    }
+    .card-title-block { flex: 1; }
+    .card-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 19px; font-weight: 400; color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .tag { font-size: 10px; font-weight: 500; padding: 2px 9px; border-radius: 20px; border: 1px solid transparent; }
+    .tag-time { background: var(--mon-bg); color: var(--mon-t); border-color: var(--mon-b); }
+    .tag-cost { background: var(--fri-bg); color: var(--fri-t); border-color: var(--fri-b); }
+    .tag-work { background: var(--tue-bg); color: var(--tue-t); border-color: var(--tue-b); }
+
+    /* Schedule list */
+    .card-body { padding: 14px 18px 16px; }
+    .schedule { list-style: none; }
+    .schedule li {
+      font-size: 13px; color: var(--text-primary); line-height: 1.85;
+      padding-left: 14px; position: relative;
+    }
+    .schedule li::before { content: "·"; position: absolute; left: 2px; color: var(--text-tertiary); }
+    .time-label { color: var(--text-secondary); font-weight: 500; margin-right: 4px; }
+
+    .note {
+      font-size: 12px; line-height: 1.65; padding: 10px 13px;
+      border-radius: var(--radius-sm); border-left: 3px solid; margin-top: 12px;
+    }
+
+    /* Per-day colors */
+    .day-mon .day-pill { background: var(--mon-bg); color: var(--mon-t); border-color: var(--mon-b); }
+    .day-mon .note { background: var(--mon-bg); color: var(--mon-t); border-color: var(--mon-b); }
+    .day-tue .day-pill { background: var(--tue-bg); color: var(--tue-t); border-color: var(--tue-b); }
+    .day-tue .note { background: var(--tue-bg); color: var(--tue-t); border-color: var(--tue-b); }
+    .day-wed .day-pill { background: var(--wed-bg); color: var(--wed-t); border-color: var(--wed-b); }
+    .day-wed .note { background: var(--wed-bg); color: var(--wed-t); border-color: var(--wed-b); }
+    .day-thu .day-pill { background: var(--thu-bg); color: var(--thu-t); border-color: var(--thu-b); }
+    .day-thu .note { background: var(--thu-bg); color: var(--thu-t); border-color: var(--thu-b); }
+    .day-fri .day-pill { background: var(--fri-bg); color: var(--fri-t); border-color: var(--fri-b); }
+    .day-fri .note { background: var(--fri-bg); color: var(--fri-t); border-color: var(--fri-b); }
+
+    .footer { margin-top: 32px; text-align: center; font-size: 12px; color: var(--text-tertiary); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 540px) {
+      body { padding: 24px 14px 60px; }
+      .header h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="eyebrow">Next week · Mon–Fri</div>
+    <h1>Summer Fun <em>Week</em></h1>
+    <p class="header-sub">Art, berry picking, Lifetime camp, Enchanted Forest, kayaking, a movie, and Oaks Park — balanced around ~10 hours of work.</p>
+  </div>
+
+  <div class="budget-bar">
+    <div>
+      <div class="budget-label">Estimated total</div>
+      <div class="budget-amount">~$215–240</div>
+    </div>
+    <div class="budget-sub">Plus normal groceries / gas</div>
+  </div>
+
+  <div class="cards">
+
+    <!-- Monday -->
+    <div class="card day-mon">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill">Mon</span>
+          <div class="card-title-block">
+            <div class="card-title">Pinball Museum + West Union Berries</div>
+            <div class="tag-row">
+              <span class="tag tag-cost">~$25–30</span>
+              <span class="tag tag-work">Work AM/PM around it</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="schedule">
+          <li><span class="time-label">9am–12pm:</span>You work</li>
+          <li><span class="time-label">12–2pm:</span>Hillsboro Pinball Museum — unlimited play on dozens of vintage and modern machines</li>
+          <li><span class="time-label">2:15–4pm:</span>Berry picking at West Union Gardens</li>
+          <li><span class="time-label">Evening:</span>Joey's FC Portland practice at 6pm; you finish remaining work hours</li>
+        </ul>
+        <div class="note">🕹️ A fun rainy-day-or-sunny-day option — flat entry fee covers unlimited play. Great mix for both kids, and there's usually a snack bar on site too.</div>
+        <div class="note" style="margin-top:8px;">🍓 West Union Gardens is a quick stop after pinball — bring a cooler for the ride home.</div>
+      </div>
+    </div>
+
+    <!-- Tuesday -->
+    <div class="card day-tue">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill">Tue</span>
+          <div class="card-title-block">
+            <div class="card-title">Lifetime Camp Day — You Work</div>
+            <div class="tag-row">
+              <span class="tag tag-work">Full work day</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="schedule">
+          <li>Kids at Lifetime camp all day — your big work block</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Wednesday -->
+    <div class="card day-wed">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill">Wed</span>
+          <div class="card-title-block">
+            <div class="card-title">Enchanted Forest — Family Day</div>
+            <div class="tag-row">
+              <span class="tag tag-cost">~$100+ (tickets)</span>
+              <span class="tag tag-time">Full day</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="schedule">
+          <li><span class="time-label">9:30am–6pm:</span>Full day at Enchanted Forest amusement park</li>
+        </ul>
+        <div class="note">🏰 Plan to arrive close to opening to beat the heat and the lines on the bigger rides. Pack water bottles and snacks — outside food is usually fine in the picnic areas.</div>
+      </div>
+    </div>
+
+    <!-- Thursday -->
+    <div class="card day-thu">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill">Thu</span>
+          <div class="card-title-block">
+            <div class="card-title">Kayaking near Willamette Park</div>
+            <div class="tag-row">
+              <span class="tag tag-cost">~$25–35/kayak</span>
+              <span class="tag tag-time">2–3 hrs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="schedule">
+          <li><span class="time-label">Morning:</span>You work</li>
+          <li><span class="time-label">1–3:30pm:</span>Kayak rental near George Rogers Park, Lake Oswego — calm water, easy beach launch</li>
+          <li><span class="time-label">Evening:</span>Finish work hours, low-key dinner</li>
+        </ul>
+        <div class="note">🛶 George Rogers Park rents single kayaks for ~$25/hr, easy beach launch. Reviewers say it's calmer on weekdays vs. weekends (less boat traffic = less wake). Online reservation makes check-in fast.</div>
+      </div>
+    </div>
+
+    <!-- Friday -->
+    <div class="card day-fri">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill">Fri</span>
+          <div class="card-title-block">
+            <div class="card-title">Movie Morning + Oaks Park Afternoon</div>
+            <div class="tag-row">
+              <span class="tag tag-cost">~$65–70</span>
+              <span class="tag tag-time">All day</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="schedule">
+          <li><span class="time-label">10:45am–12:45pm:</span>Minions & Monsters at Cinemark Clackamas Town Center and XD — seats J7, J8, J9, Auditorium 17</li>
+          <li><span class="time-label">1–4:30pm:</span>Oaks Amusement Park — rides, mini golf, maybe roller skating</li>
+          <li><span class="time-label">Evening:</span>Low-key dinner, end the week on a high note</li>
+        </ul>
+        <div class="note">🎬 Cinemark Clackamas Town Center, 12000 SE 82nd Ave. Movie runs until 12:45pm, so plan to head to Oaks Park right after — it's about a 15-20 min drive. 🎡 No gate fee at Oaks Park; unlimited ride bracelets run ~$25–28/person on weekdays.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">Summer Fun Week · Made with Claude</div>
+
+</div>
+</body>
+</html>
