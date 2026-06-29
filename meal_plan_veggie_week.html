@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>This Week's Meal Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4ef;
+      --surface: #ffffff;
+      --surface-2: #f9f8f5;
+      --border: #e5e2db;
+      --border-light: #eeebe4;
+      --text-primary: #1c1b18;
+      --text-secondary: #6b6860;
+      --text-tertiary: #a09d98;
+      --radius: 14px;
+      --radius-sm: 8px;
+
+      --veg-bg: #eef5ee; --veg-t: #1a5230; --veg-b: #b0d4b8;
+      --combo-bg: #fff8ee; --combo-t: #8b4d10; --combo-b: #f0d4b0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Geist', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 40px 20px 80px;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; }
+
+    .header { margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+    .eyebrow {
+      font-size: 11px; font-weight: 500; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--text-tertiary); margin-bottom: 8px;
+    }
+    .header h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 32px; font-weight: 400; color: var(--text-primary);
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .header h1 em { font-style: italic; color: var(--text-secondary); }
+    .header-sub { font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; }
+
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 28px;
+      animation: fadeUp 0.5s ease 0.05s both;
+    }
+    .legend-chip {
+      display: flex; align-items: center; gap: 6px; font-size: 11.5px;
+      color: var(--text-secondary); background: var(--surface);
+      border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px;
+    }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    .section-label {
+      font-size: 13px; font-weight: 600; color: var(--text-primary);
+      margin: 28px 0 14px; padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--border);
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .cards { display: flex; flex-direction: column; gap: 14px; }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      opacity: 0; animation: fadeUp 0.5s ease both;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); transform: translateY(-1px); }
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.16s; }
+    .card:nth-child(3) { animation-delay: 0.22s; }
+    .card:nth-child(4) { animation-delay: 0.28s; }
+    .card:nth-child(5) { animation-delay: 0.34s; }
+
+    .card-header { padding: 14px 18px 12px; border-bottom: 1px solid var(--border-light); }
+    .card-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+    .day-pill {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 3px 10px; border-radius: 20px;
+      border: 1px solid; white-space: nowrap; margin-top: 3px; flex-shrink: 0;
+    }
+    .day-pill.veg { background: var(--veg-bg); color: var(--veg-t); border-color: var(--veg-b); }
+    .day-pill.combo { background: var(--combo-bg); color: var(--combo-t); border-color: var(--combo-b); }
+    .card-title-block { flex: 1; }
+    .card-day-label { font-size: 11px; color: var(--text-tertiary); margin-bottom: 3px; }
+    .card-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 19px; font-weight: 400; color: var(--text-primary); line-height: 1.3;
+    }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .tag { font-size: 10px; font-weight: 500; padding: 2px 9px; border-radius: 20px; border: 1px solid transparent; }
+    .tag-veg { background: var(--veg-bg); color: var(--veg-t); border-color: var(--veg-b); }
+    .tag-combo { background: var(--combo-bg); color: var(--combo-t); border-color: var(--combo-b); }
+
+    .card-body { padding: 14px 18px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .col-label {
+      font-size: 10px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--text-tertiary); margin-bottom: 8px;
+    }
+    .col-items { list-style: none; }
+    .col-items li {
+      font-size: 13px; color: var(--text-primary); line-height: 1.8;
+      padding-left: 14px; position: relative;
+    }
+    .col-items li::before { content: "·"; position: absolute; left: 3px; color: var(--text-tertiary); }
+
+    .card-note {
+      grid-column: 1 / -1; font-size: 12px; line-height: 1.65;
+      padding: 10px 13px; border-radius: var(--radius-sm); border-left: 3px solid;
+    }
+    .note-veg { background: var(--veg-bg); color: var(--veg-t); border-color: var(--veg-b); }
+    .note-combo { background: var(--combo-bg); color: var(--combo-t); border-color: var(--combo-b); }
+
+    /* Lunches + Snacks */
+    .lunch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .lunch-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 12px 14px;
+      opacity: 0; animation: fadeUp 0.5s ease both;
+    }
+    .lunch-day { font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+    .lunch-items { list-style: none; }
+    .lunch-items li {
+      font-size: 12.5px; color: var(--text-primary); line-height: 1.75;
+      padding-left: 12px; position: relative;
+    }
+    .lunch-items li::before { content: "·"; position: absolute; left: 2px; color: var(--text-tertiary); }
+
+    .snack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .snack-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 10px 8px; text-align: center;
+      opacity: 0; animation: fadeUp 0.5s ease both;
+    }
+    .snack-emoji { font-size: 18px; margin-bottom: 3px; }
+    .snack-name { font-size: 11.5px; font-weight: 500; color: var(--text-primary); }
+
+    .footer { margin-top: 36px; text-align: center; font-size: 12px; color: var(--text-tertiary); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 540px) {
+      body { padding: 24px 14px 60px; }
+      .header h1 { font-size: 26px; }
+      .card-body { grid-template-columns: 1fr; }
+      .card-note { grid-column: 1; }
+      .lunch-grid { grid-template-columns: 1fr; }
+      .snack-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="eyebrow">This week · Mon–Fri</div>
+    <h1>Meal Plan <em>— Veggie Edition</em></h1>
+    <p class="header-sub">Dinners, camp lunches, and snacks — built around Kit's new vegetarian plate, with easy swaps so nobody feels singled out.</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-chip"><div class="legend-dot" style="background:#1a5230"></div>All-veggie night — whole family</div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#8b4d10"></div>Combo night — Kit gets a swap</div>
+  </div>
+
+  <div class="section-label">🍽️ Dinners</div>
+  <div class="cards">
+
+    <!-- Monday -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill veg">Mon</span>
+          <div class="card-title-block">
+            <div class="card-day-label">All-veggie night</div>
+            <div class="card-title">Black Bean & Sweet Potato Quesadillas</div>
+            <div class="tag-row">
+              <span class="tag tag-veg">Whole family veggie</span>
+              <span class="tag tag-veg">~$1.50/serving</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="col-label">On the plate</div>
+          <ul class="col-items">
+            <li>Mashed roasted sweet potato + black beans</li>
+            <li>Shredded cheese, folded in tortillas</li>
+            <li>Pan-fried until crispy</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Toppings</div>
+          <ul class="col-items">
+            <li>Greek yogurt (sour cream swap)</li>
+            <li>Mild salsa</li>
+            <li>Avocado slices</li>
+          </ul>
+        </div>
+        <div class="card-note note-veg">🌱 Budget-friendly and naturally kid-loved — quesadillas are already a familiar format. Beans + cheese cover protein easily.</div>
+      </div>
+    </div>
+
+    <!-- Tuesday -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill combo">Tue</span>
+          <div class="card-title-block">
+            <div class="card-day-label">Combo night</div>
+            <div class="card-title">Sheet Pan Chicken Fajitas</div>
+            <div class="tag-row">
+              <span class="tag tag-combo">Combo — veggie swap for Kit</span>
+              <span class="tag tag-combo">⏱ 30 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="col-label">On the pan</div>
+          <ul class="col-items">
+            <li>Chicken strips, bell peppers, onion</li>
+            <li>Tossed with oil + taco seasoning + lime</li>
+            <li>Roast at 425°F, 18–20 min</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Kit's veggie swap</div>
+          <ul class="col-items">
+            <li>Black beans roasted alongside in a corner of the pan, same seasoning</li>
+            <li>Same peppers + onions + toppings bar for everyone</li>
+          </ul>
+        </div>
+        <div class="card-note note-combo">🫑 One pan does it all — just section off a corner for seasoned black beans instead of chicken. Same toppings bar means nobody's meal looks different from across the table.</div>
+      </div>
+    </div>
+
+    <!-- Wednesday -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill veg">Wed</span>
+          <div class="card-title-block">
+            <div class="card-day-label">All-veggie night</div>
+            <div class="card-title">Chickpea Tomato Skillet over Rice</div>
+            <div class="tag-row">
+              <span class="tag tag-veg">Whole family veggie</span>
+              <span class="tag tag-veg">~$1.25/serving</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="col-label">In the skillet</div>
+          <ul class="col-items">
+            <li>Canned chickpeas, canned tomatoes</li>
+            <li>Garlic, cumin, paprika</li>
+            <li>Simmered until thick</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Serve with</div>
+          <ul class="col-items">
+            <li>Rice or warm pita</li>
+            <li>Shredded cheese on top</li>
+            <li>Plain yogurt dollop</li>
+          </ul>
+        </div>
+        <div class="card-note note-veg">🌱 One of the cheapest dinners you can make — canned chickpeas + tomatoes cost very little and reheat great for lunch leftovers too.</div>
+      </div>
+    </div>
+
+    <!-- Thursday -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill combo">Thu</span>
+          <div class="card-title-block">
+            <div class="card-day-label">Combo night</div>
+            <div class="card-title">Mac & Cheese — Add Chicken Sausage / Plain for Kit</div>
+            <div class="tag-row">
+              <span class="tag tag-combo">Combo — easy swap</span>
+              <span class="tag tag-combo">~$1.50/serving</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="col-label">Base for everyone</div>
+          <ul class="col-items">
+            <li>Stovetop mac & cheese (5-ingredient version)</li>
+            <li>Frozen peas stirred in for everyone</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Family add-on</div>
+          <ul class="col-items">
+            <li>Sliced chicken sausage, pan-browned</li>
+            <li>Stirred into adult/Joey bowls only — Kit's bowl stays meat-free</li>
+          </ul>
+        </div>
+        <div class="card-note note-combo">🧀 Same pot, same base — just hold back Kit's portion before adding the sausage. Zero extra dishes.</div>
+      </div>
+    </div>
+
+    <!-- Friday -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-top">
+          <span class="day-pill veg">Fri</span>
+          <div class="card-title-block">
+            <div class="card-day-label">All-veggie night</div>
+            <div class="card-title">Sheet Pan Veggie Frittata + Pancakes</div>
+            <div class="tag-row">
+              <span class="tag tag-veg">Whole family veggie</span>
+              <span class="tag tag-veg">~$1.75/serving</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="col-label">On the sheet pan</div>
+          <ul class="col-items">
+            <li>Roast veggies first (peppers, broccoli, tomatoes)</li>
+            <li>Pour beaten eggs + cheese over, bake until set</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Side</div>
+          <ul class="col-items">
+            <li>Whole-grain pancakes (breakfast-for-dinner combo!)</li>
+            <li>Maple syrup, butter</li>
+          </ul>
+        </div>
+        <div class="card-note note-veg">🍳 Breakfast-for-dinner is always a hit and naturally vegetarian — easy Friday night win with minimal cleanup.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-label">🥪 Camp Lunches — Mom Camp Week</div>
+  <div class="lunch-grid">
+    <div class="lunch-card">
+      <div class="lunch-day">Monday</div>
+      <ul class="lunch-items">
+        <li>Cheese quesadilla wedges</li>
+        <li>Cucumber + hummus</li>
+        <li>Strawberries</li>
+        <li>Yogurt tube</li>
+        <li>Pretzels</li>
+      </ul>
+    </div>
+    <div class="lunch-card">
+      <div class="lunch-day">Tuesday</div>
+      <ul class="lunch-items">
+        <li>PB&J or sunbutter sandwich</li>
+        <li>Carrot sticks</li>
+        <li>Apple slices</li>
+        <li>String cheese</li>
+        <li>Goldfish crackers</li>
+      </ul>
+    </div>
+    <div class="lunch-card">
+      <div class="lunch-day">Wednesday</div>
+      <ul class="lunch-items">
+        <li>Leftover chickpea skillet (thermos)</li>
+        <li>Pita chips</li>
+        <li>Orange slices</li>
+        <li>Yogurt</li>
+        <li>Animal crackers</li>
+      </ul>
+    </div>
+    <div class="lunch-card">
+      <div class="lunch-day">Thursday</div>
+      <ul class="lunch-items">
+        <li>Egg salad or veggie wrap</li>
+        <li>Snap peas + ranch</li>
+        <li>Grapes</li>
+        <li>Cheese cubes</li>
+        <li>Fruit snacks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">🍿 Snack Stock-Up</div>
+  <div class="snack-grid">
+    <div class="snack-item"><div class="snack-emoji">🧀</div><div class="snack-name">String cheese</div></div>
+    <div class="snack-item"><div class="snack-emoji">🥒</div><div class="snack-name">Cucumber + hummus</div></div>
+    <div class="snack-item"><div class="snack-emoji">🥨</div><div class="snack-name">Pretzels</div></div>
+    <div class="snack-item"><div class="snack-emoji">🍎</div><div class="snack-name">Apple slices</div></div>
+    <div class="snack-item"><div class="snack-emoji">🐠</div><div class="snack-name">Goldfish</div></div>
+    <div class="snack-item"><div class="snack-emoji">🍇</div><div class="snack-name">Grapes</div></div>
+    <div class="snack-item"><div class="snack-emoji">🥜</div><div class="snack-name">Trail mix</div></div>
+    <div class="snack-item"><div class="snack-emoji">🍓</div><div class="snack-name">Strawberries</div></div>
+    <div class="snack-item"><div class="snack-emoji">🍪</div><div class="snack-name">Granola bars</div></div>
+  </div>
+
+  <div class="footer">Meal Plan — Veggie Edition · Made with Claude</div>
+
+</div>
+</body>
+</html>
