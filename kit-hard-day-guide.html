@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Justin — Kit's Hard Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold-50: #FDF8EC;
+    --gold-100: #F5E4B0;
+    --gold-200: #EDD080;
+    --gold-400: #D4A017;
+    --gold-600: #A07010;
+    --gold-800: #6B4A08;
+    --teal-50: #E2F4F0;
+    --teal-600: #1A7F78;
+    --teal-800: #0D5C57;
+    --green-50: #EAF3DE;
+    --green-600: #3B6D11;
+    --red-50: #FCEBEB;
+    --red-600: #A32D2D;
+    --purple-50: #F2EEFB;
+    --purple-600: #6A4BB5;
+    --purple-800: #452E8A;
+    --blue-50: #E8F2FD;
+    --blue-600: #2060C0;
+    --bg: #FDFAF4;
+    --surface: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --border-mid: rgba(0,0,0,0.15);
+    --text: #1F1A0E;
+    --text-muted: #6B5E3E;
+    --text-light: #B0A070;
+    --accent: #A07010;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+  }
+
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2rem 1rem 4rem; }
+  .container { max-width: 680px; margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 1.5rem; padding: 2rem 1.5rem 1.75rem; background: var(--surface); border-radius: var(--radius-xl); border: 0.5px solid var(--border); }
+  .header-badge { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; background: var(--gold-50); color: var(--gold-600); padding: 5px 14px; border-radius: 20px; margin-bottom: 12px; }
+  header h1 { font-size: 24px; font-weight: 900; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+  header p { font-size: 13px; color: var(--text-muted); font-weight: 500; line-height: 1.6; max-width: 480px; margin: 0 auto; }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .tab-btn { font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 20px; border: 0.5px solid var(--border-mid); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+  .tab-btn:hover { border-color: var(--gold-400); color: var(--gold-600); }
+  .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 12px; }
+  .card-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 0.5px solid var(--border); }
+
+  /* What happened box */
+  .event-box { background: var(--gold-50); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 12px; }
+  .event-label { font-size: 11px; font-weight: 800; color: var(--gold-800); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+  .event-item { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+  .event-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-600); flex-shrink: 0; margin-top: 6px; }
+  .event-text { font-size: 13px; color: var(--gold-800); line-height: 1.55; font-weight: 500; }
+
+  .script-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .script-tag { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; white-space: nowrap; margin-top: 1px; flex-shrink: 0; letter-spacing: 0.02em; }
+  .tag-try { background: var(--green-50); color: var(--green-600); }
+  .tag-why { background: var(--gold-50); color: var(--gold-800); }
+  .tag-avoid { background: var(--red-50); color: var(--red-600); }
+  .tag-also { background: var(--teal-50); color: var(--teal-800); }
+  .script-text { font-size: 14px; color: var(--text); line-height: 1.55; }
+
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+  .step { display: flex; gap: 12px; align-items: flex-start; }
+  .step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-content { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .step-content strong { font-weight: 800; color: var(--gold-800); }
+
+  /* Say this cards */
+  .say-card { background: var(--teal-50); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 8px; }
+  .say-label { font-size: 11px; font-weight: 800; color: var(--teal-800); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+  .say-text { font-size: 14px; color: var(--teal-800); line-height: 1.6; font-weight: 600; font-style: italic; }
+  .say-why { font-size: 12px; color: var(--teal-600); margin-top: 5px; font-weight: 500; line-height: 1.5; }
+
+  .urgent-box { background: #FFF8E6; border: 1.5px solid #F5C518; border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 12px; }
+  .urgent-label { font-size: 11px; font-weight: 800; color: #8A6000; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px; }
+  .urgent-text { font-size: 13px; color: #5A3E00; line-height: 1.7; font-weight: 600; }
+
+  .tip-box { background: var(--gold-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 16px; }
+  .tip-label { font-size: 11px; font-weight: 800; color: var(--gold-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tip-text { font-size: 13px; color: var(--gold-600); line-height: 1.6; font-weight: 500; }
+
+  .warm-box { background: var(--teal-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 12px; }
+  .warm-label { font-size: 11px; font-weight: 800; color: var(--teal-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .warm-text { font-size: 13px; color: var(--teal-600); line-height: 1.6; font-weight: 500; }
+
+  .reframe-box { background: var(--purple-50); border-radius: var(--radius-md); padding: 12px 14px; margin-top: 12px; }
+  .reframe-label { font-size: 11px; font-weight: 800; color: var(--purple-800); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .reframe-text { font-size: 13px; color: var(--purple-600); line-height: 1.6; font-weight: 500; }
+
+  #content { display: none; }
+  #content.ready { display: block; }
+  footer { text-align: center; margin-top: 2.5rem; font-size: 13px; color: var(--text-light); }
+
+  @media (max-width: 500px) {
+    header h1 { font-size: 20px; }
+    .script-row { flex-direction: column; gap: 4px; }
+    .script-tag { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-badge">For Justin — Kit's Day</div>
+    <h1>Kit had a really hard day 💛</h1>
+    <p>Here's what happened, why it happened the way it did, and what she needs from us tonight and in the days ahead.</p>
+  </header>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="content"></div>
+
+  <footer>Made with love &nbsp;·&nbsp; for our family</footer>
+</div>
+
+<script>
+const scenarios = [
+  {
+    id: "whathappened",
+    label: "📋 What happened",
+    cards: [
+      {
+        type: "events",
+        title: "What happened at camp today",
+        events: [
+          "She really wanted to play Sandy the dog in the Annie play — and didn't get the part.",
+          "Another child taunted her about getting the role she wanted.",
+          "She cried for about an hour and tried to run out the camp door.",
+          "She said some hard things about herself: 'I'm the worst kid alive' and 'I wish I hadn't been born.'",
+          "Her distress upset some of the other kids around her.",
+          "The camp directors were understanding — they said the dysregulated version of her is not the real her. They handled it well.",
+          "She is okay now and back to baseline.",
+        ],
+        note: "The 'I wish I hadn't been born' language is worth knowing about. At 7, in a moment like this, it almost always means 'I can't bear how this feels right now' rather than something deeper. But we're mentioning it to her therapist next week and keeping an eye on it."
+      }
+    ]
+  },
+  {
+    id: "why",
+    label: "💡 Why it went this way",
+    cards: [
+      {
+        type: "steps",
+        title: "Understanding what happened in her nervous system",
+        steps: [
+          { head: "She wanted something specific and didn't get it.", body: "The Sandy role wasn't a small thing to her — she loves performing, she loves animals, she had probably pictured herself in that role. For a child with an inflexible nervous system, an unexpected disappointment like this hits harder and takes longer to recover from than it would for most kids." },
+          { head: "Another child made it worse.", body: "Being taunted by the kid who got the role she wanted — right in the moment of her disappointment — added humiliation on top of grief. That's a lot at once for any child, and for Kit it was overwhelming." },
+          { head: "She flooded completely.", body: "When her nervous system gets overwhelmed, she loses access to her coping tools. The running, the crying, the self-talk — that's not defiance or manipulation. That's a child whose brain has gone into full alarm mode and has nothing left to regulate with." },
+          { head: "The negative self-talk is her trying to make sense of pain.", body: "'I'm the worst kid alive' is what happens when a child doesn't yet have the language for 'I am in so much pain right now and I don't know why things feel this hard for me.' It's not a belief she holds all the time — it's the loudest voice she has access to when everything hurts." },
+          { head: "She came back to baseline.", body: "This is important. She regulated. It took time, but she found her way back. That's actually a sign that the capacity is there — it just needs support to work faster and more reliably over time." }
+        ],
+        reframe: "The dysregulated version of Kit is not who she is. She is a child who loves performing, who feels things deeply, who is creative and passionate and loving. Today showed what happens when her nervous system is overwhelmed — not who she is when it isn't."
+      }
+    ]
+  },
+  {
+    id: "tonight",
+    label: "🌙 Tonight",
+    cards: [
+      {
+        type: "urgent",
+        title: "Keep it simple tonight",
+        text: "She has had a huge day and her nervous system is depleted. Tonight is not the night for a long conversation, a lesson, or addressing what she could have done differently. Tonight is just about connection and making sure she feels loved and safe."
+      },
+      {
+        type: "says",
+        title: "What to say — and what to hold off on",
+        items: [
+          {
+            label: "Start here — just be warm",
+            text: "Don't open with the incident. Just be glad to see her. A hug, a snack, something easy. Let her feel that home is safe.",
+            why: "Her nervous system needs to land somewhere safe before it can do anything else."
+          },
+          {
+            label: "If she brings it up",
+            text: "\"That sounds like it was a really hard day. I'm really glad you're home.\"",
+            why: "Follow her lead. Listen more than you talk. Don't correct or analyze yet."
+          },
+          {
+            label: "On the Sandy role",
+            text: "\"Not getting to be Sandy when you really wanted it — that's genuinely disappointing. That makes total sense. I would have been sad too.\"",
+            why: "Don't minimize the disappointment. Let it be real and heard."
+          },
+          {
+            label: "On the other kid who taunted her",
+            text: "\"That kid was unkind to you. What he did wasn't okay. It makes sense that it hurt.\"",
+            why: "She needs to hear that what happened to her was real and that she's not wrong to have felt it."
+          },
+          {
+            label: "On the negative self-talk",
+            text: "\"I heard you said some really hard things about yourself today. I want you to know — those things aren't true. You are not the worst kid. I am so glad you were born. I need you to know that.\"",
+            why: "Say it simply and mean it. Don't elaborate too much. Just plant it clearly."
+          },
+          {
+            label: "Before bed — one specific true thing",
+            text: "\"I saw how much you wanted that part today. That tells me how much you love performing. I love that about you.\"",
+            why: "She went to bed carrying hard things. Give her one good true thing to carry too."
+          }
+        ]
+      },
+      {
+        type: "avoid",
+        title: "What to hold off on — not tonight",
+        items: [
+          "Talking about how she upset the other kids",
+          "Addressing the running for the door",
+          "Connecting anything to consequences or what she should do differently",
+          "Asking her to explain her behavior",
+          "Long conversations about feelings or what went wrong"
+        ],
+        note: "All of that belongs in therapy — not tonight when she's already raw. There will be time for it. Tonight is just love."
+      }
+    ]
+  },
+  {
+    id: "selftalk",
+    label: "💬 The self-talk",
+    cards: [
+      {
+        type: "steps",
+        title: "The negative self-talk — what's happening and what helps",
+        steps: [
+          { head: "Where it comes from.", body: "She doesn't get this from us. She picks it up from other kids — sometimes her brother in conflict, sometimes kids at school who say unkind things in hard moments. For a child who feels things as intensely as she does, those words land deeply and stick." },
+          { head: "Why it worries us.", body: "Kids who hear a story about themselves enough — from enough places — can start to believe it. 'I'm the worst' repeated often enough becomes 'I am bad.' We want to get ahead of that." },
+          { head: "The antidote is what we're already doing.", body: "Unconditional love and presence at home. Specific, genuine, repeated affirmation of who she actually is. She needs to hear the true version of herself from us so often and so clearly that it becomes louder than the other voice." },
+          { head: "Teach her to talk back to the mean voice.", body: "When she says 'I'm the worst' — help her notice it's a thought, not a fact. 'That's the mean voice talking. What does the kind voice say?' Over time, with practice and therapy, she can learn to catch it herself." },
+          { head: "The therapist will work on this.", body: "This is exactly the kind of thing a good child therapist addresses directly and specifically. We're on the right track getting her there next week. Make sure to mention today's specific words when we go." }
+        ],
+        tip: "The 'I wish I hadn't been born' piece — in context today it sounded like overwhelm rather than something deeper. But we're mentioning it explicitly to the therapist, and if you ever hear something that feels more persistent or more serious than 'I hate how this feels right now' — we flag it immediately."
+      }
+    ]
+  },
+  {
+    id: "bigpicture",
+    label: "🌱 The bigger picture",
+    cards: [
+      {
+        type: "steps",
+        title: "What we know and where we're going",
+        steps: [
+          { head: "She has ADHD — and it affects more than attention.", body: "The inflexibility, the emotional intensity, the difficulty moving on when upset, the rigidity when things don't go as expected — these are all part of how her brain is wired. It's not defiance. It's not bad parenting. It's her nervous system working differently." },
+          { head: "She is deeply loved at her school.", body: "FAIS knows her, accommodates her, and genuinely cares about her. That's not something to take for granted. We're keeping her there." },
+          { head: "We have a therapist appointment next week.", body: "This is the right move. She needs someone whose whole job is her — not parents who are also holding everything else together. The therapist will work on the emotional regulation, the self-talk, and the flexibility piece specifically." },
+          { head: "She's going to be okay.", body: "She is creative, passionate, deeply loving, and funny. She loves performing. She loves her family. She loves reading and music and animals. The hard parts of who she is right now are not the whole picture — and they're not permanent. She is building capacity in real time, even on the hardest days." },
+          { head: "What she needs most from both of us.", body: "Consistency. Warmth. Not making her feel like she's too much. Specific, genuine affirmation of who she actually is. And a united front — so she knows that when things get hard, her parents are solid and she is safe." }
+        ],
+        warm: "She had a really hard day. She also came back to baseline, came home, and is okay. That's her resilience showing. She has more of it than today made it look like. 💛"
+      }
+    ]
+  }
+];
+
+let active = 'whathappened';
+
+function renderTabs() {
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = '';
+  scenarios.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (s.id === active ? ' active' : '');
+    btn.textContent = s.label;
+    btn.onclick = () => { active = s.id; renderTabs(); renderContent(); };
+    tabsEl.appendChild(btn);
+  });
+}
+
+function renderContent() {
+  const contentEl = document.getElementById('content');
+  contentEl.className = 'ready';
+  const scene = scenarios.find(s => s.id === active);
+  contentEl.innerHTML = '';
+
+  scene.cards.forEach(card => {
+    const el = document.createElement('div');
+    el.className = 'card';
+    let html = `<div class="card-title">${card.title}</div>`;
+
+    if (card.type === 'events') {
+      html += '<div class="event-box"><div class="event-label">What happened — in order</div>';
+      card.events.forEach(e => {
+        html += `<div class="event-item"><div class="event-dot"></div><div class="event-text">${e}</div></div>`;
+      });
+      html += '</div>';
+      if (card.note) {
+        html += `<div class="urgent-box"><div class="urgent-label">Important note</div><div class="urgent-text">${card.note}</div></div>`;
+      }
+    } else if (card.type === 'urgent') {
+      html += `<div class="urgent-box"><div class="urgent-label">Tonight</div><div class="urgent-text">${card.text}</div></div>`;
+    } else if (card.type === 'says') {
+      card.items.forEach(item => {
+        html += `<div class="say-card"><div class="say-label">${item.label}</div><div class="say-text">"${item.text}"</div><div class="say-why">${item.why}</div></div>`;
+      });
+    } else if (card.type === 'avoid') {
+      html += `<div style="background:var(--red-50);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:4px;">`;
+      html += `<div style="font-size:11px;font-weight:800;color:var(--red-600);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;">Not tonight</div>`;
+      card.items.forEach(item => {
+        html += `<div style="display:flex;gap:8px;margin-bottom:6px;align-items:flex-start;"><div style="width:6px;height:6px;border-radius:50%;background:var(--red-600);flex-shrink:0;margin-top:5px;"></div><div style="font-size:13px;color:var(--red-600);font-weight:500;line-height:1.5;">${item}</div></div>`;
+      });
+      html += `</div>`;
+      if (card.note) html += `<div style="font-size:13px;color:var(--text-muted);font-style:italic;margin-top:8px;line-height:1.6;font-weight:500;">${card.note}</div>`;
+    } else if (card.type === 'steps') {
+      html += '<div class="steps">';
+      card.steps.forEach((s, i) => {
+        html += `<div class="step"><div class="step-num">${i+1}</div><div class="step-content"><strong>${s.head}</strong> ${s.body}</div></div>`;
+      });
+      html += '</div>';
+    } else {
+      card.rows && card.rows.forEach(r => {
+        const tagClass = r.tag === 'avoid' ? 'tag-avoid' : r.tag === 'try' ? 'tag-try' : r.tag === 'also' ? 'tag-also' : 'tag-why';
+        const tagLabel = r.tag === 'avoid' ? 'Avoid' : r.tag === 'try' ? 'Try this' : r.tag === 'also' ? 'Also' : 'Why it works';
+        html += `<div class="script-row"><span class="script-tag ${tagClass}">${tagLabel}</span><span class="script-text">${r.text}</span></div>`;
+      });
+    }
+
+    if (card.tip) html += `<div class="tip-box"><div class="tip-label">Keep in mind</div><div class="tip-text">${card.tip}</div></div>`;
+    if (card.warm) html += `<div class="warm-box"><div class="warm-label">Remember</div><div class="warm-text">${card.warm}</div></div>`;
+    if (card.reframe) html += `<div class="reframe-box"><div class="reframe-label">Reframe</div><div class="reframe-text">${card.reframe}</div></div>`;
+
+    el.innerHTML = html;
+    contentEl.appendChild(el);
+  });
+}
+
+renderTabs();
+renderContent();
+</script>
+</body>
+</html>
