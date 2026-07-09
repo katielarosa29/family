@@ -298,10 +298,10 @@
   <!-- Filter buttons -->
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterRecipes('all', this)">
-      <div class="dot" style="background:#a09d98"></div> All <span class="filter-count">8</span>
+      <div class="dot" style="background:#a09d98"></div> All <span class="filter-count">12</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('dinner', this)">
-      <div class="dot" style="background:#e8924a"></div> Dinner <span class="filter-count">4</span>
+      <div class="dot" style="background:#e8924a"></div> Dinner <span class="filter-count">8</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('sauce', this)">
       <div class="dot" style="background:#4aad6e"></div> Sauces & Dressings <span class="filter-count">2</span>
@@ -316,8 +316,194 @@
 
   <div class="recipe-grid" id="recipeGrid">
 
-    <!-- 1. Beefy Skillet Lasagna (newest) -->
+    <!-- 1. High-Protein Blender Pancakes (newest) -->
     <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">High-Protein Blender Pancakes</div>
+          <div class="recipe-meta">Social save · Blender + oven · 25 min · Serves 4–6</div>
+          <div class="tag-row">
+            <span class="tag">Protein powder</span>
+            <span class="tag">Kid approved</span>
+            <span class="tag">Blender</span>
+            <span class="tag">Breakfast for dinner</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 cup</span>whole milk <em style="color:var(--text-tertiary);">(Fairlife for extra protein)</em></li>
+            <li><span class="ing-amount">6</span>eggs</li>
+            <li><span class="ing-amount">½ cup</span>vanilla protein powder <em style="color:var(--text-tertiary);">(Clean Simple Eats recommended)</em></li>
+            <li><span class="ing-amount">½ cup</span>all-purpose flour</li>
+            <li><span class="ing-amount">¼ tsp</span>salt</li>
+            <li><span class="ing-amount">1 tsp</span>vanilla extract</li>
+            <li><span class="ing-amount">1 tsp</span>baking powder</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F.</li>
+            <li>Add all ingredients to a blender and blend until smooth.</li>
+            <li>Pour into a greased baking dish or sheet pan.</li>
+            <li>Bake 15–20 minutes until golden brown and set in the center.</li>
+            <li>Slice and serve with syrup.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Joey and Kit approved with Uncle Bob's Butter Country syrup. Fairlife milk bumps the protein even higher. These bake up more like a Dutch baby / sheet pancake than individual flapjacks — easy to slice and serve for a crowd.</div>
+      </div>
+    </div>
+
+    <!-- 2. Melon-Prosciutto Salad -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Melon-Prosciutto Salad</div>
+          <div class="recipe-meta">Experience Life · No-cook · 15 min · Serves 2</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Summer</span>
+            <span class="tag">15 minutes</span>
+            <span class="tag">Gluten free</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">½</span>cantaloupe, scooped with a melon baller</li>
+            <li><span class="ing-amount">½</span>honeydew melon, scooped with a melon baller</li>
+            <li><span class="ing-amount">8 oz</span>small fresh mozzarella balls</li>
+            <li><span class="ing-amount">3 tbsp</span>minced fresh parsley</li>
+            <li><span class="ing-amount">3 tbsp</span>chopped fresh basil</li>
+            <li><span class="ing-amount">3 tbsp</span>chopped fresh mint</li>
+            <li>Flaky salt, to taste</li>
+            <li><span class="ing-amount">4 oz</span>prosciutto, sliced or torn into pieces</li>
+            <li><span class="ing-amount">¼ cup</span>extra-virgin olive oil <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tsp</span>dried oregano <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">2 tbsp</span>white balsamic or apple-cider vinegar <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>lemon juice <em style="color:var(--text-tertiary);">(dressing)</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a large bowl, mix the melon balls, mozzarella, and herbs.</li>
+            <li>In a smaller bowl, whisk the dressing ingredients together.</li>
+            <li>Drizzle the dressing over the salad and toss to coat.</li>
+            <li>Sprinkle the salt over the fruit, then top with the prosciutto and serve immediately.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and fast — great for a hot summer night. Toss right before serving so the melon doesn't sit in the dressing and get watery.</div>
+      </div>
+    </div>
+
+    <!-- 2. Mediterranean Smashed Chickpeas -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mediterranean Smashed Chickpeas</div>
+          <div class="recipe-meta">Experience Life · No-cook · 15 min · Serves 2</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">15 minutes</span>
+            <span class="tag">High protein</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 can</span>chickpeas (15 oz), drained and rinsed</li>
+            <li><span class="ing-amount">½</span>red onion, diced</li>
+            <li><span class="ing-amount">1</span>medium cucumber, diced</li>
+            <li><span class="ing-amount">2 tbsp</span>minced fresh dill</li>
+            <li><span class="ing-amount">3 tbsp</span>minced Castelvetrano olives</li>
+            <li><span class="ing-amount">¼ cup</span>canned artichoke hearts, roughly chopped</li>
+            <li><span class="ing-amount">2 tbsp</span>chopped dried cranberries or cherries</li>
+            <li><span class="ing-amount">¼ cup</span>crumbled feta cheese</li>
+            <li><span class="ing-amount">¼ cup</span>loosely packed parsley, minced</li>
+            <li><span class="ing-amount">⅓ cup</span>plain full-fat Greek yogurt <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tsp</span>dried oregano <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">½ tsp</span>ground coriander <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 clove</span>garlic, finely minced <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">3 tbsp</span>lemon juice <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>extra-virgin olive oil <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li>Sea salt + black pepper, to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a medium bowl, use a fork or potato masher to roughly mash half the chickpeas. Leave the rest whole.</li>
+            <li>Add the remaining salad ingredients except the parsley, and mix thoroughly.</li>
+            <li>In a small bowl, whisk the dressing ingredients. If the dressing seems too thick, add a splash of water.</li>
+            <li>Dress the salad and top with the reserved parsley. Add more salt and pepper to taste, and serve.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and meal-prep friendly — holds well in the fridge for a few days, making it an easy lunchbox or quick-lunch option.</div>
+      </div>
+    </div>
+
+    <!-- 3. Crab-Avocado Wraps -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Crab-Avocado Wraps</div>
+          <div class="recipe-meta">Experience Life · No-cook · 20 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Lettuce wraps</span>
+            <span class="tag">20 minutes</span>
+            <span class="tag">Seafood</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1</span>ripe avocado</li>
+            <li><span class="ing-amount">⅓ cup</span>mayonnaise</li>
+            <li><span class="ing-amount">1 tbsp</span>lemon juice, plus more for serving</li>
+            <li><span class="ing-amount">1 tsp</span>Old Bay seasoning</li>
+            <li><span class="ing-amount">2 tbsp</span>finely diced red bell pepper</li>
+            <li><span class="ing-amount">1 rib</span>celery, finely diced</li>
+            <li><span class="ing-amount">½ cup</span>drained canned sweet corn</li>
+            <li><span class="ing-amount">1 cup</span>lump crabmeat</li>
+            <li><span class="ing-amount">1 head</span>butter lettuce, leaves washed and patted dry</li>
+            <li><span class="ing-amount">3 tbsp</span>minced green onion</li>
+            <li>Flaky salt, to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a food processor, purée half the avocado with the mayonnaise, lemon juice, and Old Bay. Dice the other half of the avocado.</li>
+            <li>In a large bowl, mix the avocado mayo with the diced avocado, bell pepper, celery, and sweet corn. Fold in the crabmeat gently, to keep it in large pieces.</li>
+            <li>Wrap the crab mixture in the lettuce leaves and top with the green onions, a squeeze of lemon, and a sprinkle of flaky salt, and serve.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and ready in 20 minutes — a great light dinner or lunch on a hot day. Keep the crab folded in gently so it stays in big, satisfying lumps.</div>
+      </div>
+    </div>
+
+    <!-- 4. Beefy Skillet Lasagna -->
+    <div class="recipe-card" data-category="dinner">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-dinner">Dinner</span>
         <div class="recipe-title-block">
@@ -365,7 +551,7 @@
       </div>
     </div>
 
-    <!-- 2. TMP Mini Meatloaf -->
+    <!-- 5. TMP Mini Meatloaf -->
     <div class="recipe-card" data-category="dinner">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-dinner">Dinner</span>
@@ -416,7 +602,7 @@
       </div>
     </div>
 
-    <!-- 3. Homemade Mac and Cheese -->
+    <!-- 6. Homemade Mac and Cheese -->
     <div class="recipe-card" data-category="dinner">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-dinner">Dinner</span>
@@ -464,7 +650,7 @@
       </div>
     </div>
 
-    <!-- 4. The Kitchn Stovetop Mac & Cheese -->
+    <!-- 7. The Kitchn Stovetop Mac & Cheese -->
     <div class="recipe-card" data-category="dinner">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-dinner">Dinner</span>
@@ -507,7 +693,7 @@
       </div>
     </div>
 
-    <!-- 5. Creamy Sun-Dried Tomato Vinaigrette -->
+    <!-- 8. Creamy Sun-Dried Tomato Vinaigrette -->
     <div class="recipe-card" data-category="sauce">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-sauce">Sauce</span>
@@ -551,7 +737,7 @@
       </div>
     </div>
 
-    <!-- 6. Romesco -->
+    <!-- 9. Romesco -->
     <div class="recipe-card" data-category="sauce">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-sauce">Sauce</span>
@@ -596,7 +782,7 @@
       </div>
     </div>
 
-    <!-- 7. Whole30 Zuppa Toscana -->
+    <!-- 10. Whole30 Zuppa Toscana -->
     <div class="recipe-card" data-category="soup">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-soup">Soup</span>
@@ -644,7 +830,7 @@
       </div>
     </div>
 
-    <!-- 8. Paleo Chocolate Chip Cookies -->
+    <!-- 11. Paleo Chocolate Chip Cookies -->
     <div class="recipe-card" data-category="dessert">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-dessert">Dessert</span>
