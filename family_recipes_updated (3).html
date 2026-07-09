@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Recipes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4ef;
+      --surface: #ffffff;
+      --surface-2: #f9f8f5;
+      --border: #e5e2db;
+      --border-light: #eeebe4;
+      --text-primary: #1c1b18;
+      --text-secondary: #6b6860;
+      --text-tertiary: #a09d98;
+      --accent: #b85a1a;
+      --radius: 14px;
+      --radius-sm: 8px;
+
+      /* Category colors */
+      --dinner: #fff8ee; --dinner-t: #8b4d10; --dinner-b: #f0d4b0;
+      --sauce: #eef5ee; --sauce-t: #1a5230; --sauce-b: #b0d4b8;
+      --soup: #eef0ff; --soup-t: #2a3080; --soup-b: #b8bff0;
+      --dessert: #fff0f5; --dessert-t: #801a40; --dessert-b: #f0b8cc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Geist', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* Layout */
+    .layout { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* Page header */
+    .page-header {
+      margin-bottom: 24px;
+      animation: fadeUp 0.4s ease both;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+    .page-header h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .page-header h2 em { font-style: italic; color: var(--text-secondary); }
+
+    /* Filter buttons */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.4s ease 0.03s both;
+    }
+    .filter-btn {
+      font-family: 'Geist', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: 24px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+    .filter-btn.active {
+      background: var(--text-primary);
+      border-color: var(--text-primary);
+      color: white;
+    }
+    .filter-btn .dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .filter-btn.active .dot { background: white !important; }
+    .filter-count {
+      font-size: 11px;
+      opacity: 0.6;
+      font-weight: 400;
+    }
+
+    /* Recipe cards */
+    .recipe-grid { display: flex; flex-direction: column; gap: 16px; }
+
+    .recipe-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      animation: fadeUp 0.4s ease both;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .recipe-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); transform: translateY(-1px); }
+    .recipe-card:nth-child(1) { animation-delay: 0.05s; }
+    .recipe-card:nth-child(2) { animation-delay: 0.1s; }
+    .recipe-card:nth-child(3) { animation-delay: 0.15s; }
+    .recipe-card:nth-child(4) { animation-delay: 0.2s; }
+    .recipe-card:nth-child(5) { animation-delay: 0.25s; }
+    .recipe-card:nth-child(6) { animation-delay: 0.3s; }
+    .recipe-card:nth-child(7) { animation-delay: 0.35s; }
+    .recipe-card:nth-child(8) { animation-delay: 0.4s; }
+
+    /* Collapsible */
+    .recipe-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .recipe-header:hover { background: var(--surface-2); }
+    .recipe-card.open .recipe-header { border-bottom: 1px solid var(--border-light); }
+
+    .cat-pill {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid;
+      white-space: nowrap;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .recipe-title-block { flex: 1; }
+    .recipe-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 3px;
+    }
+    .recipe-meta {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+    }
+    .recipe-meta a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid var(--border); }
+    .recipe-meta a:hover { color: var(--text-primary); }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+    .tag {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--surface-2);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .chevron {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      transition: transform 0.2s;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .recipe-card.open .chevron { transform: rotate(180deg); }
+
+    /* Recipe body */
+    .recipe-body {
+      display: none;
+      padding: 18px 20px 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .recipe-card.open .recipe-body { display: grid; }
+
+    .col-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-tertiary);
+      margin-bottom: 10px;
+    }
+
+    /* Ingredients */
+    .ingredients { list-style: none; }
+    .ingredients li {
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.8;
+      padding-left: 14px;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1px;
+    }
+    .ingredients li:last-child { border-bottom: none; }
+    .ingredients li::before {
+      content: "·";
+      position: absolute;
+      left: 2px;
+      color: var(--text-tertiary);
+    }
+    .ing-amount {
+      color: var(--text-tertiary);
+      font-size: 11.5px;
+      margin-right: 4px;
+    }
+
+    /* Steps */
+    .steps { list-style: none; }
+    .steps li {
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.65;
+      padding-left: 22px;
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .steps li::before {
+      content: counter(step);
+      counter-increment: step;
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 16px;
+      height: 16px;
+      background: var(--text-primary);
+      color: white;
+      font-size: 9px;
+      font-weight: 600;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      text-align: center;
+    }
+    .steps { counter-reset: step; }
+
+    .note-box {
+      grid-column: 1 / -1;
+      font-size: 12px;
+      line-height: 1.65;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* Category color classes */
+    .cat-dinner { background: var(--dinner); color: var(--dinner-t); border-color: var(--dinner-b); }
+    .cat-sauce  { background: var(--sauce);  color: var(--sauce-t);  border-color: var(--sauce-b); }
+    .cat-soup   { background: var(--soup);   color: var(--soup-t);   border-color: var(--soup-b); }
+    .cat-dessert{ background: var(--dessert);color: var(--dessert-t);border-color: var(--dessert-b); }
+
+    /* Footer */
+    .footer { margin-top: 32px; font-size: 12px; color: var(--text-tertiary); text-align: center; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 700px) {
+      .recipe-body { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <div class="page-header">
+    <div class="eyebrow">LaRosa Kitchen</div>
+    <h2>Family <em>Recipes</em></h2>
+  </div>
+
+  <!-- Filter buttons -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterRecipes('all', this)">
+      <div class="dot" style="background:#a09d98"></div> All <span class="filter-count">12</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('dinner', this)">
+      <div class="dot" style="background:#e8924a"></div> Dinner <span class="filter-count">8</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('sauce', this)">
+      <div class="dot" style="background:#4aad6e"></div> Sauces & Dressings <span class="filter-count">2</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('soup', this)">
+      <div class="dot" style="background:#6878e0"></div> Soups <span class="filter-count">1</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('dessert', this)">
+      <div class="dot" style="background:#e0688a"></div> Desserts <span class="filter-count">1</span>
+    </button>
+  </div>
+
+  <div class="recipe-grid" id="recipeGrid">
+
+    <!-- 1. High-Protein Blender Pancakes (newest) -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">High-Protein Blender Pancakes</div>
+          <div class="recipe-meta">Social save · Blender + oven · 25 min · Serves 4–6</div>
+          <div class="tag-row">
+            <span class="tag">Protein powder</span>
+            <span class="tag">Kid approved</span>
+            <span class="tag">Blender</span>
+            <span class="tag">Breakfast for dinner</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 cup</span>whole milk <em style="color:var(--text-tertiary);">(Fairlife for extra protein)</em></li>
+            <li><span class="ing-amount">6</span>eggs</li>
+            <li><span class="ing-amount">½ cup</span>vanilla protein powder <em style="color:var(--text-tertiary);">(Clean Simple Eats recommended)</em></li>
+            <li><span class="ing-amount">½ cup</span>all-purpose flour</li>
+            <li><span class="ing-amount">¼ tsp</span>salt</li>
+            <li><span class="ing-amount">1 tsp</span>vanilla extract</li>
+            <li><span class="ing-amount">1 tsp</span>baking powder</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F.</li>
+            <li>Add all ingredients to a blender and blend until smooth.</li>
+            <li>Pour into a greased baking dish or sheet pan.</li>
+            <li>Bake 15–20 minutes until golden brown and set in the center.</li>
+            <li>Slice and serve with syrup.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Joey and Kit approved with Uncle Bob's Butter Country syrup. Fairlife milk bumps the protein even higher. These bake up more like a Dutch baby / sheet pancake than individual flapjacks — easy to slice and serve for a crowd.</div>
+      </div>
+    </div>
+
+    <!-- 2. Melon-Prosciutto Salad -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Melon-Prosciutto Salad</div>
+          <div class="recipe-meta">Experience Life · No-cook · 15 min · Serves 2</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Summer</span>
+            <span class="tag">15 minutes</span>
+            <span class="tag">Gluten free</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">½</span>cantaloupe, scooped with a melon baller</li>
+            <li><span class="ing-amount">½</span>honeydew melon, scooped with a melon baller</li>
+            <li><span class="ing-amount">8 oz</span>small fresh mozzarella balls</li>
+            <li><span class="ing-amount">3 tbsp</span>minced fresh parsley</li>
+            <li><span class="ing-amount">3 tbsp</span>chopped fresh basil</li>
+            <li><span class="ing-amount">3 tbsp</span>chopped fresh mint</li>
+            <li>Flaky salt, to taste</li>
+            <li><span class="ing-amount">4 oz</span>prosciutto, sliced or torn into pieces</li>
+            <li><span class="ing-amount">¼ cup</span>extra-virgin olive oil <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tsp</span>dried oregano <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">2 tbsp</span>white balsamic or apple-cider vinegar <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>lemon juice <em style="color:var(--text-tertiary);">(dressing)</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a large bowl, mix the melon balls, mozzarella, and herbs.</li>
+            <li>In a smaller bowl, whisk the dressing ingredients together.</li>
+            <li>Drizzle the dressing over the salad and toss to coat.</li>
+            <li>Sprinkle the salt over the fruit, then top with the prosciutto and serve immediately.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and fast — great for a hot summer night. Toss right before serving so the melon doesn't sit in the dressing and get watery.</div>
+      </div>
+    </div>
+
+    <!-- 2. Mediterranean Smashed Chickpeas -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mediterranean Smashed Chickpeas</div>
+          <div class="recipe-meta">Experience Life · No-cook · 15 min · Serves 2</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">15 minutes</span>
+            <span class="tag">High protein</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 can</span>chickpeas (15 oz), drained and rinsed</li>
+            <li><span class="ing-amount">½</span>red onion, diced</li>
+            <li><span class="ing-amount">1</span>medium cucumber, diced</li>
+            <li><span class="ing-amount">2 tbsp</span>minced fresh dill</li>
+            <li><span class="ing-amount">3 tbsp</span>minced Castelvetrano olives</li>
+            <li><span class="ing-amount">¼ cup</span>canned artichoke hearts, roughly chopped</li>
+            <li><span class="ing-amount">2 tbsp</span>chopped dried cranberries or cherries</li>
+            <li><span class="ing-amount">¼ cup</span>crumbled feta cheese</li>
+            <li><span class="ing-amount">¼ cup</span>loosely packed parsley, minced</li>
+            <li><span class="ing-amount">⅓ cup</span>plain full-fat Greek yogurt <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tsp</span>dried oregano <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">½ tsp</span>ground coriander <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 clove</span>garlic, finely minced <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">3 tbsp</span>lemon juice <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>extra-virgin olive oil <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li>Sea salt + black pepper, to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a medium bowl, use a fork or potato masher to roughly mash half the chickpeas. Leave the rest whole.</li>
+            <li>Add the remaining salad ingredients except the parsley, and mix thoroughly.</li>
+            <li>In a small bowl, whisk the dressing ingredients. If the dressing seems too thick, add a splash of water.</li>
+            <li>Dress the salad and top with the reserved parsley. Add more salt and pepper to taste, and serve.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and meal-prep friendly — holds well in the fridge for a few days, making it an easy lunchbox or quick-lunch option.</div>
+      </div>
+    </div>
+
+    <!-- 3. Crab-Avocado Wraps -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Crab-Avocado Wraps</div>
+          <div class="recipe-meta">Experience Life · No-cook · 20 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Lettuce wraps</span>
+            <span class="tag">20 minutes</span>
+            <span class="tag">Seafood</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1</span>ripe avocado</li>
+            <li><span class="ing-amount">⅓ cup</span>mayonnaise</li>
+            <li><span class="ing-amount">1 tbsp</span>lemon juice, plus more for serving</li>
+            <li><span class="ing-amount">1 tsp</span>Old Bay seasoning</li>
+            <li><span class="ing-amount">2 tbsp</span>finely diced red bell pepper</li>
+            <li><span class="ing-amount">1 rib</span>celery, finely diced</li>
+            <li><span class="ing-amount">½ cup</span>drained canned sweet corn</li>
+            <li><span class="ing-amount">1 cup</span>lump crabmeat</li>
+            <li><span class="ing-amount">1 head</span>butter lettuce, leaves washed and patted dry</li>
+            <li><span class="ing-amount">3 tbsp</span>minced green onion</li>
+            <li>Flaky salt, to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a food processor, purée half the avocado with the mayonnaise, lemon juice, and Old Bay. Dice the other half of the avocado.</li>
+            <li>In a large bowl, mix the avocado mayo with the diced avocado, bell pepper, celery, and sweet corn. Fold in the crabmeat gently, to keep it in large pieces.</li>
+            <li>Wrap the crab mixture in the lettuce leaves and top with the green onions, a squeeze of lemon, and a sprinkle of flaky salt, and serve.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and ready in 20 minutes — a great light dinner or lunch on a hot day. Keep the crab folded in gently so it stays in big, satisfying lumps.</div>
+      </div>
+    </div>
+
+    <!-- 4. Beefy Skillet Lasagna -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Beefy Skillet Lasagna</div>
+          <div class="recipe-meta">One pan · ~30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Ground beef</span>
+            <span class="tag">One pan</span>
+            <span class="tag">30 minutes</span>
+            <span class="tag">Kid approved</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>ground beef</li>
+            <li><span class="ing-amount">½</span>yellow onion, diced</li>
+            <li><span class="ing-amount">2</span>garlic cloves, minced</li>
+            <li><span class="ing-amount">24 oz</span>jarred marinara sauce</li>
+            <li><span class="ing-amount">1½ cups</span>water or chicken broth</li>
+            <li><span class="ing-amount">8</span>lasagna noodles, broken into pieces</li>
+            <li><span class="ing-amount">1 tsp</span>Italian seasoning</li>
+            <li><span class="ing-amount">½ tsp</span>salt</li>
+            <li><span class="ing-amount">¼ tsp</span>black pepper</li>
+            <li><span class="ing-amount">¾ cup</span>plain whole-milk Greek yogurt <em style="color:var(--text-tertiary);">(swapped for ricotta)</em></li>
+            <li><span class="ing-amount">1½ cups</span>shredded mozzarella</li>
+            <li><span class="ing-amount">¼ cup</span>parmesan, grated <em style="color:var(--text-tertiary);">(plus extra for the yogurt)</em></li>
+            <li><span class="ing-amount">2 tbsp</span>fresh basil or parsley, chopped (optional)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Brown the ground beef with onion and garlic over medium-high heat, breaking it up as it cooks, about 6–8 minutes until no longer pink. Drain excess grease if needed.</li>
+            <li>Stir in marinara, water or broth, Italian seasoning, salt, and pepper. Bring to a simmer.</li>
+            <li>Add the broken lasagna noodles directly into the simmering sauce, stirring to submerge them. Cover and simmer, stirring occasionally, until noodles are tender, about 12–15 min.</li>
+            <li>Reduce heat to low. Dollop spoonfuls of the parmesan-stirred yogurt over the top, then sprinkle with mozzarella and parmesan. Cover and let sit 3–5 min until melted.</li>
+            <li>Garnish with basil or parsley if using. Serve hot straight from the pan.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Yogurt swap: stir a spoonful of parmesan into the Greek yogurt before dolloping it on — rounds out the tang so it reads more like a cheese filling. Add off the heat so it doesn't split. Leave out the yogurt dollops entirely if your kids prefer it more "saucy."</div>
+      </div>
+    </div>
+
+    <!-- 5. TMP Mini Meatloaf -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">TMP Mini Italian-Style Meatloaf</div>
+          <div class="recipe-meta"><a href="https://themodernproper.com/mini-italian-style-meatloaf-sheet-pan" target="_blank">The Modern Proper ↗</a> · Sheet pan · ~30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Ground beef + pork</span>
+            <span class="tag">Sheet pan dinner</span>
+            <span class="tag">Freezer friendly</span>
+            <span class="tag">Kid approved</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>ground beef (80/20)</li>
+            <li><span class="ing-amount">½ lb</span>ground pork</li>
+            <li><span class="ing-amount">½ cup</span>breadcrumbs</li>
+            <li><span class="ing-amount">2</span>eggs</li>
+            <li><span class="ing-amount">¼ cup</span>milk</li>
+            <li><span class="ing-amount">1 tsp</span>Italian seasoning</li>
+            <li><span class="ing-amount">1 tsp</span>garlic powder</li>
+            <li><span class="ing-amount">1 tsp</span>onion powder</li>
+            <li><span class="ing-amount">½ tsp</span>salt + pepper</li>
+            <li><span class="ing-amount">4 tbsp</span>ketchup, divided</li>
+            <li><span class="ing-amount">1 tbsp</span>brown sugar</li>
+            <li><span class="ing-amount">1 tsp</span>Worcestershire sauce</li>
+            <li>Small potatoes + broccoli (for sheet pan)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F. Grease a large rimmed sheet pan.</li>
+            <li>Combine beef, pork, and breadcrumbs in a large bowl.</li>
+            <li>Whisk eggs, milk, salt, Italian seasoning, pepper, garlic powder, onion powder. Pour into meat with 3 tbsp ketchup. Mix with hands.</li>
+            <li>Form into 6–8 mini loaves and place on pan.</li>
+            <li>Mix remaining ketchup, brown sugar, Worcestershire + 1 tsp water. Spread on top of loaves.</li>
+            <li>Add potatoes and broccoli around loaves with olive oil and salt.</li>
+            <li>Bake 25–30 min until internal temp hits 165°F.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 TMP tip: mini loaves cook much faster than a full meatloaf — check temp at 25 min. These freeze beautifully. Double batch and freeze half for a future easy weeknight dinner.</div>
+      </div>
+    </div>
+
+    <!-- 6. Homemade Mac and Cheese -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Homemade Mac & Cheese</div>
+          <div class="recipe-meta">Family classic · Stovetop · ~25 min · Serves 6</div>
+          <div class="tag-row">
+            <span class="tag">Kids love it</span>
+            <span class="tag">Stovetop</span>
+            <span class="tag">Comfort food</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>elbow macaroni or shells</li>
+            <li><span class="ing-amount">4 tbsp</span>butter</li>
+            <li><span class="ing-amount">¼ cup</span>all-purpose flour</li>
+            <li><span class="ing-amount">2½ cups</span>whole milk, warmed</li>
+            <li><span class="ing-amount">½ cup</span>heavy cream</li>
+            <li><span class="ing-amount">2 cups</span>sharp cheddar, shredded</li>
+            <li><span class="ing-amount">1 cup</span>gruyère or mozzarella, shredded</li>
+            <li><span class="ing-amount">1 tsp</span>Dijon mustard</li>
+            <li><span class="ing-amount">½ tsp</span>garlic powder</li>
+            <li><span class="ing-amount">½ tsp</span>paprika</li>
+            <li>Salt + white pepper to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook pasta in well-salted water until al dente. Reserve ½ cup pasta water. Drain.</li>
+            <li>Melt butter in the same pot over medium heat. Whisk in flour and cook 1–2 min until golden.</li>
+            <li>Slowly whisk in warm milk and cream. Cook, stirring, until thickened — about 4 min.</li>
+            <li>Remove from heat. Stir in Dijon, garlic powder, paprika, salt + pepper.</li>
+            <li>Add cheese in handfuls, stirring until melted and smooth.</li>
+            <li>Fold in drained pasta. Loosen with pasta water if needed.</li>
+            <li>Serve immediately, or pour into a buttered baking dish, top with breadcrumbs and extra cheese, and broil 3–4 min until golden.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Always shred your own cheese — pre-shredded has anti-caking agents that make the sauce grainy. Gruyère gives it a grown-up depth; mozzarella keeps it kid-friendly and stretchy. Both work.</div>
+      </div>
+    </div>
+
+    <!-- 7. The Kitchn Stovetop Mac & Cheese -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Best Stovetop Mac & Cheese</div>
+          <div class="recipe-meta"><a href="https://www.thekitchn.com/how-to-make-the-best-macaroni-and-cheese-on-the-stove-82588" target="_blank">The Kitchn ↗</a> · Stovetop · 20 min · Serves 4 · Just 5 ingredients</div>
+          <div class="tag-row">
+            <span class="tag">5 ingredients</span>
+            <span class="tag">No roux</span>
+            <span class="tag">Kid favorite</span>
+            <span class="tag">20 minutes</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>elbow macaroni</li>
+            <li><span class="ing-amount">3 tbsp</span>unsalted butter</li>
+            <li><span class="ing-amount">3 tbsp</span>all-purpose flour</li>
+            <li><span class="ing-amount">3 cups</span>whole milk, warmed</li>
+            <li><span class="ing-amount">3 cups</span>sharp cheddar, freshly shredded</li>
+            <li>Salt + black pepper to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook macaroni in well-salted boiling water until al dente. Reserve ½ cup pasta water, then drain.</li>
+            <li>Melt butter in the same pot over medium heat. Whisk in flour and cook 1–2 min until lightly golden.</li>
+            <li>Slowly whisk in warm milk. Cook, stirring constantly, until thickened — about 4–5 min.</li>
+            <li>Remove from heat. Add cheese in handfuls, stirring until completely smooth.</li>
+            <li>Season well with salt and pepper. Fold in drained pasta.</li>
+            <li>Loosen with reserved pasta water as needed. Serve immediately.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The Kitchn's clever trick: always use freshly shredded cheese — pre-shredded bags contain anti-caking starch that makes the sauce grainy. Warming the milk first prevents lumps. This is the recipe that "tastes like childhood."</div>
+      </div>
+    </div>
+
+    <!-- 8. Creamy Sun-Dried Tomato Vinaigrette -->
+    <div class="recipe-card" data-category="sauce">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-sauce">Sauce</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Creamy Sun-Dried Tomato Vinaigrette</div>
+          <div class="recipe-meta">Family recipe · Blender · 5 min · Makes ~1 cup</div>
+          <div class="tag-row">
+            <span class="tag">5 minutes</span>
+            <span class="tag">Salad dressing</span>
+            <span class="tag">Gluten free</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">¼ cup</span>oil-packed sun-dried tomatoes</li>
+            <li><span class="ing-amount">¼ cup</span>mayonnaise or Greek yogurt</li>
+            <li><span class="ing-amount">2 tbsp</span>red wine vinegar</li>
+            <li><span class="ing-amount">1 tsp</span>Dijon mustard</li>
+            <li><span class="ing-amount">1 small</span>garlic clove</li>
+            <li><span class="ing-amount">⅓ cup</span>olive oil</li>
+            <li><span class="ing-amount">2–3 tbsp</span>water (to thin)</li>
+            <li>Salt + black pepper to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Add sun-dried tomatoes, mayo (or Greek yogurt), red wine vinegar, Dijon, and garlic to a blender or food processor.</li>
+            <li>Blend until smooth.</li>
+            <li>With blender running, slowly drizzle in olive oil until emulsified.</li>
+            <li>Add water 1 tbsp at a time to reach desired consistency.</li>
+            <li>Season with salt and pepper. Taste and adjust.</li>
+            <li>Store in a jar in the fridge up to 1 week.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Greek yogurt makes it tangier and lighter; mayo makes it richer and creamier. Great on salads, grain bowls, roasted veggies, or as a dip for crusty bread.</div>
+      </div>
+    </div>
+
+    <!-- 9. Romesco -->
+    <div class="recipe-card" data-category="sauce">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-sauce">Sauce</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Romesco Sauce</div>
+          <div class="recipe-meta"><a href="https://www.bonappetit.com" target="_blank">Bon Appétit ↗</a> · Food processor · 10 min · Makes ~1½ cups</div>
+          <div class="tag-row">
+            <span class="tag">Roasted red pepper</span>
+            <span class="tag">Almonds</span>
+            <span class="tag">Gluten free</span>
+            <span class="tag">Great on everything</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 large</span>roasted red bell pepper (from jar)</li>
+            <li><span class="ing-amount">1</span>garlic clove, smashed</li>
+            <li><span class="ing-amount">½ cup</span>slivered almonds, toasted</li>
+            <li><span class="ing-amount">¼ cup</span>tomato purée</li>
+            <li><span class="ing-amount">2 tbsp</span>chopped flat-leaf parsley</li>
+            <li><span class="ing-amount">2 tbsp</span>sherry vinegar</li>
+            <li><span class="ing-amount">1 tsp</span>smoked paprika</li>
+            <li><span class="ing-amount">½ tsp</span>cayenne pepper</li>
+            <li><span class="ing-amount">½ cup</span>extra-virgin olive oil</li>
+            <li>Fine sea salt + freshly ground black pepper</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Pulse roasted pepper, garlic, almonds, tomato purée, parsley, sherry vinegar, smoked paprika, and cayenne in a food processor until very finely chopped.</li>
+            <li>With motor running, slowly drizzle in olive oil until emulsified and smooth.</li>
+            <li>Season generously with salt and pepper. Taste and adjust.</li>
+            <li>Store in an airtight jar in the fridge up to 5 days.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Incredible on grilled chicken, turkey sandwiches, roasted veggies, or simply spread on crusty bread. The smoked paprika is key — don't skip it. Use jarred roasted peppers for ease.</div>
+      </div>
+    </div>
+
+    <!-- 10. Whole30 Zuppa Toscana -->
+    <div class="recipe-card" data-category="soup">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-soup">Soup</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Whole30 Zuppa Toscana</div>
+          <div class="recipe-meta"><a href="https://40aprons.com/whole30-zuppa-toscana/" target="_blank">40 Aprons ↗</a> · One pot · ~35 min · Serves 6</div>
+          <div class="tag-row">
+            <span class="tag">Whole30</span>
+            <span class="tag">Dairy free</span>
+            <span class="tag">Gluten free</span>
+            <span class="tag">Italian sausage</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>Italian sausage, casings removed</li>
+            <li><span class="ing-amount">4 strips</span>bacon, chopped</li>
+            <li><span class="ing-amount">1</span>yellow onion, diced</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">3–4</span>medium Yukon Gold potatoes, sliced thin</li>
+            <li><span class="ing-amount">4 cups</span>chicken broth</li>
+            <li><span class="ing-amount">2 cups</span>water</li>
+            <li><span class="ing-amount">1 can</span>full-fat coconut milk (13.5 oz)</li>
+            <li><span class="ing-amount">3 cups</span>kale, stems removed, chopped</li>
+            <li>Red pepper flakes, salt + pepper</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook bacon in a large pot over medium heat until crispy. Remove and set aside, leaving drippings in pot.</li>
+            <li>Brown sausage in the same pot, breaking it up. Remove and set aside.</li>
+            <li>Sauté onion in the drippings until softened, ~4 min. Add garlic and cook 1 min more.</li>
+            <li>Add potatoes, chicken broth, and water. Bring to a boil, reduce heat and simmer ~10 min until potatoes are tender.</li>
+            <li>Stir in coconut milk, sausage, and bacon. Season with red pepper flakes, salt + pepper.</li>
+            <li>Add kale and simmer 3–5 min until wilted.</li>
+            <li>Taste, adjust seasoning, and serve hot.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Coconut milk replaces the heavy cream for a Whole30-compliant version — you genuinely can't tell the difference once the soup is seasoned. Full-fat coconut milk only; light will make it watery.</div>
+      </div>
+    </div>
+
+    <!-- 11. Paleo Chocolate Chip Cookies -->
+    <div class="recipe-card" data-category="dessert">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dessert">Dessert</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Paleo Chocolate Chip Cookies</div>
+          <div class="recipe-meta"><a href="https://www.bakerita.com/paleo-chocolate-chip-cookies/" target="_blank">Bakerita ↗</a> · ~20 min · Makes ~16 cookies</div>
+          <div class="tag-row">
+            <span class="tag">Paleo</span>
+            <span class="tag">Gluten free</span>
+            <span class="tag">Dairy free option</span>
+            <span class="tag">No one guesses!</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 cups</span>almond flour (blanched)</li>
+            <li><span class="ing-amount">¼ tsp</span>baking soda</li>
+            <li><span class="ing-amount">¼ tsp</span>fine sea salt</li>
+            <li><span class="ing-amount">¼ cup</span>coconut oil, melted</li>
+            <li><span class="ing-amount">¼ cup</span>pure maple syrup</li>
+            <li><span class="ing-amount">1</span>egg (or flax egg for vegan)</li>
+            <li><span class="ing-amount">1 tsp</span>vanilla extract</li>
+            <li><span class="ing-amount">¾ cup</span>dark chocolate chips (dairy-free if needed)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F. Line a baking sheet with parchment.</li>
+            <li>Whisk together almond flour, baking soda, and salt in a bowl.</li>
+            <li>In a separate bowl, mix melted coconut oil, maple syrup, egg, and vanilla.</li>
+            <li>Stir wet into dry until a dough forms. Fold in chocolate chips.</li>
+            <li>Scoop ~1.5 tbsp rounds onto parchment, spacing 2 inches apart. Flatten slightly.</li>
+            <li>Bake 9–11 min until edges are golden. Centers will look underdone — that's right.</li>
+            <li>Cool on pan 10 min before moving — they firm up as they cool.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Bakerita says "no one guesses these are gluten-free" — and it's true. The key is not overbaking; pull them when edges are just golden. They'll seem too soft but firm up perfectly. Store in fridge up to a week.</div>
+      </div>
+    </div>
+
+  </div><!-- end recipe grid -->
+
+  <div class="footer">LaRosa Family Recipes · Last updated June 2026</div>
+
+</div>
+
+<script>
+  function toggleRecipe(header) {
+    const card = header.closest('.recipe-card');
+    card.classList.toggle('open');
+  }
+
+  function filterRecipes(cat, btn) {
+    const cards = document.querySelectorAll('.recipe-card');
+    cards.forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+    });
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
