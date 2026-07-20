@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaRosa Colorado Trip — July 25 to August 4</title>
+<style>
+  :root{
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --surface-1: #f3efe9;
+    --text: #2b2620;
+    --text-secondary: #6b6255;
+    --text-muted: #948b7d;
+    --accent: #b5622f;
+    --accent-soft: #f0e3d8;
+    --warn-bg: #fdf1e0;
+    --warn-text: #9a5b13;
+    --border: #e5ddd0;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    padding:24px 16px 60px;
+  }
+  .wrap{max-width:640px;margin:0 auto}
+  h1{font-size:20px;font-weight:600;margin:0 0 4px}
+  .sub{font-size:13px;color:var(--text-muted);margin:0 0 20px}
+  .tabs{display:flex;gap:8px;margin-bottom:20px;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5}
+  .tabs button{
+    flex:1;padding:10px 12px;border-radius:var(--radius);border:1px solid var(--border);
+    background:var(--surface);color:var(--text);font-size:14px;font-weight:500;cursor:pointer;
+  }
+  .tabs button.active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+  .d{font-size:13px;font-weight:600;color:var(--text-secondary);margin:20px 0 8px;text-transform:uppercase;letter-spacing:.02em}
+  .d:first-of-type{margin-top:0}
+  .t{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px}
+  .t.new{border-color:var(--accent)}
+  .t .time{font-size:12px;font-weight:600;color:var(--accent);min-width:76px;flex-shrink:0;padding-top:1px}
+  .t b{display:block;font-size:14.5px;font-weight:600}
+  .t span{display:block;font-size:13px;color:var(--text-secondary);margin-top:2px;line-height:1.4}
+  .alert{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--warn-bg);color:var(--warn-text);border-radius:var(--radius);font-size:13px;font-weight:500;margin-bottom:16px}
+  .note{font-size:12px;color:var(--text-muted);margin:0 0 16px;line-height:1.5}
+  .panel{display:none}
+  .panel.active{display:block}
+  footer{text-align:center;font-size:11px;color:var(--text-muted);margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>LaRosa Colorado Trip</h1>
+  <p class="sub">July 25 – August 4</p>
+
+  <div class="tabs">
+    <button id="tab-lg" class="active" onclick="showTab('lg')">Lake George (7/25–7/31)</button>
+    <button id="tab-db" onclick="showTab('db')">Denver / Boulder (7/31–8/4)</button>
+  </div>
+
+  <div id="panel-lg" class="panel active">
+    <p class="note">No day-specific plans given yet — this is one reasonable way to spread the week out.</p>
+
+    <p class="d">Sat 7/25 — arrival</p>
+    <div class="t"><div class="time">PM</div><div><b>Arrive at the cabin, settle in</b><span>Evening fish if there's time · 1–2 hrs</span></div></div>
+
+    <p class="d">Sun 7/26</p>
+    <div class="t"><div class="time">7–11am</div><div><b>Fish at the cabin / Dream Stream</b><span>4 hrs</span></div></div>
+    <div class="t"><div class="time">12–4pm</div><div><b>Eleven Mile Canyon</b><span>~30 min drive + 3 hrs on site</span></div></div>
+
+    <p class="d">Mon 7/27 — history day</p>
+    <div class="t"><div class="time">9am–1pm</div><div><b>Manitou Cliff Dwellings</b><span>50 min drive + ~1–1.5 hr visit</span></div></div>
+    <div class="t"><div class="time">1:30–4:30pm</div><div><b>Rock Ledge Ranch + Garden of the Gods</b><span>Right next to each other · 3 hrs</span></div></div>
+
+    <p class="d">Tue 7/28</p>
+    <div class="t"><div class="time">7–11am</div><div><b>Fish</b><span>4 hrs</span></div></div>
+    <div class="t"><div class="time">1–3pm</div><div><b>Florissant Fossil Beds</b><span>20 min drive + 1.5 hrs · ask about night sky program</span></div></div>
+
+    <p class="d">Wed 7/29</p>
+    <div class="t"><div class="time">9am–12:30pm</div><div><b>Mueller State Park hike</b><span>25 min drive + 2–3 hr hike</span></div></div>
+    <div class="t"><div class="time">5–7pm</div><div><b>Evening fish</b><span>2 hrs</span></div></div>
+
+    <p class="d">Thu 7/30</p>
+    <div class="t"><div class="time">All day</div><div><b>Fish, relax at the cabin</b><span>Buffer day</span></div></div>
+    <div class="t"><div class="time">Late AM</div><div><b>Ute Pass Historical Society Museum</b><span>20 min drive · 30–45 min, optional</span></div></div>
+
+    <p class="d">Fri 7/31 — travel day</p>
+    <div class="t"><div class="time">AM</div><div><b>Pack up, depart cabin</b><span>Drive to Denver/Boulder</span></div></div>
+  </div>
+
+  <div id="panel-db" class="panel">
+    <div class="alert">⚠️ <span><b>Book Casa Bonita now</b> — no walk-ins, reserve online</span></div>
+
+    <p class="d">Fri 7/31</p>
+    <div class="t"><div class="time">PM</div><div><b>Arrive Denver, drive to Boulder</b><span>Settle in, easy evening</span></div></div>
+
+    <p class="d">Sat 8/1</p>
+    <div class="t"><div class="time">10am–1pm</div><div><b>Denver Art Museum</b><span>2–3 hrs · free day</span></div></div>
+    <div class="t new"><div class="time">6–7:30pm</div><div><b>Dinner: Acreage</b><span>Playground + open space for the kids, great view</span></div></div>
+
+    <p class="d">Sun 8/2 — Boulder day</p>
+    <div class="t"><div class="time">9–11:30am</div><div><b>Chautauqua Park hike</b><span>1.5–2.5 hrs, pick trail by ability</span></div></div>
+    <div class="t"><div class="time">12–1:15pm</div><div><b>Pearl Street + Boulder Bookstore</b><span>Lunch, walk, browse · ~1.25 hrs</span></div></div>
+    <div class="t"><div class="time">1:45–4pm</div><div><b>Valmont Bike Park — pump tracks</b><span>Rent bikes at University Bicycles or Trek Boulder nearby · 2–2.5 hrs, free entry</span></div></div>
+    <div class="t"><div class="time">6–7:30pm</div><div><b>Dinner: Pizzeria Alberico</b><span>Never been, but well reviewed</span></div></div>
+
+    <p class="d">Mon 8/3 — open, pick one track</p>
+    <div class="t"><div class="time">Morning</div><div><b>Eldorado Canyon hike</b><span>2–3 hrs</span></div></div>
+    <div class="t"><div class="time">Midday</div><div><b>Celestial Seasonings (45 min) + Liberty Puzzles (30–45 min) tours</b><span>Back to back</span></div></div>
+    <div class="t"><div class="time">Afternoon</div><div><b>Relish pickleball</b><span>1–2 hrs, food hall on site</span></div></div>
+    <div class="t"><div class="time">Or: full day</div><div><b>Golden</b><span>Coors tour (1 hr) + Golden Mill (1–2 hrs)</span></div></div>
+
+    <p class="d">Tue 8/4</p>
+    <div class="t"><div class="time">By 10am</div><div><b>Leave Boulder</b><span>Drive to airport</span></div></div>
+    <div class="t"><div class="time">12:54pm</div><div><b>Depart Denver</b></div></div>
+  </div>
+
+  <footer>LaRosa Colorado Trip Itinerary</footer>
+</div>
+
+<script>
+function showTab(t){
+  document.getElementById('panel-lg').classList.toggle('active', t==='lg');
+  document.getElementById('panel-db').classList.toggle('active', t==='db');
+  document.getElementById('tab-lg').classList.toggle('active', t==='lg');
+  document.getElementById('tab-db').classList.toggle('active', t==='db');
+}
+</script>
+</body>
+</html>
