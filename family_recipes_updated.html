@@ -1,0 +1,3004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Recipes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f4ef;
+      --surface: #ffffff;
+      --surface-2: #f9f8f5;
+      --border: #e5e2db;
+      --border-light: #eeebe4;
+      --text-primary: #1c1b18;
+      --text-secondary: #6b6860;
+      --text-tertiary: #a09d98;
+      --accent: #b85a1a;
+      --radius: 14px;
+      --radius-sm: 8px;
+
+      /* Category colors */
+      --dinner: #fff8ee; --dinner-t: #8b4d10; --dinner-b: #f0d4b0;
+      --sauce: #eef5ee; --sauce-t: #1a5230; --sauce-b: #b0d4b8;
+      --soup: #eef0ff; --soup-t: #2a3080; --soup-b: #b8bff0;
+      --dessert: #fff0f5; --dessert-t: #801a40; --dessert-b: #f0b8cc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Geist', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* Layout */
+    .layout { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* Page header */
+    .page-header {
+      margin-bottom: 24px;
+      animation: fadeUp 0.4s ease both;
+    }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-tertiary);
+      margin-bottom: 6px;
+    }
+    .page-header h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .page-header h2 em { font-style: italic; color: var(--text-secondary); }
+
+    /* Filter buttons */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.4s ease 0.03s both;
+    }
+    .filter-btn {
+      font-family: 'Geist', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 14px;
+      border-radius: 24px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-btn:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+    .filter-btn.active {
+      background: var(--text-primary);
+      border-color: var(--text-primary);
+      color: white;
+    }
+    .filter-btn .dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .filter-btn.active .dot { background: white !important; }
+    .filter-count {
+      font-size: 11px;
+      opacity: 0.6;
+      font-weight: 400;
+    }
+
+    /* Recipe cards */
+    .recipe-grid { display: flex; flex-direction: column; gap: 16px; }
+
+    .recipe-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      animation: fadeUp 0.4s ease both;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .recipe-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.07); transform: translateY(-1px); }
+    .recipe-card:nth-child(1) { animation-delay: 0.05s; }
+    .recipe-card:nth-child(2) { animation-delay: 0.1s; }
+    .recipe-card:nth-child(3) { animation-delay: 0.15s; }
+    .recipe-card:nth-child(4) { animation-delay: 0.2s; }
+    .recipe-card:nth-child(5) { animation-delay: 0.25s; }
+    .recipe-card:nth-child(6) { animation-delay: 0.3s; }
+    .recipe-card:nth-child(7) { animation-delay: 0.35s; }
+    .recipe-card:nth-child(8) { animation-delay: 0.4s; }
+
+    /* Collapsible */
+    .recipe-header {
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .recipe-header:hover { background: var(--surface-2); }
+    .recipe-card.open .recipe-header { border-bottom: 1px solid var(--border-light); }
+
+    .cat-pill {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid;
+      white-space: nowrap;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .recipe-title-block { flex: 1; }
+    .recipe-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 3px;
+    }
+    .recipe-meta {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+    }
+    .recipe-meta a { color: var(--text-secondary); text-decoration: none; border-bottom: 1px solid var(--border); }
+    .recipe-meta a:hover { color: var(--text-primary); }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+    .tag {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--surface-2);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .chevron {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      transition: transform 0.2s;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+    .recipe-card.open .chevron { transform: rotate(180deg); }
+
+    /* Recipe body */
+    .recipe-body {
+      display: none;
+      padding: 18px 20px 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .recipe-card.open .recipe-body { display: grid; }
+
+    .col-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-tertiary);
+      margin-bottom: 10px;
+    }
+
+    /* Ingredients */
+    .ingredients { list-style: none; }
+    .ingredients li {
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.8;
+      padding-left: 14px;
+      position: relative;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 1px;
+    }
+    .ingredients li:last-child { border-bottom: none; }
+    .ingredients li::before {
+      content: "·";
+      position: absolute;
+      left: 2px;
+      color: var(--text-tertiary);
+    }
+    .ing-amount {
+      color: var(--text-tertiary);
+      font-size: 11.5px;
+      margin-right: 4px;
+    }
+
+    /* Steps */
+    .steps { list-style: none; }
+    .steps li {
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.65;
+      padding-left: 22px;
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .steps li::before {
+      content: counter(step);
+      counter-increment: step;
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 16px;
+      height: 16px;
+      background: var(--text-primary);
+      color: white;
+      font-size: 9px;
+      font-weight: 600;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      text-align: center;
+    }
+    .steps { counter-reset: step; }
+
+    .note-box {
+      grid-column: 1 / -1;
+      font-size: 12px;
+      line-height: 1.65;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* Category color classes */
+    .cat-dinner { background: var(--dinner); color: var(--dinner-t); border-color: var(--dinner-b); }
+    .cat-sauce  { background: var(--sauce);  color: var(--sauce-t);  border-color: var(--sauce-b); }
+    .cat-soup   { background: var(--soup);   color: var(--soup-t);   border-color: var(--soup-b); }
+    .cat-dessert{ background: var(--dessert);color: var(--dessert-t);border-color: var(--dessert-b); }
+
+    /* Footer */
+    .footer { margin-top: 32px; font-size: 12px; color: var(--text-tertiary); text-align: center; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 700px) {
+      .recipe-body { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <div class="page-header">
+    <div class="eyebrow">LaRosa Kitchen</div>
+    <h2>Family <em>Recipes</em></h2>
+  </div>
+
+  <!-- Filter buttons -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterRecipes('all', this)">
+      <div class="dot" style="background:#a09d98"></div> All <span class="filter-count">56</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('dinner', this)">
+      <div class="dot" style="background:#e8924a"></div> Dinner <span class="filter-count">50</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('sauce', this)">
+      <div class="dot" style="background:#4aad6e"></div> Sauces & Dressings <span class="filter-count">2</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('soup', this)">
+      <div class="dot" style="background:#6878e0"></div> Soups <span class="filter-count">2</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('dessert', this)">
+      <div class="dot" style="background:#e0688a"></div> Desserts <span class="filter-count">1</span>
+    </button>
+  </div>
+
+  <div class="recipe-grid" id="recipeGrid">
+
+
+
+
+
+    <!-- VEG-1. Ginger Miso Tofu Ramen (newest) -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Ginger Miso Tofu Ramen</div>
+          <div class="recipe-meta">Vegetarian · Asian Night · 30 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">Vegetarian</span><span class="tag">Phytoestrogens</span><span class="tag">Kit-friendly</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">4 portions</span>ramen or udon noodles</li>
+            <li><span class="ing-amount">14 oz</span>firm tofu, cubed and crisped</li>
+            <li><span class="ing-amount">5 cups</span>vegetable broth</li>
+            <li><span class="ing-amount">3 tbsp</span>white miso paste</li>
+            <li><span class="ing-amount">1 tbsp</span>red miso paste</li>
+            <li><span class="ing-amount">1 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">2-inch</span>ginger knob, grated</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">2 cups</span>shiitake mushrooms, sliced</li>
+            <li><span class="ing-amount">2 heads</span>baby bok choy, halved</li>
+            <li><span class="ing-amount">4</span>soft-boiled eggs, halved</li>
+            <li>Scallions, nori, sesame seeds, chili oil to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Press and cube tofu. Pan-fry in 1 tbsp neutral oil over high heat without stirring 3–4 min until golden. Flip and cook 2 more min. Set aside.</li>
+            <li>In a pot, sauté garlic and ginger in sesame oil 1 min. Add mushrooms and cook 3 min. Add broth and bring to a simmer.</li>
+            <li>Whisk both misos and soy sauce into a splash of hot broth, then stir back into the pot. Never boil after adding miso — it kills the probiotics and flattens the flavor.</li>
+            <li>Add bok choy to the broth for the last 2 min. Cook noodles separately, drain.</li>
+            <li>Build bowls: noodles, ladle broth over, top with crispy tofu, bok choy, soft egg, scallions, nori, sesame seeds. Chili oil for adults.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Miso + tofu = double phytoestrogens (isoflavones) — one of the most studied foods for perimenopause symptom relief. Shiitakes are also one of the few plant sources of vitamin D. Kit loves ramen; this version is genuinely just as satisfying as the pork version.</div>
+      </div>
+    </div>
+
+    <!-- VEG-2. Lentil Bolognese -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Lentil Bolognese with Pappardelle</div>
+          <div class="recipe-meta">Vegetarian · Italian Night · 45 min · Serves 4–6</div>
+          <div class="tag-row"><span class="tag">Italian Night</span><span class="tag">Vegetarian</span><span class="tag">Iron-rich</span><span class="tag">High fiber</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1½ cups</span>green or brown lentils, rinsed</li>
+            <li><span class="ing-amount">12 oz</span>pappardelle or tagliatelle</li>
+            <li><span class="ing-amount">1 can</span>crushed tomatoes (28 oz)</li>
+            <li><span class="ing-amount">½ cup</span>dry red wine</li>
+            <li><span class="ing-amount">1</span>onion, finely diced</li>
+            <li><span class="ing-amount">2</span>carrots, finely diced</li>
+            <li><span class="ing-amount">2 stalks</span>celery, finely diced</li>
+            <li><span class="ing-amount">5 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">2 tbsp</span>tomato paste</li>
+            <li><span class="ing-amount">3 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">1 tsp</span>dried oregano + thyme</li>
+            <li><span class="ing-amount">2 cups</span>vegetable broth</li>
+            <li>Parmesan + fresh basil, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Warm olive oil in a large heavy pot. Sauté onion, carrot, and celery over medium heat 8 min (the soffritto — this is the flavor base, take your time).</li>
+            <li>Add garlic and tomato paste. Cook 2 min until paste darkens slightly.</li>
+            <li>Add wine and cook until almost evaporated, 3 min.</li>
+            <li>Add lentils, crushed tomatoes, broth, and herbs. Bring to a simmer. Cook 25–30 min until lentils are tender and sauce is thick. Season generously.</li>
+            <li>Cook pasta in salted water. Reserve ½ cup pasta water. Toss pasta with sauce, adding pasta water to loosen. Finish with parmesan and basil.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Lentils are one of the richest plant sources of iron AND protein — a major win for perimenopause when iron levels can drop. The red wine deepens the flavor enormously; it cooks off completely. Kit: this tastes just like meat bolognese to kids — serve it the same way. Make a double batch and freeze half.</div>
+      </div>
+    </div>
+
+    <!-- VEG-3. Paneer Tikka Masala -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Paneer Tikka Masala</div>
+          <div class="recipe-meta">Vegetarian · Wildcard Night · 40 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Wildcard Night</span><span class="tag">Vegetarian</span><span class="tag">Calcium</span><span class="tag">Anti-inflammatory</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">14 oz</span>paneer, cubed</li>
+            <li><span class="ing-amount">½ cup</span>Greek yogurt</li>
+            <li><span class="ing-amount">1 tsp each</span>garam masala, cumin, turmeric, chili powder</li>
+            <li><em style="color:var(--text-tertiary);">— Masala Sauce —</em></li>
+            <li><span class="ing-amount">1 can</span>crushed tomatoes (14 oz)</li>
+            <li><span class="ing-amount">1</span>large onion, diced</li>
+            <li><span class="ing-amount">5 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1-inch</span>ginger, grated</li>
+            <li><span class="ing-amount">1 tsp</span>Kashmiri chili powder or sweet paprika</li>
+            <li><span class="ing-amount">1 tsp</span>garam masala + cumin + coriander</li>
+            <li><span class="ing-amount">½ cup</span>heavy cream or coconut cream</li>
+            <li><span class="ing-amount">1 tsp</span>dried fenugreek leaves (kasuri methi)</li>
+            <li><span class="ing-amount">2 tbsp</span>neutral oil + 1 tbsp butter</li>
+            <li>Basmati rice + warm naan, to serve</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Marinate paneer in yogurt and spices for at least 30 min. Thread onto skewers or pan-fry in a cast-iron until charred on all sides, 2–3 min per side. Set aside.</li>
+            <li>In the same pan, melt butter and oil. Sauté onion 8 min until deep golden. Add garlic, ginger, and dry spices. Cook 2 min until fragrant.</li>
+            <li>Add crushed tomatoes and simmer 10 min until sauce thickens and darkens. Let cool slightly, then blend until silky smooth.</li>
+            <li>Return sauce to the pan. Stir in cream and kasuri methi. Simmer 5 min. Fold in charred paneer. Taste and season.</li>
+            <li>Serve over basmati rice with warm naan for scooping.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Kasuri methi (dried fenugreek) is the ingredient that makes tikka masala taste like the restaurant — it has a slightly bitter, maple-like flavor. Find it at any Indian grocery. Turmeric is one of the strongest anti-inflammatory foods you can eat during perimenopause. Blending the sauce is non-negotiable — that silky texture is everything. Kit approved.</div>
+      </div>
+    </div>
+
+    <!-- VEG-4. Sweet Potato & Black Bean Enchiladas -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Sweet Potato & Black Bean Enchiladas</div>
+          <div class="recipe-meta">Vegetarian · Mexican Night · 45 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Mexican Night</span><span class="tag">Vegetarian</span><span class="tag">Iron-rich</span><span class="tag">Magnesium</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 medium</span>sweet potatoes, diced ½-inch</li>
+            <li><span class="ing-amount">1 can</span>black beans (15 oz), drained</li>
+            <li><span class="ing-amount">1 tsp each</span>cumin, smoked paprika, garlic powder</li>
+            <li><span class="ing-amount">8</span>corn tortillas</li>
+            <li><span class="ing-amount">2 cups</span>enchilada sauce (store-bought is fine)</li>
+            <li><span class="ing-amount">1½ cups</span>Monterey Jack or cheddar, shredded</li>
+            <li><span class="ing-amount">½ cup</span>cotija or sour cream, to finish</li>
+            <li>Fresh cilantro + lime + avocado, to serve</li>
+            <li><em style="color:var(--text-tertiary);">Kit: plain cheese enchiladas in the same dish — fill with just cheddar</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Roast sweet potato: toss with olive oil, cumin, paprika, garlic powder, salt. Roast at 425°F 20 min until tender and caramelized.</li>
+            <li>Mix roasted sweet potato with drained black beans. Taste and season.</li>
+            <li>Warm corn tortillas directly over a gas flame or in a dry pan until pliable. Spread 2 tbsp enchilada sauce across the bottom of a baking dish.</li>
+            <li>Fill each tortilla with 3 tbsp sweet potato-bean mixture, roll tightly, and place seam-side down in the dish. Kit's cheese enchiladas go in the same dish — fill with cheese only.</li>
+            <li>Pour remaining enchilada sauce over everything. Top with cheese. Bake at 375°F 20–25 min until bubbling. Finish with cotija, cilantro, avocado, and lime.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Sweet potatoes are rich in magnesium — which helps with sleep and mood during perimenopause. Black beans are excellent for iron and blood sugar stability. Kit's cheese-only section goes right in the same baking dish — one pan, no fuss. Enchilada sauce from a can (Las Palmas or Hatch) is genuinely good.</div>
+      </div>
+    </div>
+
+    <!-- VEG-5. Butternut Squash, Sage & Ricotta Pizza -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Butternut Squash, Sage & Ricotta Pizza</div>
+          <div class="recipe-meta">Vegetarian · Pizza Night · 35 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Pizza Night</span><span class="tag">Vegetarian</span><span class="tag">Calcium</span><span class="tag">Magnesium</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>store-bought pizza dough</li>
+            <li><span class="ing-amount">2 cups</span>butternut squash, diced small and roasted</li>
+            <li><span class="ing-amount">¾ cup</span>whole-milk ricotta</li>
+            <li><span class="ing-amount">1 cup</span>mozzarella, shredded</li>
+            <li><span class="ing-amount">12</span>fresh sage leaves</li>
+            <li><span class="ing-amount">3 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">3 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">¼ tsp</span>nutmeg</li>
+            <li><span class="ing-amount">¼ cup</span>parmesan, grated</li>
+            <li>Honey + red pepper flakes, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Roast squash: toss with 1 tbsp olive oil, salt, and nutmeg. Roast at 425°F 20 min until caramelized. Set aside.</li>
+            <li>Preheat oven to 450°F with pizza stone or baking sheet inside.</li>
+            <li>Mix ricotta with garlic, salt, pepper, and nutmeg. Stretch dough into a rough oval and brush with olive oil.</li>
+            <li>Spread ricotta mixture over the dough. Scatter mozzarella, then roasted squash. Lay sage leaves on top and drizzle with olive oil.</li>
+            <li>Bake 12–14 min until golden and crust is crispy. Finish with parmesan, a drizzle of honey, and red pepper flakes.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The honey-red pepper drizzle at the end is the thing — sweet, spicy, savory all at once. Butternut squash is high in magnesium and vitamin A. Ricotta and mozzarella together give a serious calcium hit. Kit will love this one — it's sweet and mild. The sage crisps beautifully in the oven and becomes almost chip-like.</div>
+      </div>
+    </div>
+
+    <!-- VEG-6. Roasted Beet, Walnut & Farro Bowl -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Roasted Beet, Walnut & Farro Bowl</div>
+          <div class="recipe-meta">Vegetarian · Healthy Bowl Night · 40 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Healthy Bowl</span><span class="tag">Vegetarian</span><span class="tag">Omega-3s</span><span class="tag">Iron-rich</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1½ cups</span>farro (dry)</li>
+            <li><span class="ing-amount">3</span>medium beets, roasted and sliced</li>
+            <li><span class="ing-amount">½ cup</span>walnuts, toasted</li>
+            <li><span class="ing-amount">3 cups</span>arugula</li>
+            <li><span class="ing-amount">3 oz</span>goat cheese, crumbled</li>
+            <li><span class="ing-amount">1</span>orange, segmented</li>
+            <li><span class="ing-amount">¼</span>red onion, very thinly sliced</li>
+            <li><em style="color:var(--text-tertiary);">— Lemon-Dijon Dressing —</em></li>
+            <li><span class="ing-amount">3 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">2 tbsp</span>lemon juice</li>
+            <li><span class="ing-amount">1 tsp</span>Dijon mustard</li>
+            <li><span class="ing-amount">1 tsp</span>honey</li>
+            <li><span class="ing-amount">1 tsp</span>fresh thyme</li>
+            <li>Salt + pepper</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Roast beets: wrap whole beets in foil with a drizzle of olive oil. Roast at 400°F 45–55 min until a fork slides through easily. Cool, then peel (the skin slips off). Slice into wedges.</li>
+            <li>Cook farro in salted water 25–30 min until tender but chewy. Drain and season.</li>
+            <li>Toast walnuts in a dry pan 3–4 min. Watch carefully — they burn fast.</li>
+            <li>Whisk dressing ingredients together.</li>
+            <li>Build bowls: farro base, arugula, beets, orange segments, red onion, toasted walnuts, goat cheese. Drizzle with dressing. The beet juice will bleed beautifully — lean into it.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Walnuts are the best plant-based omega-3 source and are specifically linked to reduced hot flash frequency. Beets are rich in folate and nitrates, which support cardiovascular health — important during perimenopause. Farro gives a solid iron hit. Kit mod: white rice base, skip arugula, extra goat cheese.</div>
+      </div>
+    </div>
+
+    <!-- VEG-7. Mushroom & Lentil Shepherd's Pie -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mushroom & Lentil Shepherd's Pie</div>
+          <div class="recipe-meta">Vegetarian · Family Recipe Night · 60 min · Serves 6</div>
+          <div class="tag-row"><span class="tag">Family Recipe</span><span class="tag">Vegetarian</span><span class="tag">Iron-rich</span><span class="tag">Vitamin D</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><em style="color:var(--text-tertiary);">— Filling —</em></li>
+            <li><span class="ing-amount">1 cup</span>green lentils, rinsed</li>
+            <li><span class="ing-amount">3 cups</span>cremini or mixed mushrooms, chopped</li>
+            <li><span class="ing-amount">1</span>onion, diced</li>
+            <li><span class="ing-amount">2</span>carrots, diced</li>
+            <li><span class="ing-amount">2 stalks</span>celery, diced</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">2 tbsp</span>tomato paste</li>
+            <li><span class="ing-amount">1 cup</span>vegetable broth</li>
+            <li><span class="ing-amount">1 tbsp</span>Worcestershire sauce <em style="color:var(--text-tertiary);">(veg version) or soy sauce</em></li>
+            <li><span class="ing-amount">1 tsp</span>thyme + rosemary</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li><em style="color:var(--text-tertiary);">— Mashed Potato Top —</em></li>
+            <li><span class="ing-amount">2 lbs</span>Yukon Gold potatoes, peeled and quartered</li>
+            <li><span class="ing-amount">4 tbsp</span>butter</li>
+            <li><span class="ing-amount">½ cup</span>warm milk or cream</li>
+            <li><span class="ing-amount">⅓ cup</span>parmesan, grated</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook lentils in 3 cups salted water 20–25 min until just tender. Drain and set aside.</li>
+            <li>Boil potatoes until completely tender. Drain, mash with butter, warm milk, and parmesan until silky. Season generously.</li>
+            <li>Sauté onion, carrot, and celery in olive oil 8 min. Add garlic, mushrooms, tomato paste, and herbs. Cook until mushrooms are deeply browned and liquid has cooked off — 8–10 min. Add broth and Worcestershire. Stir in lentils. Simmer 5 min until thick.</li>
+            <li>Transfer filling to a baking dish. Spread mashed potatoes evenly over the top. Fork the surface to create ridges (these crisp beautifully).</li>
+            <li>Bake at 400°F 20–25 min until top is golden and filling is bubbling at the edges.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Mushrooms are one of the few plant sources of vitamin D — and they're genuinely rich in it if you buy ones that have been exposed to UV light (check the label). Lentils + mushrooms together are deeply satisfying in a way that doesn't feel like you're missing the meat. Makes great leftovers — the filling reheats perfectly.</div>
+      </div>
+    </div>
+
+    <!-- VEG-8. Korean Sundubu Jjigae (Soft Tofu Stew) -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Sundubu Jjigae — Korean Soft Tofu Stew</div>
+          <div class="recipe-meta">Vegetarian · Asian Night · 20 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">Vegetarian</span><span class="tag">Phytoestrogens</span><span class="tag">20 minutes</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 tubes</span>soft or silken tofu (12 oz each)</li>
+            <li><span class="ing-amount">2 tbsp</span>gochugaru (Korean red pepper flakes)</li>
+            <li><span class="ing-amount">1 tbsp</span>gochujang paste</li>
+            <li><span class="ing-amount">4 cups</span>vegetable broth</li>
+            <li><span class="ing-amount">1 cup</span>shiitake mushrooms, sliced</li>
+            <li><span class="ing-amount">1</span>zucchini, halved and sliced</li>
+            <li><span class="ing-amount">½</span>onion, diced</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">2 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">4</span>eggs (one cracked per bowl at the end)</li>
+            <li>Scallions, steamed rice, sesame seeds to serve</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Heat sesame oil in a wide shallow pot or Korean clay pot (dolsot) over medium heat. Add garlic and onion, cook 2 min.</li>
+            <li>Add gochugaru and gochujang. Stir for 1 min until fragrant and the oil turns deeply red.</li>
+            <li>Add mushrooms and zucchini, cook 2 min. Pour in broth and soy sauce. Bring to a boil.</li>
+            <li>Spoon soft tofu directly into the broth in large chunks — don't break it up too much, you want silky pieces.</li>
+            <li>Crack one raw egg into each bowl's portion of stew (or into the pot if serving family-style). Cover and cook 1–2 min until the white is just set but yolk is still runny. Serve immediately over steamed rice.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Soft tofu (sundubu) is the single best perimenopause food — it has the highest isoflavone content of any soy product, and research specifically links regular tofu consumption to reduced hot flash frequency and better bone density. The egg cracked on top adds vitamin D and protein. Kit mod: milder — reduce gochugaru by half and skip the gochujang. Gochugaru is sold at Fred Meyer's Asian aisle or H Mart.</div>
+      </div>
+    </div>
+
+    <!-- VEG-9. Ribollita -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Ribollita — Tuscan Kale & White Bean Soup</div>
+          <div class="recipe-meta">Vegetarian · Italian Night · 45 min · Serves 6</div>
+          <div class="tag-row"><span class="tag">Italian Night</span><span class="tag">Blue Zone</span><span class="tag">Calcium (kale)</span><span class="tag">Iron-rich</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 bunch</span>lacinato (dinosaur) kale, stems removed, torn</li>
+            <li><span class="ing-amount">2 cans</span>cannellini beans (15 oz each), drained</li>
+            <li><span class="ing-amount">3 thick slices</span>stale sourdough or ciabatta, torn</li>
+            <li><span class="ing-amount">1 can</span>crushed tomatoes (14 oz)</li>
+            <li><span class="ing-amount">1</span>onion, diced</li>
+            <li><span class="ing-amount">2</span>carrots, diced</li>
+            <li><span class="ing-amount">2 stalks</span>celery, diced</li>
+            <li><span class="ing-amount">5 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">2 sprigs</span>rosemary</li>
+            <li><span class="ing-amount">4 cups</span>vegetable broth</li>
+            <li><span class="ing-amount">4 tbsp</span>good olive oil</li>
+            <li>Parmesan rind + shaved parm to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Warm 3 tbsp olive oil in a large pot. Sauté onion, carrot, celery 8 min. Add garlic and rosemary, cook 2 min.</li>
+            <li>Add tomatoes, broth, parmesan rind, and one can of beans (whole). Mash the second can with a fork and stir in — this thickens the soup.</li>
+            <li>Bring to a simmer. Add kale and cook 15 min until very tender and silky.</li>
+            <li>Add torn stale bread directly to the soup. Stir until the bread breaks down and thickens everything — this is what "ribollita" means: reboiled, thickened. Simmer 10 more min.</li>
+            <li>Remove rosemary. Season generously. Serve in deep bowls with a heavy drizzle of your best olive oil and shaved parmesan.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Lacinato kale is one of the richest plant sources of calcium — and significantly more bioavailable than spinach. Combined with white beans (iron + protein + fiber), this is an extraordinary perimenopause meal. The bread is not optional — it's what makes ribollita ribollita. Use truly stale bread; fresh bread turns gluey. Gets even better the next day.</div>
+      </div>
+    </div>
+
+    <!-- VEG-10. Thai Green Curry with Tofu & Broccolini -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Thai Green Curry with Tofu & Broccolini</div>
+          <div class="recipe-meta">Vegetarian · Wildcard Night · 30 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Wildcard Night</span><span class="tag">Vegetarian</span><span class="tag">Phytoestrogens</span><span class="tag">Cruciferous</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">14 oz</span>firm tofu, pressed and cubed</li>
+            <li><span class="ing-amount">1 bunch</span>broccolini, cut into pieces</li>
+            <li><span class="ing-amount">1 cup</span>snap peas</li>
+            <li><span class="ing-amount">1</span>red bell pepper, sliced</li>
+            <li><span class="ing-amount">2–3 tbsp</span>store-bought green curry paste (Mae Ploy or Maesri)</li>
+            <li><span class="ing-amount">1 can</span>full-fat coconut milk (14 oz)</li>
+            <li><span class="ing-amount">1 cup</span>vegetable broth</li>
+            <li><span class="ing-amount">2</span>makrut lime leaves <em style="color:var(--text-tertiary);">(or zest of 1 lime)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tsp</span>brown sugar</li>
+            <li><span class="ing-amount">1</span>lime, juiced</li>
+            <li>Fresh Thai basil + jasmine rice + chili oil to serve</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Crisp tofu: heat oil in a large pan or wok over high heat. Add tofu in one layer, cook 3–4 min per side until golden. Remove.</li>
+            <li>In the same pan, fry green curry paste in 2 tbsp of the coconut cream (the thick part at the top of the can) for 2 min until fragrant and slightly darker.</li>
+            <li>Pour in remaining coconut milk, broth, lime leaves, soy sauce, and sugar. Bring to a simmer.</li>
+            <li>Add broccolini and bell pepper. Cook 3–4 min until just tender. Add snap peas for the last minute.</li>
+            <li>Fold in crispy tofu. Finish with lime juice and fresh basil. Serve over jasmine rice.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Broccolini (and all cruciferous vegetables) supports estrogen metabolism — they contain compounds that help the body process and clear excess estrogen, which is key in perimenopause. Tofu adds phytoestrogens. Mae Ploy green curry paste (in a tub at Fred Meyer's Asian aisle) is significantly better than the small cans — worth it. Kit: milder curry paste, extra coconut milk to cool it down.</div>
+      </div>
+    </div>
+
+    <!-- VEG-11. Roasted Cauliflower Tacos with Chipotle Crema -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Roasted Cauliflower Tacos with Chipotle Crema</div>
+          <div class="recipe-meta">Vegetarian · Mexican Night · 35 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Mexican Night</span><span class="tag">Vegetarian</span><span class="tag">Cruciferous</span><span class="tag">Probiotic (yogurt)</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 head</span>cauliflower, cut into small florets</li>
+            <li><span class="ing-amount">2 tsp</span>cumin + smoked paprika + garlic powder</li>
+            <li><span class="ing-amount">½ tsp</span>turmeric</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">8</span>corn tortillas</li>
+            <li><span class="ing-amount">1 cup</span>red cabbage, shredded</li>
+            <li><span class="ing-amount">1</span>avocado, sliced</li>
+            <li><span class="ing-amount">⅓ cup</span>cotija, crumbled</li>
+            <li>Cilantro + lime + pickled jalapeños</li>
+            <li><em style="color:var(--text-tertiary);">— Chipotle Crema —</em></li>
+            <li><span class="ing-amount">½ cup</span>Greek yogurt</li>
+            <li><span class="ing-amount">1–2 tsp</span>chipotle in adobo, minced</li>
+            <li><span class="ing-amount">1 tbsp</span>lime juice</li>
+            <li>Pinch of salt</li>
+            <li><em style="color:var(--text-tertiary);">Kit: warm flour tortilla with cheese + roasted cauliflower (mild)</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Toss cauliflower with olive oil, cumin, paprika, garlic powder, turmeric, and salt. Spread on a sheet pan without crowding. Roast at 425°F 25–28 min until deeply golden and crispy at the edges.</li>
+            <li>Make chipotle crema: blend Greek yogurt, chipotle in adobo, lime juice, and salt until smooth. Taste — add more chipotle for heat.</li>
+            <li>Toss cabbage with a squeeze of lime and pinch of salt.</li>
+            <li>Char tortillas over a flame or in a dry pan until pliable with good spots.</li>
+            <li>Build tacos: chipotle crema on the tortilla, roasted cauliflower, cabbage slaw, avocado, cotija, cilantro, lime. Kit gets flour tortilla with cheese and mild cauliflower.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Turmeric in the cauliflower roast is an anti-inflammatory bonus. Greek yogurt crema gives you probiotics — gut health is directly connected to hormone metabolism, making fermented foods especially valuable during perimenopause. The cauliflower gets addictively crispy at 425°F — don't crowd the pan or it steams instead of roasts.</div>
+      </div>
+    </div>
+
+    <!-- VEG-12. Roasted Garlic, Broccolini & White Bean Pizza -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Roasted Garlic, Broccolini & White Bean Pizza</div>
+          <div class="recipe-meta">Vegetarian · Pizza Night · 30 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Pizza Night</span><span class="tag">Vegetarian</span><span class="tag">Cruciferous</span><span class="tag">Iron-rich</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>store-bought pizza dough</li>
+            <li><span class="ing-amount">1 head</span>garlic, roasted whole</li>
+            <li><span class="ing-amount">1 bunch</span>broccolini, blanched and chopped</li>
+            <li><span class="ing-amount">1 can</span>cannellini beans (15 oz), drained</li>
+            <li><span class="ing-amount">1½ cups</span>fresh mozzarella, torn</li>
+            <li><span class="ing-amount">3 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">½ tsp</span>red pepper flakes</li>
+            <li>Lemon zest + parmesan, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Roast garlic: slice the top off a whole head, drizzle with olive oil, wrap in foil. Roast at 400°F 40 min until golden and jammy. Squeeze out the cloves — they should spread like butter.</li>
+            <li>Preheat oven to 450°F with a pizza stone or baking sheet inside.</li>
+            <li>Blanch broccolini in salted boiling water 2 min, drain and roughly chop.</li>
+            <li>Stretch dough, brush with olive oil. Spread roasted garlic across the surface like a sauce. Scatter white beans and broccolini. Top with torn mozzarella and red pepper flakes.</li>
+            <li>Bake 12–14 min until crust is golden and cheese is bubbling. Finish with lemon zest and parmesan.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Roasted garlic spread directly on the dough is the sauce here — sweet, mellow, deeply savory. White beans add plant protein and iron directly onto the pizza (try it before you doubt it). Broccolini is cruciferous, supporting estrogen clearance. Roast extra garlic heads and refrigerate — they keep a week and are endlessly useful.</div>
+      </div>
+    </div>
+
+    <!-- VEG-13. Sesame Soba Noodle Bowl with Crispy Tofu -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Sesame Soba Noodle Bowl with Crispy Tofu</div>
+          <div class="recipe-meta">Vegetarian · Healthy Bowl Night · 25 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Healthy Bowl</span><span class="tag">Vegetarian</span><span class="tag">Phytoestrogens</span><span class="tag">Magnesium</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">8 oz</span>soba noodles (100% buckwheat)</li>
+            <li><span class="ing-amount">14 oz</span>extra-firm tofu, pressed and cubed</li>
+            <li><span class="ing-amount">1</span>English cucumber, julienned</li>
+            <li><span class="ing-amount">2</span>carrots, julienned or grated</li>
+            <li><span class="ing-amount">1 cup</span>snap peas, halved</li>
+            <li><span class="ing-amount">1</span>avocado, sliced</li>
+            <li><span class="ing-amount">2</span>scallions, sliced</li>
+            <li>Sesame seeds + nori strips to finish</li>
+            <li><em style="color:var(--text-tertiary);">— Miso-Sesame Dressing —</em></li>
+            <li><span class="ing-amount">2 tbsp</span>white miso</li>
+            <li><span class="ing-amount">2 tbsp</span>tahini</li>
+            <li><span class="ing-amount">2 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">1 tbsp</span>rice vinegar</li>
+            <li><span class="ing-amount">1 tsp</span>ginger, grated</li>
+            <li><span class="ing-amount">1 tsp</span>maple syrup</li>
+            <li>2–3 tbsp warm water to thin</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Press tofu between towels 15 min. Cube and pan-fry in 1 tbsp oil over high heat, 3–4 min per side until deeply golden. Toss with 1 tbsp soy sauce in the pan at the end.</li>
+            <li>Whisk all dressing ingredients together, adding warm water until pourable. Taste — it should be savory, tangy, and slightly sweet.</li>
+            <li>Cook soba noodles per package (usually 4–5 min). Drain, rinse under cold water (this stops cooking and removes starch), drain well.</li>
+            <li>Toss noodles with half the dressing.</li>
+            <li>Build bowls: noodles, crispy tofu, cucumber, carrots, snap peas, avocado. Drizzle remaining dressing over the top. Finish with sesame seeds, scallions, and nori.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 100% buckwheat soba (not wheat-blended) is one of the richest sources of magnesium in any noodle — magnesium is crucial for sleep and mood regulation during perimenopause. Miso + tofu = double phytoestrogens again. Rinsing soba under cold water after cooking is non-negotiable — it's what makes them springy instead of gummy. Kit: rice noodles instead of soba, lighter dressing.</div>
+      </div>
+    </div>
+
+    <!-- VEG-14. Spanakopita -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Spanakopita — Greek Spinach & Feta Pie</div>
+          <div class="recipe-meta">Vegetarian · Family Recipe Night · 60 min · Serves 6–8</div>
+          <div class="tag-row"><span class="tag">Family Recipe</span><span class="tag">Vegetarian</span><span class="tag">Calcium</span><span class="tag">Iron-rich</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>frozen phyllo dough, thawed overnight in fridge</li>
+            <li><span class="ing-amount">2 lbs</span>fresh spinach (or 2 boxes frozen, thawed + squeezed dry)</li>
+            <li><span class="ing-amount">12 oz</span>feta, crumbled</li>
+            <li><span class="ing-amount">1 cup</span>ricotta or cottage cheese</li>
+            <li><span class="ing-amount">4</span>eggs, beaten</li>
+            <li><span class="ing-amount">1 bunch</span>scallions, sliced thin</li>
+            <li><span class="ing-amount">½ cup</span>fresh dill, chopped</li>
+            <li><span class="ing-amount">¼ tsp</span>nutmeg</li>
+            <li><span class="ing-amount">½ cup</span>olive oil or melted butter (for brushing)</li>
+            <li>Black pepper, to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>If using fresh spinach, wilt in batches in a dry pan. Squeeze every drop of water out in a clean kitchen towel — this is crucial. Chop roughly.</li>
+            <li>Mix spinach with feta, ricotta, eggs, scallions, dill, nutmeg, and pepper. Taste the filling — it should be well-seasoned since feta is salty.</li>
+            <li>Brush a 9x13 baking dish with olive oil. Layer 8 sheets of phyllo, brushing each with oil. Let the sheets hang over the sides.</li>
+            <li>Spread filling evenly. Fold overhanging phyllo over the filling. Layer remaining phyllo sheets on top, brushing each with oil. Score the top into squares before baking (makes serving much easier).</li>
+            <li>Bake at 375°F 45–50 min until deeply golden. Rest 10 min before cutting. Serve warm or at room temperature.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Squeezing the spinach dry is the single most important step — wet filling makes soggy phyllo. Spinach is exceptional for perimenopause: iron, folate, magnesium, and vitamin K for bone health. Feta adds calcium. This is a genuinely impressive Sunday dinner that feeds 6–8. It's excellent at room temperature, which means it travels well and is great for leftovers. Kit loves the crispy phyllo layers.</div>
+      </div>
+    </div>
+
+    <!-- 1. Paneer Kati Roll -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Paneer Kati Roll</div>
+          <div class="recipe-meta">Copycat · Portland Indian · 30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">Indian</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">Kit-friendly</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">14 oz</span>paneer, cut into 1-inch cubes</li>
+            <li><span class="ing-amount">1 cup</span>plain Greek yogurt</li>
+            <li><span class="ing-amount">2 tsp</span>garam masala</li>
+            <li><span class="ing-amount">1 tsp</span>cumin</li>
+            <li><span class="ing-amount">1 tsp</span>turmeric</li>
+            <li><span class="ing-amount">1 tsp</span>chili powder</li>
+            <li><span class="ing-amount">1 tsp</span>ginger, grated</li>
+            <li><span class="ing-amount">3 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tbsp</span>neutral oil</li>
+            <li><span class="ing-amount">1</span>red onion, thinly sliced</li>
+            <li><span class="ing-amount">1</span>red bell pepper, thinly sliced</li>
+            <li><span class="ing-amount">4</span>large flour tortillas or parathas</li>
+            <li><em style="color:var(--text-tertiary);">— Chutneys & Toppings —</em></li>
+            <li><span class="ing-amount">¼ cup</span>store-bought green chutney (mint-cilantro)</li>
+            <li><span class="ing-amount">¼ cup</span>tamarind chutney</li>
+            <li><span class="ing-amount">½ cup</span>fresh cilantro</li>
+            <li><span class="ing-amount">1</span>lime, cut into wedges</li>
+            <li>Chaat masala, to finish (optional but great)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Mix yogurt, garam masala, cumin, turmeric, chili powder, ginger, garlic, and salt in a bowl. Add paneer cubes and toss to coat. Marinate 15–30 min at room temp.</li>
+            <li>Heat oil in a cast-iron skillet or grill pan over medium-high. Add paneer in a single layer — don't crowd. Sear 2–3 min per side until deeply golden and slightly charred. Remove.</li>
+            <li>In the same pan, sauté sliced onion and bell pepper with a pinch of cumin and salt until soft and lightly charred, about 4–5 min.</li>
+            <li>Warm flour tortillas or parathas directly over a gas flame or in a dry pan until pliable with charred spots.</li>
+            <li>Assemble: spread green chutney on the tortilla, layer on paneer, sautéed onion-pepper, cilantro. Drizzle tamarind chutney over everything. Squeeze lime, sprinkle chaat masala. Roll tightly.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Green chutney (mint-cilantro) and tamarind chutney are sold at Fred Meyer or any Indian grocery — buy both, they keep for weeks. Chaat masala is the finishing touch that makes it taste like the real thing: sour, salty, a little funky. Kit loves this as-is — fully vegetarian and satisfying. Joey: lighter on the chili powder in the marinade.</div>
+      </div>
+    </div>
+
+    <!-- 2. Korean-Hawaiian Burrito -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Korean-Hawaiian Burrito</div>
+          <div class="recipe-meta">Fusion · 35 min + marinate · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Korean-Hawaiian</span>
+            <span class="tag">Fusion</span>
+            <span class="tag">Bulgogi</span>
+            <span class="tag">Build your own</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><em style="color:var(--text-tertiary);">— Bulgogi Beef —</em></li>
+            <li><span class="ing-amount">1½ lbs</span>ribeye or sirloin, sliced very thin</li>
+            <li><span class="ing-amount">3 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">1 tbsp</span>brown sugar</li>
+            <li><span class="ing-amount">1 tbsp</span>mirin</li>
+            <li><span class="ing-amount">3 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>fresh ginger, grated</li>
+            <li><span class="ing-amount">2 tbsp</span>pear or apple, grated <em style="color:var(--text-tertiary);">(tenderizes)</em></li>
+            <li><em style="color:var(--text-tertiary);">— Hawaiian-Inspired Fixings —</em></li>
+            <li><span class="ing-amount">2 cups</span>steamed jasmine rice</li>
+            <li><span class="ing-amount">½ cup</span>kimchi, chopped</li>
+            <li><span class="ing-amount">½ cup</span>fresh pineapple, diced</li>
+            <li><span class="ing-amount">½</span>cucumber, thinly sliced</li>
+            <li><span class="ing-amount">¼ cup</span>pickled daikon, sliced</li>
+            <li><span class="ing-amount">2</span>scallions, sliced</li>
+            <li><span class="ing-amount">4</span>large flour tortillas (burrito-size)</li>
+            <li>Sriracha mayo + sesame seeds, to finish</li>
+            <li><em style="color:var(--text-tertiary);">Kit: same burrito with crispy tofu using the same marinade</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Combine soy sauce, sesame oil, brown sugar, mirin, garlic, ginger, and grated pear. Add thinly sliced beef and marinate at least 30 min (overnight is better).</li>
+            <li>Make sriracha mayo: mix 3 tbsp mayo with 1 tbsp sriracha. Set aside.</li>
+            <li>Cook beef in a hot cast-iron or wok over high heat in small batches. Don't crowd — 1–2 min per batch until caramelized. Set aside.</li>
+            <li>Warm tortillas in a dry pan or over a flame. Lay flat and build: rice, beef (or tofu for Kit), kimchi, pineapple, cucumber, pickled daikon, scallions, sriracha mayo.</li>
+            <li>Fold the sides in, roll tightly from the bottom, and sear seam-side down in the same hot pan 1–2 min to seal. Slice in half and serve.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The grated pear or apple in the marinade is the Korean trick that makes cheap cuts taste like tenderloin — it breaks down the muscle fibers. Pineapple on the burrito might sound wrong; it's not. The sweet acidity cuts through the savory beef and kimchi perfectly. Kit: same marinade on cubed firm tofu, pan-fried until crispy — build her burrito with the same toppings.</div>
+      </div>
+    </div>
+
+    <!-- 3. Bo Luc Lac (Luc Lac Shaking Beef) with Tomato Fried Rice -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Bo Luc Lac — Shaking Beef</div>
+          <div class="recipe-meta">Copycat · Luc Lac Vietnamese Kitchen, Portland · 25 min + marinate · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">Vietnamese</span>
+            <span class="tag">Luc Lac</span>
+            <span class="tag">Special occasion</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><em style="color:var(--text-tertiary);">— Shaking Beef —</em></li>
+            <li><span class="ing-amount">1½ lbs</span>beef tenderloin or ribeye, cut into 1½-inch cubes</li>
+            <li><span class="ing-amount">2 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>oyster sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>fish sauce</li>
+            <li><span class="ing-amount">1 tsp</span>brown sugar</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">2 tbsp</span>Hennessy or brandy <em style="color:var(--text-tertiary);">(Luc Lac's signature)</em></li>
+            <li><span class="ing-amount">2 tbsp</span>butter</li>
+            <li><span class="ing-amount">1 tbsp</span>neutral oil</li>
+            <li><em style="color:var(--text-tertiary);">— Watercress Salad —</em></li>
+            <li><span class="ing-amount">2 cups</span>watercress or mixed greens</li>
+            <li><span class="ing-amount">1 cup</span>cherry tomatoes, halved</li>
+            <li><span class="ing-amount">½</span>red onion, very thinly sliced + soaked in rice vinegar 10 min</li>
+            <li><span class="ing-amount">2 tbsp</span>rice vinegar + 1 tsp sugar + 1 tsp salt <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><em style="color:var(--text-tertiary);">— Tomato Fried Rice —</em></li>
+            <li><span class="ing-amount">2 cups</span>day-old cooked jasmine rice</li>
+            <li><span class="ing-amount">2 tbsp</span>tomato paste</li>
+            <li><span class="ing-amount">1 tbsp</span>butter</li>
+            <li><span class="ing-amount">2 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tbsp</span>soy sauce</li>
+            <li><em style="color:var(--text-tertiary);">— Dipping Salt —</em></li>
+            <li>Juice of 1 lime + 1 tsp salt + ½ tsp black pepper</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Marinate beef: combine soy sauce, oyster sauce, fish sauce, brown sugar, garlic, and Hennessy. Add beef cubes and toss. Marinate 30 min at room temp or up to overnight in fridge.</li>
+            <li>Make tomato fried rice: sauté garlic in butter until golden. Add day-old rice and break up clumps. Stir in tomato paste, soy sauce, and a pinch of sugar. Toss until rice is uniformly orange-red. Keep warm.</li>
+            <li>Make dipping salt: mix lime juice, salt, and black pepper in a small bowl. Set aside.</li>
+            <li>Arrange watercress and tomatoes on a platter. Toss pickled onion slices over the top with their vinegar dressing.</li>
+            <li>Get a cast-iron or wok screaming hot. Add oil. Cook beef in small batches (never crowd the pan) 1–2 min per side, shaking the pan as you go to sear all sides. In the final 30 seconds, add butter and garlic to each batch. Pour pan juices over the watercress bed.</li>
+            <li>Lay the shaking beef directly over the watercress. Serve immediately with tomato fried rice and dipping salt alongside.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The Hennessy is non-negotiable for the Luc Lac experience — it caramelizes against the hot pan and gives the beef its distinctively rich, slightly boozy glaze. Day-old rice is essential for fried rice; fresh rice makes it mushy. Beef goes on top of the watercress raw so the hot juices wilt it slightly — that's the move. Joey: serve his beef on plain rice with less dipping sauce.</div>
+      </div>
+    </div>
+
+    <!-- 4. Luc Lac-Style Pho Bo -->
+    <div class="recipe-card" data-category="soups">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-soups">Soups</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Pho Bo — Vietnamese Beef Noodle Soup</div>
+          <div class="recipe-meta">Copycat · Luc Lac Vietnamese Kitchen, Portland · 3 hrs (mostly hands-off) · Serves 6</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">Luc Lac</span>
+            <span class="tag">Weekend project</span>
+            <span class="tag">Freezes well</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><em style="color:var(--text-tertiary);">— Broth (the whole game) —</em></li>
+            <li><span class="ing-amount">2 lbs</span>beef bones (knuckle + marrow), roasted</li>
+            <li><span class="ing-amount">1 lb</span>beef brisket</li>
+            <li><span class="ing-amount">1</span>large yellow onion, halved and charred</li>
+            <li><span class="ing-amount">3-inch</span>knob ginger, halved and charred</li>
+            <li><span class="ing-amount">3</span>star anise</li>
+            <li><span class="ing-amount">3</span>whole cloves</li>
+            <li><span class="ing-amount">1</span>cinnamon stick</li>
+            <li><span class="ing-amount">1 tsp</span>coriander seeds</li>
+            <li><span class="ing-amount">1 tbsp</span>fish sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>sugar</li>
+            <li><span class="ing-amount">10 cups</span>water</li>
+            <li><em style="color:var(--text-tertiary);">— Bowls —</em></li>
+            <li><span class="ing-amount">1 lb</span>dried flat rice noodles (bánh phở)</li>
+            <li><span class="ing-amount">½ lb</span>beef sirloin, sliced paper-thin (freeze 20 min first)</li>
+            <li><em style="color:var(--text-tertiary);">— Table Herbs —</em></li>
+            <li>Bean sprouts, Thai basil, fresh jalapeño, lime wedges, hoisin, sriracha</li>
+            <li><em style="color:var(--text-tertiary);">Kit: same broth with tofu and rice noodles — the broth is already vegetarian-adjacent, just skip the beef</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Char the onion and ginger directly over a gas flame or under the broiler until blackened on the outside. This is what gives pho its depth.</li>
+            <li>Toast star anise, cloves, cinnamon, and coriander in a dry pan 1–2 min until fragrant.</li>
+            <li>Roast beef bones at 425°F for 30 min. Blanch in boiling water 5 min, rinse clean — this removes impurities for a clear broth.</li>
+            <li>Combine bones, brisket, charred onion + ginger, toasted spices, fish sauce, and sugar in a large pot. Cover with 10 cups cold water. Bring to a boil, then reduce to a bare simmer. Simmer 2½–3 hours. Skim foam every 30 min.</li>
+            <li>Remove brisket after 90 min; slice thinly and refrigerate. Strain broth through a fine mesh sieve. Season with fish sauce, sugar, and salt until deeply savory and sweet.</li>
+            <li>Soak rice noodles in cold water 30 min, then cook in boiling water 30–60 seconds. Drain.</li>
+            <li>Build bowls: noodles, sliced cooked brisket + raw sirloin. Ladle boiling broth over everything — the raw sirloin cooks in the bowl. Serve immediately with the herb plate.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Charring the onion and ginger is the single most important step — it's where pho's signature sweet smokiness comes from. The broth freezes beautifully; make a double batch and freeze half. Luc Lac's version is notably sweet and clean — their secret is using rock sugar instead of regular sugar. Worth finding at an Asian grocery store.</div>
+      </div>
+    </div>
+
+    <!-- 5. Easy Greek Chicken Souvlaki -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Greek Chicken Souvlaki with Tzatziki & Pita</div>
+          <div class="recipe-meta">Mediterranean · 25 min + marinate · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Mediterranean</span>
+            <span class="tag">Easy</span>
+            <span class="tag">Heart healthy</span>
+            <span class="tag">30 minutes</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1½ lbs</span>chicken thighs, boneless skinless, cut into 1½-inch cubes</li>
+            <li><span class="ing-amount">3 tbsp</span>extra-virgin olive oil</li>
+            <li><span class="ing-amount">3 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1</span>lemon, zested + juiced</li>
+            <li><span class="ing-amount">2 tsp</span>dried oregano</li>
+            <li><span class="ing-amount">1 tsp</span>cumin</li>
+            <li><span class="ing-amount">1 tsp</span>smoked paprika</li>
+            <li><span class="ing-amount">½ tsp</span>salt + black pepper</li>
+            <li><span class="ing-amount">4</span>warm pita breads</li>
+            <li><em style="color:var(--text-tertiary);">— Quick Tzatziki —</em></li>
+            <li><span class="ing-amount">1 cup</span>Greek yogurt (full-fat)</li>
+            <li><span class="ing-amount">½</span>English cucumber, grated and squeezed dry</li>
+            <li><span class="ing-amount">1 clove</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tbsp</span>fresh dill or mint</li>
+            <li><span class="ing-amount">1 tbsp</span>lemon juice</li>
+            <li>Salt to taste</li>
+            <li><em style="color:var(--text-tertiary);">To serve: sliced tomato, red onion, cucumber, fresh parsley</em></li>
+            <li><em style="color:var(--text-tertiary);">Kit: same marinade on halloumi or paneer — sear 2 min per side</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Make marinade: whisk olive oil, garlic, lemon zest and juice, oregano, cumin, paprika, salt and pepper. Add chicken and toss. Marinate at least 30 min, up to overnight.</li>
+            <li>Make tzatziki: grate cucumber, squeeze out every drop of water in a clean towel. Mix with yogurt, garlic, dill, lemon juice, and salt. Refrigerate until serving.</li>
+            <li>Thread chicken onto skewers (or use a grill pan). Grill or pan-sear over medium-high heat 3–4 min per side until charred and cooked through.</li>
+            <li>Warm pita over a flame or in a dry pan until pliable with a little char.</li>
+            <li>Serve: lay pita flat, spread tzatziki generously, add chicken, sliced tomato, cucumber, and red onion. Wrap or leave open and eat with a fork.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Squeezing every drop of water from the cucumber is what separates good tzatziki from watery tzatziki — this step matters. Chicken thighs over breasts here — they stay juicy even with high-heat cooking. Kit: same marinade on halloumi slabs or paneer, seared 2–3 min per side in a dry pan until golden. The halloumi souvlaki is genuinely better than most chicken versions.</div>
+      </div>
+    </div>
+
+    <!-- 6. Café Yumm Bowl -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Café Yumm Bowl — Copycat</div>
+          <div class="recipe-meta">Copycat · Café Yumm!, Portland · 20 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">Healthy Bowl</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">Portland classic</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 cups</span>organic brown rice (dry), cooked</li>
+            <li><span class="ing-amount">1 can</span>black beans (15 oz), warmed and drained</li>
+            <li><span class="ing-amount">½–¾ cup</span>Yumm Sauce (see recipe in Sauces)</li>
+            <li><span class="ing-amount">1</span>avocado, sliced</li>
+            <li><span class="ing-amount">1 cup</span>cherry tomatoes, diced</li>
+            <li><span class="ing-amount">½ cup</span>sharp cheddar, shredded</li>
+            <li><span class="ing-amount">¼ cup</span>black olives, sliced</li>
+            <li><span class="ing-amount">¼ cup</span>sour cream</li>
+            <li><span class="ing-amount">¼ cup</span>fresh cilantro, chopped</li>
+            <li><span class="ing-amount">½ cup</span>fresh mild salsa</li>
+            <li><em style="color:var(--text-tertiary);">Add grilled chicken, tofu, or tempeh for protein</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook brown rice and warm black beans separately. Season beans with a pinch of cumin and salt.</li>
+            <li>Build the bowl: generous scoop of rice as the base.</li>
+            <li>Spoon black beans over one side. Ladle Yumm Sauce generously over the center — don't be shy, this is the whole point.</li>
+            <li>Add avocado, tomato, cheddar, olives, and sour cream around the bowl.</li>
+            <li>Finish with cilantro and salsa. Serve immediately.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The Yumm Sauce is what makes or breaks this — make the full batch (recipe in Sauces & Dressings) and keep it in the fridge all week. The bowls come together in 5 min once the sauce is made and rice is cooked. Kit loves this as-is. Joey: swap brown rice for white and go easy on the olives.</div>
+      </div>
+    </div>
+
+    <!-- 2. Yumm Sauce -->
+    <div class="recipe-card" data-category="sauces">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-sauces">Sauces & Dressings</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Yumm Sauce — Copycat</div>
+          <div class="recipe-meta">Copycat · Café Yumm!, Portland · 10 min · Makes ~2 cups</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">Vegan</span>
+            <span class="tag">Blender</span>
+            <span class="tag">Keeps 1 week</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">½ cup</span>nutritional yeast, toasted</li>
+            <li><span class="ing-amount">½ cup</span>slivered almonds</li>
+            <li><span class="ing-amount">3 tbsp</span>canned chickpeas, drained</li>
+            <li><span class="ing-amount">½ cup</span>neutral oil (avocado or canola)</li>
+            <li><span class="ing-amount">¼ cup</span>fresh lemon juice</li>
+            <li><span class="ing-amount">2 tbsp</span>water</li>
+            <li><span class="ing-amount">1 tbsp</span>white vinegar</li>
+            <li><span class="ing-amount">1 tsp</span>garlic powder</li>
+            <li><span class="ing-amount">½ tsp</span>dried basil</li>
+            <li><span class="ing-amount">¾ tsp</span>salt</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Toast nutritional yeast: add to a dry pan over medium heat, stir frequently for 3–5 min until it turns deep yellow and smells nutty. Transfer to a plate immediately and let cool 5 min — don't skip this step or it will create a vacuum in the blender.</li>
+            <li>Soak slivered almonds in very hot water for 10–15 min to soften. Drain.</li>
+            <li>Add all ingredients to a blender. Blend on high 60–90 seconds until completely smooth and creamy.</li>
+            <li>Taste and adjust salt and lemon. The sauce should be tangy, savory, and slightly nutty. Thin with a splash of water if needed.</li>
+            <li>Store in a sealed jar in the fridge up to 1 week. It will thicken as it chills — stir before using.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Nutritional yeast is the key ingredient — find it at Fred Meyer in the natural foods aisle (Bob's Red Mill or Bragg brand). Don't substitute with regular yeast. The sauce is vegan, gluten-free, and incredibly versatile — use it on grain bowls, as a veggie dip, on eggs, or as a sandwich spread. Keeps all week.</div>
+      </div>
+    </div>
+
+    <!-- 3. Thai Fresh Salad Rolls with Peanut Sauce -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Thai Fresh Salad Rolls with Peanut Sauce</div>
+          <div class="recipe-meta">Copycat · Thai restaurants · 30 min · Makes 12 rolls · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">No cook</span>
+            <span class="tag">Kit-friendly</span>
+            <span class="tag">Fun to make together</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">12</span>rice paper wrappers (8-inch)</li>
+            <li><span class="ing-amount">3 oz</span>rice vermicelli noodles, cooked and cooled</li>
+            <li><span class="ing-amount">1 lb</span>medium shrimp, cooked and halved lengthwise <em style="color:var(--text-tertiary);">(or tofu for Kit)</em></li>
+            <li><span class="ing-amount">1 head</span>butter lettuce, leaves separated</li>
+            <li><span class="ing-amount">1</span>English cucumber, julienned</li>
+            <li><span class="ing-amount">2</span>carrots, julienned</li>
+            <li><span class="ing-amount">1</span>avocado, thinly sliced</li>
+            <li><span class="ing-amount">1 cup</span>fresh mint leaves</li>
+            <li><span class="ing-amount">1 cup</span>fresh Thai or regular basil</li>
+            <li><em style="color:var(--text-tertiary);">— Peanut Sauce —</em></li>
+            <li><span class="ing-amount">⅓ cup</span>creamy peanut butter</li>
+            <li><span class="ing-amount">2 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>rice vinegar</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">1 tbsp</span>lime juice</li>
+            <li><span class="ing-amount">1 tsp</span>fresh ginger, grated</li>
+            <li><span class="ing-amount">1 clove</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>sriracha (optional)</li>
+            <li><span class="ing-amount">3–4 tbsp</span>warm water, to thin</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Make peanut sauce: whisk all sauce ingredients together, adding warm water until pourable. Taste — should be salty, tangy, rich, with a little heat. Set aside.</li>
+            <li>Cook vermicelli according to package (usually just soaking in boiling water 5 min). Rinse under cold water and drain. Toss with a drop of sesame oil to prevent sticking.</li>
+            <li>Set up a rolling station: a wide shallow bowl of very warm water, all fillings prepped and within reach.</li>
+            <li>Dip one rice paper in warm water 10–15 seconds until just pliable (not fully soft — it keeps softening). Lay flat on a clean surface.</li>
+            <li>Layer in the center: lettuce leaf, vermicelli, cucumber, carrot, avocado, herbs, and 3–4 shrimp halves (or tofu). Don't overfill.</li>
+            <li>Fold the bottom edge up over the filling, fold in the sides, then roll tightly away from you. The paper seals itself. Repeat.</li>
+            <li>Serve immediately with peanut sauce for dipping.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The rice paper tears if you soak it too long — 10 seconds is usually enough, it softens as you roll. Set everything out assembly-line style and make it a family roll-your-own dinner. Kit and Joey can build their own. Peanut sauce keeps 5 days in the fridge — make double.</div>
+      </div>
+    </div>
+
+    <!-- 4. Boke Bowl-style Pulled Pork Ramen -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Boke Bowl-Style Pulled Pork Ramen</div>
+          <div class="recipe-meta">Copycat · Boke Bowl, Portland · 45 min active / broth overnight · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">Ramen</span>
+            <span class="tag">Weekend project</span>
+            <span class="tag">Kid-approved</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><em style="color:var(--text-tertiary);">— Pork Broth (start the night before) —</em></li>
+            <li><span class="ing-amount">2 lbs</span>pork shoulder, cut into 2 pieces</li>
+            <li><span class="ing-amount">6 cups</span>chicken broth</li>
+            <li><span class="ing-amount">3 tbsp</span>white miso paste</li>
+            <li><span class="ing-amount">3 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, smashed</li>
+            <li><span class="ing-amount">1-inch</span>knob ginger, sliced</li>
+            <li><span class="ing-amount">4</span>dried shiitake mushrooms</li>
+            <li><span class="ing-amount">2 tbsp</span>mirin</li>
+            <li><em style="color:var(--text-tertiary);">— Toppings —</em></li>
+            <li><span class="ing-amount">4 portions</span>fresh ramen noodles (or dried)</li>
+            <li><span class="ing-amount">4</span>soft-boiled eggs, halved</li>
+            <li><span class="ing-amount">2 heads</span>baby bok choy, halved and blanched</li>
+            <li><span class="ing-amount">1 can</span>bamboo shoots, drained</li>
+            <li><span class="ing-amount">4</span>scallions, sliced thin</li>
+            <li>Sesame seeds, nori strips, chili oil to finish</li>
+            <li><em style="color:var(--text-tertiary);">Kit: same broth with tofu and mushrooms instead of pork</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Night before: combine pork, broth, garlic, ginger, dried shiitakes, soy sauce, and mirin in a slow cooker. Cook on low 8–10 hours (or high 5–6 hrs) until pork shreds easily.</li>
+            <li>Remove pork and shred with two forks. Strain broth into a pot. Whisk in miso paste and sesame oil. Taste — season with more soy sauce if needed. Keep warm.</li>
+            <li>Soft-boil eggs: bring water to a boil, lower eggs in gently, cook exactly 6½ minutes, transfer immediately to ice water. Peel when cool.</li>
+            <li>Cook noodles according to package in a separate pot of boiling water. Drain.</li>
+            <li>Build bowls: noodles in the bottom, ladle hot broth over generously, top with pulled pork, bok choy, bamboo shoots, soft egg, and scallions.</li>
+            <li>Finish with sesame seeds, a strip of nori, and chili oil for adults.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The broth is the whole game — starting it the night before in the slow cooker means zero effort day-of. Miso goes in at the end, never boiled, or it loses its flavor. Kit: make her a small pot of the same broth with cubed tofu and extra mushrooms — it's genuinely great. Kids love ramen; this one will become a requested weekend dinner.</div>
+      </div>
+    </div>
+
+    <!-- 5. Boke Bowl Red Chile Turmeric Curry Bowl -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Boke Bowl-Style Red Chile Turmeric Curry</div>
+          <div class="recipe-meta">Copycat · Boke Bowl, Portland · 30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">Curry</span>
+            <span class="tag">30 minutes</span>
+            <span class="tag">Coconut milk</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><em style="color:var(--text-tertiary);">— Curry Broth —</em></li>
+            <li><span class="ing-amount">1 can</span>full-fat coconut milk (14 oz)</li>
+            <li><span class="ing-amount">1 can</span>crushed tomatoes (14 oz)</li>
+            <li><span class="ing-amount">2 tsp</span>turmeric</li>
+            <li><span class="ing-amount">1 tbsp</span>sambal oelek or red chile paste</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1-inch</span>ginger, grated</li>
+            <li><span class="ing-amount">1</span>onion, diced</li>
+            <li><span class="ing-amount">2</span>makrut lime leaves <em style="color:var(--text-tertiary);">(or 1 tsp lime zest)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>fish sauce <em style="color:var(--text-tertiary);">(or soy sauce)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>olive oil</li>
+            <li><em style="color:var(--text-tertiary);">— Green Onion Ginger Rice —</em></li>
+            <li><span class="ing-amount">2 cups</span>jasmine rice</li>
+            <li><span class="ing-amount">3</span>scallions, sliced</li>
+            <li><span class="ing-amount">1 tsp</span>fresh ginger, grated</li>
+            <li><em style="color:var(--text-tertiary);">— Asian Fennel Slaw —</em></li>
+            <li><span class="ing-amount">1</span>fennel bulb, shaved thin</li>
+            <li><span class="ing-amount">1 cup</span>napa cabbage, shredded</li>
+            <li><span class="ing-amount">2 tbsp</span>rice vinegar + 1 tsp sesame oil + pinch salt</li>
+            <li>Protein: fried chicken, shrimp, or tofu for Kit</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Make green onion ginger rice: cook jasmine rice, then fold in sliced scallions and grated ginger while still hot. Set aside.</li>
+            <li>Make fennel slaw: toss shaved fennel and napa cabbage with rice vinegar, sesame oil, and salt. Refrigerate while you make the curry.</li>
+            <li>Warm olive oil in a wide pan over medium heat. Sauté onion 5 min, add garlic, ginger, and turmeric, cook 1 min until fragrant.</li>
+            <li>Add sambal, crushed tomatoes, and coconut milk. Add lime leaves. Simmer 12–15 min until thickened and bright orange. Stir in fish sauce. Taste.</li>
+            <li>Build bowls: green onion ginger rice, ladle of curry broth over the top, protein of choice, and a generous pile of fennel slaw on the side.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The fennel slaw is Boke's signature touch — the cool, anise-y crunch against the warm spiced curry is exactly what makes it feel like a restaurant bowl. Makrut lime leaves (also called kaffir lime) are sold frozen at Asian grocery stores; keep a bag in the freezer. Kit: tofu crisped in a dry pan works perfectly in this broth.</div>
+      </div>
+    </div>
+
+    <!-- 6. Boke Bowl Miso Mushroom Steam Buns -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Boke Bowl-Style Miso Mushroom Steam Buns</div>
+          <div class="recipe-meta">Copycat · Boke Bowl, Portland · 30 min · Makes 8 buns</div>
+          <div class="tag-row">
+            <span class="tag">Copycat</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">Steam buns</span>
+            <span class="tag">Fun project</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">8</span>store-bought steam buns or Hawaiian rolls, split</li>
+            <li><span class="ing-amount">2 cups</span>shiitake mushrooms, stems removed and sliced</li>
+            <li><span class="ing-amount">2 tbsp</span>white miso paste</li>
+            <li><span class="ing-amount">1 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>mirin</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">2 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>fresh ginger, grated</li>
+            <li><span class="ing-amount">2 tbsp</span>neutral oil</li>
+            <li><em style="color:var(--text-tertiary);">— Toppings —</em></li>
+            <li><span class="ing-amount">½</span>cucumber, thinly sliced</li>
+            <li><span class="ing-amount">2</span>scallions, sliced thin</li>
+            <li>Sriracha mayo (sriracha + mayo, 1:3)</li>
+            <li>Sesame seeds, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Whisk together miso, soy sauce, mirin, sesame oil, garlic, and ginger to make the glaze.</li>
+            <li>Heat neutral oil in a skillet over medium-high. Add mushrooms in a single layer — don't stir for 2–3 min until deeply golden. Then toss.</li>
+            <li>Pour the miso glaze over the mushrooms and toss to coat. Cook 1–2 min more until caramelized and sticky. Remove from heat.</li>
+            <li>Steam the buns: arrange in a bamboo steamer or colander set over boiling water. Cover and steam 3–4 min until pillowy and soft. (Or microwave with a damp paper towel, 30 seconds.)</li>
+            <li>Assemble: open each bun, add a spoonful of miso mushrooms, a few cucumber slices, scallions, a drizzle of sriracha mayo, and sesame seeds.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Store-bought steam buns are sold frozen at most Asian grocery stores (look for the plain white bao buns). Hawaiian rolls split open work great as a substitute. The miso mushroom filling takes about 8 minutes start to finish and is the kind of thing you'll want to eat straight from the pan. Great as a side alongside the ramen, or as a standalone snack.</div>
+      </div>
+    </div>
+
+    <!-- 7. Linguine alle Vongole (newest — Family Recipe Night Aug 23) -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Linguine alle Vongole</div>
+          <div class="recipe-meta">Family recipe · Italian coastal · 30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Family Recipe Night</span>
+            <span class="tag">Clams</span>
+            <span class="tag">Low cholesterol</span>
+            <span class="tag">Heart healthy</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">12 oz</span>linguine</li>
+            <li><span class="ing-amount">2 lbs</span>littleneck clams, scrubbed</li>
+            <li><span class="ing-amount">½ cup</span>dry white wine</li>
+            <li><span class="ing-amount">5 cloves</span>garlic, thinly sliced</li>
+            <li><span class="ing-amount">⅓ cup</span>extra-virgin olive oil</li>
+            <li><span class="ing-amount">½ tsp</span>red pepper flakes</li>
+            <li><span class="ing-amount">½ cup</span>fresh flat-leaf parsley, chopped</li>
+            <li><span class="ing-amount">1</span>lemon, zested + juiced</li>
+            <li>Salt, to taste</li>
+            <li><em style="color:var(--text-tertiary);">Kit: linguine, olive oil, garlic, parm (pull before clams)</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Soak clams in cold salted water 20 min, scrub clean. Discard any that don't close when tapped.</li>
+            <li>Cook linguine in heavily salted water until 2 min shy of al dente. Reserve 1 cup pasta water before draining.</li>
+            <li>In a large wide pan, warm olive oil over medium heat. Add garlic and red pepper flakes, cook 1–2 min until fragrant but not browned.</li>
+            <li>Add white wine and clams. Cover and cook over medium-high heat 5–7 min, shaking the pan occasionally, until clams open. Discard any that don't open.</li>
+            <li>Add drained pasta directly to the clam pan. Toss vigorously, adding pasta water a splash at a time until sauce is silky and coats every strand.</li>
+            <li>Off heat, stir in parsley and lemon zest. Squeeze lemon juice over the top. Taste and season. Serve immediately.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The pasta finishes cooking in the clam sauce — that's how the starch binds everything together. Don't skip the pasta water. Kit gets her portion pulled after step 3 with butter + parm. Clams are an outstanding iron source (one of the best), great for the kids when they'll eat them.</div>
+      </div>
+    </div>
+
+    <!-- 2. Sunday Roast Chicken with Preserved Lemon -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Sunday Roast Chicken with Preserved Lemon</div>
+          <div class="recipe-meta">Family recipe · Mediterranean · 1 hr 20 min · Serves 4–5</div>
+          <div class="tag-row">
+            <span class="tag">Family Recipe Night</span>
+            <span class="tag">One pan</span>
+            <span class="tag">Mediterranean</span>
+            <span class="tag">Whole chicken</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 whole</span>chicken (3½–4 lbs)</li>
+            <li><span class="ing-amount">1</span>preserved lemon, quartered <em style="color:var(--text-tertiary);">(or 1 fresh lemon)</em></li>
+            <li><span class="ing-amount">6 cloves</span>garlic, smashed</li>
+            <li><span class="ing-amount">3 tbsp</span>extra-virgin olive oil</li>
+            <li><span class="ing-amount">2 tsp</span>dried herbes de Provence</li>
+            <li><span class="ing-amount">1 tsp</span>salt + black pepper</li>
+            <li><span class="ing-amount">1 lb</span>baby potatoes, halved</li>
+            <li><span class="ing-amount">3</span>carrots, cut into chunks</li>
+            <li><span class="ing-amount">1 bulb</span>fennel, sliced into wedges</li>
+            <li><span class="ing-amount">1</span>red onion, cut into wedges</li>
+            <li><em style="color:var(--text-tertiary);">Kit: separate sheet pan — same veg + white beans + feta</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 425°F. Pat chicken dry. Stuff cavity with preserved lemon quarters and half the garlic.</li>
+            <li>Rub chicken all over with 2 tbsp olive oil, herbes de Provence, salt and pepper.</li>
+            <li>Toss potatoes, carrots, fennel, onion, and remaining garlic with 1 tbsp olive oil and salt. Scatter in a large roasting pan.</li>
+            <li>Set chicken breast-side up on top of the vegetables. Roast 60–75 min until juices run clear and skin is deeply golden. Rest 10 min before carving.</li>
+            <li>Kit: roast her veggie pan with a can of drained white beans and crumbled feta for the last 15 min.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Preserved lemon (found at most grocery stores) gives it a deeply savory, slightly briny flavor that fresh lemon can't replicate — worth seeking out. Resting the chicken before carving keeps it juicy. Kids almost universally love roast chicken; plain potatoes on the side seal the deal.</div>
+      </div>
+    </div>
+
+    <!-- 3. Miso Salmon Rice Bowls -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Miso Salmon Rice Bowls</div>
+          <div class="recipe-meta">Family recipe · Mediterranean / Asian · 25 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Mediterranean Night</span>
+            <span class="tag">Salmon</span>
+            <span class="tag">Heart healthy</span>
+            <span class="tag">25 minutes</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">4 fillets</span>salmon (5–6 oz each)</li>
+            <li><span class="ing-amount">3 tbsp</span>white miso paste</li>
+            <li><span class="ing-amount">2 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>mirin</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">2 cups</span>cooked rice (white or brown)</li>
+            <li><span class="ing-amount">1</span>English cucumber, sliced</li>
+            <li><span class="ing-amount">1</span>avocado, sliced</li>
+            <li><span class="ing-amount">1 cup</span>snap peas</li>
+            <li><span class="ing-amount">1 tsp</span>fresh ginger, grated</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame seeds, to finish</li>
+            <li><em style="color:var(--text-tertiary);">Kit: same bowl with crispy tofu, same miso glaze</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Whisk together miso, soy sauce, mirin, sesame oil, and ginger to make the glaze.</li>
+            <li>Pat salmon dry. Brush generously with glaze. Let sit 10 min (or up to 1 hr in fridge).</li>
+            <li>Roast salmon at 425°F for 12–14 min until just cooked through and caramelized. Or broil 6–8 min for crispier glaze.</li>
+            <li>Build bowls: rice base, salmon on top, cucumber, avocado, and snap peas alongside. Spoon any extra glaze over the top. Finish with sesame seeds.</li>
+            <li>Kit: cube firm tofu, pat dry, toss in the same glaze, and roast alongside salmon for 15–18 min until golden.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 White miso is milder and sweeter than red — stick with white for this one. The miso glaze is the workhorse: it caramelizes beautifully and works equally well on tofu. Joey can go lighter on the sauce with plain rice + cucumber + avocado.</div>
+      </div>
+    </div>
+
+    <!-- 4. Ginger Tofu & Vegetable Stir-fry -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Ginger Tofu & Vegetable Stir-fry</div>
+          <div class="recipe-meta">Family recipe · Mediterranean Night · 25 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Mediterranean Night</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">Add shrimp or chicken</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">14 oz</span>extra-firm tofu, pressed and cubed</li>
+            <li><span class="ing-amount">2 cups</span>bok choy, chopped</li>
+            <li><span class="ing-amount">1 cup</span>shiitake mushrooms, sliced</li>
+            <li><span class="ing-amount">1 cup</span>snap peas</li>
+            <li><span class="ing-amount">3</span>scallions, sliced</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tbsp</span>fresh ginger, grated</li>
+            <li><span class="ing-amount">3 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">1 tbsp</span>rice vinegar</li>
+            <li><span class="ing-amount">2 tbsp</span>neutral oil</li>
+            <li>Brown rice, to serve</li>
+            <li><em style="color:var(--text-tertiary);">Add shrimp or chicken to wok for Joey + Justin</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Press tofu between paper towels under a heavy pan for 15 min. Cube into 1-inch pieces.</li>
+            <li>Heat 1 tbsp oil in wok or large skillet over high heat. Add tofu in a single layer; don't touch for 3–4 min until golden. Flip and cook 2 more min. Remove.</li>
+            <li>Add remaining oil. Stir-fry garlic and ginger 30 seconds. Add mushrooms, cook 2 min. Add bok choy and snap peas, cook 2 min more.</li>
+            <li>Whisk together soy sauce, sesame oil, and rice vinegar. Pour over vegetables and toss to coat.</li>
+            <li>Return tofu to pan. Toss gently. Serve over brown rice, topped with scallions.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 High heat the whole way through — stir-fry steams instead of sears if the pan isn't hot enough. Shiitakes are one of the best plant-based iron sources. Joey mod: milder sauce (less soy), white rice, chicken cooked separately in the same pan.</div>
+      </div>
+    </div>
+
+    <!-- 5. Mediterranean Grain Bowl with Roasted Chickpeas -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mediterranean Grain Bowl with Roasted Chickpeas</div>
+          <div class="recipe-meta">Family recipe · Healthy Bowl Night · 30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Healthy Bowl</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">Add chicken</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1½ cups</span>farro or freekeh (dry)</li>
+            <li><span class="ing-amount">1 can</span>chickpeas (15 oz), drained and rinsed</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">1 tsp</span>cumin + smoked paprika</li>
+            <li><span class="ing-amount">1</span>English cucumber, diced</li>
+            <li><span class="ing-amount">1 cup</span>cherry tomatoes, halved</li>
+            <li><span class="ing-amount">¼</span>red onion, finely diced</li>
+            <li><span class="ing-amount">½ cup</span>Kalamata olives</li>
+            <li><span class="ing-amount">½ cup</span>crumbled feta</li>
+            <li><span class="ing-amount">¼ cup</span>fresh herbs (parsley, mint, or both)</li>
+            <li><span class="ing-amount">½ cup</span>store-bought tzatziki</li>
+            <li>Lemon, for squeezing</li>
+            <li><em style="color:var(--text-tertiary);">Justin + Joey: grilled chicken on top</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook farro according to package (usually 25–30 min in salted water). Drain and fluff.</li>
+            <li>Toss chickpeas with olive oil, cumin, paprika, and salt. Roast at 400°F for 25 min until crispy.</li>
+            <li>Build bowls: farro base, roasted chickpeas, cucumber, tomatoes, red onion, olives, and feta.</li>
+            <li>Add a generous spoonful of tzatziki. Scatter fresh herbs. Squeeze lemon over everything.</li>
+            <li>Justin + Joey: add grilled chicken. Joey's version: white rice instead of farro, skip olives.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Farro has nearly twice the iron of white rice — worth the swap. Roasting chickpeas until truly crispy is key; they should crunch when you bite them. Store-bought tzatziki saves 15 minutes and is genuinely good.</div>
+      </div>
+    </div>
+
+    <!-- 6. Quinoa Bowl with Salmon & Tahini Dressing -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Quinoa Bowl with Salmon & Tahini Dressing</div>
+          <div class="recipe-meta">Family recipe · Healthy Bowl Night · 30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Healthy Bowl</span>
+            <span class="tag">Heart healthy</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">High protein</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1½ cups</span>quinoa (dry)</li>
+            <li><span class="ing-amount">4 fillets</span>salmon (5 oz each)</li>
+            <li><span class="ing-amount">1 can</span>chickpeas (15 oz), drained</li>
+            <li><span class="ing-amount">3 cups</span>arugula</li>
+            <li><span class="ing-amount">1 cup</span>cherry tomatoes, halved</li>
+            <li><span class="ing-amount">1</span>cucumber, sliced</li>
+            <li><span class="ing-amount">3 tbsp</span>tahini</li>
+            <li><span class="ing-amount">3 tbsp</span>lemon juice</li>
+            <li><span class="ing-amount">1 clove</span>garlic, minced</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">3 tbsp</span>water (to thin dressing)</li>
+            <li><em style="color:var(--text-tertiary);">Kit: same bowl, chickpeas in place of salmon</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook quinoa: rinse, then simmer in 3 cups water 15 min. Fluff and season with salt.</li>
+            <li>Toss chickpeas with olive oil and salt; roast at 400°F 20 min until crispy.</li>
+            <li>Season salmon with olive oil, salt, and pepper. Roast at 425°F 12–14 min or until just cooked through.</li>
+            <li>Whisk tahini, lemon juice, garlic, olive oil, and water until smooth and pourable. Season with salt.</li>
+            <li>Build bowls: quinoa base, arugula, salmon (or chickpeas for Kit), tomatoes, cucumber. Drizzle generously with tahini dressing.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Quinoa is one of the only complete plant proteins — and it's high in iron. The tahini dressing is incredibly versatile; make a double batch to use all week. Joey mod: plain rice instead of quinoa, skip the arugula — it's bitter. Salmon on top with lemon butter.</div>
+      </div>
+    </div>
+
+    <!-- 7. Mediterranean Flatbread Pizza -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mediterranean Flatbread Pizza</div>
+          <div class="recipe-meta">Family recipe · Pizza Night · 20 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Pizza Night</span>
+            <span class="tag">Mediterranean</span>
+            <span class="tag">20 minutes</span>
+            <span class="tag">Olive oil base</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">4</span>flatbreads or naan</li>
+            <li><span class="ing-amount">3 tbsp</span>extra-virgin olive oil</li>
+            <li><span class="ing-amount">2 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 cup</span>fresh cherry tomatoes, halved</li>
+            <li><span class="ing-amount">1½ cups</span>fresh mozzarella, torn</li>
+            <li><span class="ing-amount">½ cup</span>artichoke hearts, roughly chopped</li>
+            <li><span class="ing-amount">⅓ cup</span>Kalamata olives, sliced</li>
+            <li><span class="ing-amount">⅓ cup</span>crumbled feta</li>
+            <li>Fresh basil, to finish</li>
+            <li><em style="color:var(--text-tertiary);">Justin: add sardines or anchovies on his half</em></li>
+            <li><em style="color:var(--text-tertiary);">Joey: red sauce + extra cheese on his section</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 450°F with a baking sheet inside (or use a pizza stone).</li>
+            <li>Mix olive oil and minced garlic. Brush generously over flatbreads.</li>
+            <li>Scatter tomatoes, mozzarella, artichoke hearts, and olives over each flatbread. Crumble feta on top.</li>
+            <li>Bake directly on the hot baking sheet 8–10 min until edges are golden and cheese is bubbling.</li>
+            <li>Finish with fresh basil and a final drizzle of olive oil.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Pre-heating the pan is the trick that makes flatbread pizza crispy on the bottom. Sardines or anchovies on Justin's half are barely detectable but add omega-3s and depth. Quick weeknight win.</div>
+      </div>
+    </div>
+
+    <!-- 8. White Pizza with Ricotta & Spinach -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">White Pizza with Ricotta & Spinach</div>
+          <div class="recipe-meta">Family recipe · Pizza Night · 25 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Pizza Night</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">Lower sat fat</span>
+            <span class="tag">Vegetarian</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>pizza dough (store-bought)</li>
+            <li><span class="ing-amount">1 cup</span>whole-milk ricotta</li>
+            <li><span class="ing-amount">2 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">3 cups</span>baby spinach, wilted and squeezed dry</li>
+            <li><span class="ing-amount">1 cup</span>fresh tomatoes, sliced thin</li>
+            <li><span class="ing-amount">2 tbsp</span>extra-virgin olive oil</li>
+            <li><span class="ing-amount">¼ tsp</span>red pepper flakes</li>
+            <li>Salt + pepper</li>
+            <li>Fresh basil, to finish</li>
+            <li><em style="color:var(--text-tertiary);">Joey: red sauce half with mozzarella — same crust, two pizzas</em></li>
+            <li><em style="color:var(--text-tertiary);">Justin: add sardines or anchovies on his half</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 450°F with pizza stone or baking sheet inside.</li>
+            <li>Wilt spinach in a hot dry pan 2 min, squeeze out all water. Mix with ricotta, garlic, red pepper flakes, salt and pepper.</li>
+            <li>Stretch dough onto a floured surface into a rough oval. Brush with olive oil.</li>
+            <li>Spread ricotta-spinach mixture over the dough. Arrange tomato slices on top. Drizzle with olive oil.</li>
+            <li>Bake on the hot stone or pan 12–14 min until crust is golden and bottom is crisp.</li>
+            <li>Finish with fresh basil. Let rest 2 min before slicing.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Ricotta is lower in saturated fat and sodium than mozzarella, and creamier in texture. Squeezing all the water out of the spinach is non-negotiable — wet spinach = soggy pizza. Wilting spinach into the crust also means Kit gets iron without even registering it.</div>
+      </div>
+    </div>
+
+    <!-- 9. Tuna Pasta with Spinach & Capers -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Tuna Pasta with Spinach & Capers</div>
+          <div class="recipe-meta">Family recipe · Italian Night · 30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Italian Night</span>
+            <span class="tag">Heart healthy</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">Pantry meal</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">12 oz</span>spaghetti or linguine</li>
+            <li><span class="ing-amount">2 cans</span>tuna in olive oil (5 oz each), drained</li>
+            <li><span class="ing-amount">4 tbsp</span>extra-virgin olive oil</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, sliced thin</li>
+            <li><span class="ing-amount">2 tbsp</span>capers, rinsed</li>
+            <li><span class="ing-amount">1 cup</span>cherry tomatoes, halved</li>
+            <li><span class="ing-amount">3 cups</span>baby spinach</li>
+            <li><span class="ing-amount">½ tsp</span>red pepper flakes</li>
+            <li>Zest + juice of 1 lemon</li>
+            <li>Parmesan + fresh parsley, to finish</li>
+            <li><em style="color:var(--text-tertiary);">Kit: pull her portion before adding tuna — butter + parm + spinach</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook pasta in salted water until al dente. Reserve 1 cup pasta water before draining.</li>
+            <li>Warm olive oil in a large pan over medium heat. Add garlic and red pepper flakes; sauté 2 min until golden at the edges.</li>
+            <li>Add cherry tomatoes; cook 3–4 min until they begin to burst. Add capers.</li>
+            <li>For Kit: pull her portion of pasta now, toss with butter, parm, and a handful of wilted spinach.</li>
+            <li>Add tuna to the pan, breaking into chunks. Add spinach and toss until wilted. Add pasta, tossing with pasta water until sauce coats everything.</li>
+            <li>Off heat, stir in lemon zest and juice. Finish with parmesan and parsley.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Tuna in olive oil (not water) is the move here — Genova or Ortiz brands are worth it. The pasta water is what makes the sauce silky. Capers add a briny punch that balances the richness; leave them out for Joey if needed.</div>
+      </div>
+    </div>
+
+    <!-- 10. Pasta e Fagioli -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Pasta e Fagioli</div>
+          <div class="recipe-meta">Family recipe · Italian Night · 35 min · Serves 4–6</div>
+          <div class="tag-row">
+            <span class="tag">Italian Night</span>
+            <span class="tag">Blue Zone classic</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">Vegetarian</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 cans</span>cannellini beans (15 oz each), drained</li>
+            <li><span class="ing-amount">1 cup</span>ditalini or small pasta</li>
+            <li><span class="ing-amount">1 can</span>crushed tomatoes (14 oz)</li>
+            <li><span class="ing-amount">4 cups</span>vegetable or chicken broth</li>
+            <li><span class="ing-amount">5 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">2 sprigs</span>fresh rosemary</li>
+            <li><span class="ing-amount">3 tbsp</span>extra-virgin olive oil</li>
+            <li><span class="ing-amount">1</span>Parmesan rind <em style="color:var(--text-tertiary);">(optional but excellent)</em></li>
+            <li>Salt + pepper</li>
+            <li>Parmesan + good olive oil, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Warm olive oil in a large pot over medium heat. Add garlic and rosemary sprigs; cook 2 min until fragrant.</li>
+            <li>Add crushed tomatoes, cook 3 min. Add broth and parmesan rind if using. Bring to a gentle simmer.</li>
+            <li>Add 1½ cans of beans whole. Mash the remaining ½ can with a fork and stir in — this thickens the broth beautifully.</li>
+            <li>Simmer 15 min. Remove rosemary sprigs and parmesan rind.</li>
+            <li>Add pasta directly to the pot and cook according to package until al dente, stirring often.</li>
+            <li>Serve immediately with a heavy drizzle of good olive oil and lots of parmesan.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The pasta swells and absorbs liquid as it sits — serve right away or the dish becomes very thick (still good, just different). White beans are excellent for iron and plant protein. This is the meal eaten most in the Blue Zone centenarian villages of Sardinia and Calabria.</div>
+      </div>
+    </div>
+
+    <!-- 11. Shakshuka with Warm Pita -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Shakshuka with Warm Pita</div>
+          <div class="recipe-meta">Family recipe · Wildcard Night · 25 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Wildcard Night</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">One pan</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">6</span>large eggs</li>
+            <li><span class="ing-amount">1 can</span>crushed tomatoes (28 oz)</li>
+            <li><span class="ing-amount">1</span>red bell pepper, diced</li>
+            <li><span class="ing-amount">1</span>onion, diced</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>cumin</li>
+            <li><span class="ing-amount">1 tsp</span>smoked paprika</li>
+            <li><span class="ing-amount">½ tsp</span>red pepper flakes</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">½ cup</span>crumbled feta</li>
+            <li>Fresh parsley or cilantro, to finish</li>
+            <li>Warm pita, for serving</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Warm olive oil in a large oven-safe skillet. Sauté onion and bell pepper over medium heat 5–6 min until soft.</li>
+            <li>Add garlic, cumin, paprika, and red pepper flakes. Cook 1 min until fragrant.</li>
+            <li>Pour in crushed tomatoes. Season with salt and simmer 8–10 min until sauce thickens and deepens in color.</li>
+            <li>Make 6 shallow wells in the sauce with the back of a spoon. Crack an egg into each well.</li>
+            <li>Cover and cook over medium-low heat 5–7 min until whites are set but yolks are still slightly runny.</li>
+            <li>Scatter feta and fresh herbs on top. Bring the pan to the table with warm pita.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Eggs set quickly — start checking at 5 min. The yolk should still be a little jammy when you pull it; it continues cooking in the residual heat. Joey mod: skip the red pepper flakes and serve his egg on plain rice if the sauce isn't his thing. Tomatoes are a good iron source and vitamin C boosts absorption.</div>
+      </div>
+    </div>
+
+    <!-- 12. Roasted Veggie Tacos with Avocado Crema -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Roasted Veggie Tacos with Avocado Crema</div>
+          <div class="recipe-meta">Family recipe · Mexican Night · 35 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Mexican Night</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">Plant-forward</span>
+            <span class="tag">Add shrimp or chicken</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 large</span>sweet potato, diced ½-inch</li>
+            <li><span class="ing-amount">2</span>zucchini, diced</li>
+            <li><span class="ing-amount">1 cup</span>corn kernels (fresh, frozen, or canned)</li>
+            <li><span class="ing-amount">2 tsp</span>cumin</li>
+            <li><span class="ing-amount">1 tsp</span>smoked paprika</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">8</span>corn tortillas</li>
+            <li><span class="ing-amount">1</span>avocado</li>
+            <li><span class="ing-amount">⅓ cup</span>Greek yogurt</li>
+            <li><span class="ing-amount">2</span>limes, juiced</li>
+            <li><span class="ing-amount">1 cup</span>red cabbage, shredded</li>
+            <li><span class="ing-amount">⅓ cup</span>cotija, crumbled</li>
+            <li>Cilantro + hot sauce, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Toss sweet potato and zucchini with olive oil, cumin, paprika, and salt. Spread on a sheet pan (don't crowd). Roast at 425°F for 20 min, add corn for last 5 min.</li>
+            <li>Blend avocado, Greek yogurt, lime juice, and a pinch of salt until smooth. This is the avocado crema.</li>
+            <li>Shred cabbage and toss with a squeeze of lime and a pinch of salt.</li>
+            <li>Warm tortillas directly over a gas flame or in a dry skillet until slightly charred.</li>
+            <li>Build tacos: roasted veg, cabbage slaw, avocado crema, cotija, cilantro. Hot sauce on the side.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The avocado crema (blended avocado + Greek yogurt + lime) is the secret weapon — it's tangy, creamy, and much lighter than sour cream. Joey mod: quesadilla with the same roasted filling + cheese if tacos aren't his preference. Justin + Joey can add grilled shrimp or chicken.</div>
+      </div>
+    </div>
+
+    <!-- 13. Fish Tacos with Mango Salsa -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Fish Tacos with Mango Salsa</div>
+          <div class="recipe-meta">Family recipe · Mexican Night · 20 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Mexican Night</span>
+            <span class="tag">Heart healthy</span>
+            <span class="tag">Low cholesterol</span>
+            <span class="tag">20 minutes</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1½ lbs</span>cod or tilapia fillets</li>
+            <li><span class="ing-amount">1 tsp</span>chili powder + cumin + garlic powder</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">8</span>corn tortillas</li>
+            <li><span class="ing-amount">1</span>ripe mango, diced small</li>
+            <li><span class="ing-amount">¼</span>red onion, finely diced</li>
+            <li><span class="ing-amount">½ cup</span>cilantro, roughly chopped</li>
+            <li><span class="ing-amount">2</span>limes, juiced</li>
+            <li><span class="ing-amount">1</span>jalapeño, minced <em style="color:var(--text-tertiary);">(optional)</em></li>
+            <li><span class="ing-amount">1 cup</span>cabbage, shredded</li>
+            <li><span class="ing-amount">⅓ cup</span>Greek yogurt + squeeze of lime <em style="color:var(--text-tertiary);">(crema)</em></li>
+            <li><em style="color:var(--text-tertiary);">Kit: grilled halloumi or roasted cauliflower instead of fish</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Make mango salsa: combine mango, red onion, cilantro, lime juice, and jalapeño (if using). Season with salt. Set aside.</li>
+            <li>Mix Greek yogurt with a squeeze of lime and pinch of salt for the crema.</li>
+            <li>Pat fish dry. Season with chili powder, cumin, garlic powder, salt. Brush with olive oil.</li>
+            <li>Grill or pan-sear fish over medium-high heat 3–4 min per side until just cooked through and slightly charred. Break into large flakes.</li>
+            <li>Warm tortillas. Build tacos: fish, mango salsa, cabbage slaw, lime crema. Squeeze extra lime over the top.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The mango salsa is genuinely kid-friendly — sweet, bright, and not spicy. Build-your-own taco night is the easiest way to make everyone happy: set everything out and let Joey load his however he wants. Kit gets halloumi (sear 2–3 min per side in a dry pan) — same taco setup.</div>
+      </div>
+    </div>
+
+    <!-- 14. Sweet Potato Cottage Cheese Bake -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Sweet Potato Cottage Cheese Bake</div>
+          <div class="recipe-meta">@gymtrav · Oven · 35 min · Serves 4 · 251 cal · 18g protein</div>
+          <div class="tag-row">
+            <span class="tag">Vegetarian</span>
+            <span class="tag">High protein</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">Meal prep</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">14 oz</span>sweet potatoes <em style="color:var(--text-tertiary);">(~2–2.5 medium), cooked and mashed</em></li>
+            <li><span class="ing-amount">1 cup</span>low-fat cottage cheese</li>
+            <li><span class="ing-amount">1 cup</span>mushrooms, sliced</li>
+            <li><span class="ing-amount">⅓ cup</span>red bell pepper, diced</li>
+            <li><span class="ing-amount">⅓ cup</span>red onion, diced</li>
+            <li><span class="ing-amount">3 cups</span>baby spinach, packed</li>
+            <li><span class="ing-amount">⅓ cup</span>parmesan, grated</li>
+            <li><span class="ing-amount">4</span>large eggs</li>
+            <li>Salt, paprika + pepper, to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F (180°C). Cook and mash the sweet potatoes until smooth.</li>
+            <li>Press the mashed sweet potato into a round baking dish to form an even base.</li>
+            <li>Mix the cottage cheese, mushrooms, red pepper, red onion, spinach, eggs, and seasonings together, then pour over the sweet potato base.</li>
+            <li>Top with grated parmesan and bake for 35 minutes until set and golden on top.</li>
+            <li>Let rest a few minutes before slicing into wedges.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Rated 8.5/10 by @gymtrav — great as meal prep, holds well in the fridge for a few days. Iron from spinach + eggs makes this a strong pick for the kids. Fully vegetarian and Kit-approved.</div>
+      </div>
+    </div>
+
+    <!-- 2. Tofu & Veggie Fried Rice -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Tofu & Veggie Fried Rice</div>
+          <div class="recipe-meta">Family recipe · One pan · 25 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Kit-friendly</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">Add chicken/shrimp</span>
+            <span class="tag">25 minutes</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">14 oz</span>firm tofu, pressed and cubed</li>
+            <li><span class="ing-amount">3 cups</span>cooked rice, day-old if possible</li>
+            <li><span class="ing-amount">3</span>eggs, beaten</li>
+            <li><span class="ing-amount">1 cup</span>frozen peas and carrots</li>
+            <li><span class="ing-amount">3</span>scallions, sliced</li>
+            <li><span class="ing-amount">3 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>fresh ginger, grated</li>
+            <li><span class="ing-amount">3 tbsp</span>soy sauce</li>
+            <li><span class="ing-amount">1 tbsp</span>sesame oil</li>
+            <li><span class="ing-amount">2 tbsp</span>neutral oil (avocado or vegetable)</li>
+            <li>Sriracha or chili oil, to finish <em style="color:var(--text-tertiary);">(adults)</em></li>
+            <li><em style="color:var(--text-tertiary);">Optional: cooked chicken or shrimp for Joey + Justin</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Heat 1 tbsp neutral oil in a large skillet or wok over high heat. Add tofu cubes and cook without stirring for 3–4 min until golden and crisp on one side, then toss and cook another 2 min. Remove and set aside.</li>
+            <li>Add remaining oil to the pan. Sauté garlic and ginger for 30 seconds until fragrant.</li>
+            <li>Add peas and carrots, cook 2 min. Push everything to the side and scramble the eggs in the empty space, then fold into the veg.</li>
+            <li>Add the cold rice, breaking up any clumps. Press it against the pan and let it sit 1–2 min to get some crispy bits, then stir.</li>
+            <li>Pour in soy sauce and sesame oil, toss everything to coat. Fold in the crispy tofu and scallions.</li>
+            <li>Serve as-is for Kit; add cooked chicken or shrimp to the rest of the pan for Joey and Justin.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Day-old rice is key — fresh rice is too wet and steams instead of frying. Great iron sources here: tofu, eggs, and peas all contribute. A squeeze of lemon or orange over the bowl helps everyone absorb the iron better.</div>
+      </div>
+    </div>
+
+    <!-- 2. Spinach Pasta with Butter & Parm / Ground Turkey Meat Sauce -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Spinach Pasta — Two Ways</div>
+          <div class="recipe-meta">Family recipe · Stovetop · 30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Kit: butter & parm</span>
+            <span class="tag">Joey + Justin: turkey sauce</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">One pot of pasta</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">12 oz</span>pasta (spaghetti or penne)</li>
+            <li><span class="ing-amount">4 cups</span>fresh baby spinach</li>
+            <li><span class="ing-amount">3 tbsp</span>butter</li>
+            <li><span class="ing-amount">½ cup</span>parmesan, grated</li>
+            <li><span class="ing-amount">2 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">Salt + pepper</span>to taste</li>
+            <li style="margin-top:6px;"><em style="color:var(--text-tertiary);">— Turkey Meat Sauce —</em></li>
+            <li><span class="ing-amount">1 lb</span>ground turkey</li>
+            <li><span class="ing-amount">24 oz</span>jarred marinara</li>
+            <li><span class="ing-amount">½</span>onion, diced</li>
+            <li><span class="ing-amount">2 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>Italian seasoning</li>
+            <li><span class="ing-amount">1 tbsp</span>olive oil</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Start the turkey sauce first: heat olive oil in a saucepan over medium heat. Sauté onion 3–4 min, add garlic 1 min, then add turkey and break it up until cooked through. Stir in marinara and Italian seasoning. Simmer on low while pasta cooks.</li>
+            <li>Cook pasta in well-salted boiling water until al dente. Reserve ½ cup pasta water, then drain.</li>
+            <li>In the same pot, melt butter over medium-low. Add garlic and cook 30 seconds. Add spinach and toss until just wilted, 1–2 min.</li>
+            <li>Add pasta back in and toss with the spinach, butter, and parmesan. Loosen with pasta water as needed. Season well.</li>
+            <li>Serve Kit a bowl straight from the pot. Ladle turkey meat sauce over the rest for Joey and Justin.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Wilting spinach into the pasta rather than serving it on top is the move — Kit gets the iron without even noticing it. Ground turkey keeps the sauce lean and heart-healthy for Justin. Pair with a glass of OJ or bell pepper strips on the side to maximize iron absorption.</div>
+      </div>
+    </div>
+
+    <!-- 3. Cheeseburger Stuffed Sweet Potatoes -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Cheeseburger Stuffed Sweet Potatoes</div>
+          <div class="recipe-meta">@eatinghealthyfeed · Oven · 45 min · Serves 6 · 540 cal · 32g protein</div>
+          <div class="tag-row">
+            <span class="tag">Ground beef</span>
+            <span class="tag">Sweet potato</span>
+            <span class="tag">Kid approved</span>
+            <span class="tag">High protein</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">3 medium</span>sweet potatoes, halved</li>
+            <li><span class="ing-amount">½ lb</span>ground beef</li>
+            <li><span class="ing-amount">½ cup</span>shredded cheddar</li>
+            <li><span class="ing-amount">¼ cup</span>burger sauce <em style="color:var(--text-tertiary);">(or mixed mayo + ketchup)</em></li>
+            <li><span class="ing-amount">1</span>dill pickle, sliced</li>
+            <li><span class="ing-amount">½</span>onion, diced</li>
+            <li><span class="ing-amount">1 tsp</span>paprika, salt and pepper</li>
+            <li>Chives, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Roast the sweet potato halves cut-side down at 425°F for about 30 minutes, until soft all the way through.</li>
+            <li>Brown the ground beef with the onion and paprika over medium-high heat until crisp and cooked through.</li>
+            <li>Scoop a little flesh from the center of each half to make room, then mash it back into the beef for extra body.</li>
+            <li>Stuff the halves with the beef mixture, top with cheddar, and return to the oven until the cheese melts.</li>
+            <li>Finish with a drizzle of burger sauce, pickle slices, and a scatter of chives.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Roast the sweet potatoes until a knife slides through easily — undercooked centers won't scoop or hold the filling. Crisp the beef well before stuffing; that browned edge is what gives it the real burger flavor.</div>
+      </div>
+    </div>
+
+    <!-- 2. Mexican Street Corn Chicken Crunch Bowl -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mexican Street Corn Chicken Crunch Bowl</div>
+          <div class="recipe-meta">@eatinghealthyfeed · Stovetop · 25 min · Serves 2 · 510 cal · 38g protein</div>
+          <div class="tag-row">
+            <span class="tag">Chicken</span>
+            <span class="tag">Rice bowl</span>
+            <span class="tag">25 minutes</span>
+            <span class="tag">High protein</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 large</span>chicken breast, sliced</li>
+            <li><span class="ing-amount">1 cup</span>cooked white rice</li>
+            <li><span class="ing-amount">½ cup</span>corn kernels</li>
+            <li><span class="ing-amount">½</span>avocado, diced</li>
+            <li><span class="ing-amount">2 tbsp</span>cotija, crumbled</li>
+            <li><span class="ing-amount">1 tbsp</span>mayo or Greek yogurt</li>
+            <li><span class="ing-amount">1 tsp</span>chili powder, salt and pepper</li>
+            <li>Cilantro + lime wedges, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Season the chicken with chili powder, salt, and pepper, then grill or sear until golden and cooked through.</li>
+            <li>Char the corn in a hot dry pan, then toss it with the mayo and a little cotija for that classic street-corn finish.</li>
+            <li>Rest the chicken a couple of minutes before slicing so the juices stay in the meat.</li>
+            <li>Build the bowl over the rice, arranging the sliced chicken, street corn, and avocado in their own sections.</li>
+            <li>Finish with the remaining cotija, torn cilantro, and lime wedges to squeeze over.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Char the corn in a dry hot pan until it picks up dark spots — that blistering is where the street-corn flavor lives. Season the chicken before it hits the pan so the chili powder toasts into a crust instead of sitting raw on top.</div>
+      </div>
+    </div>
+
+    <!-- 3. Gochujang Gnocchi & Garlic Beef -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Gochujang Gnocchi & Garlic Beef</div>
+          <div class="recipe-meta">@eatinghealthyfeed · Stovetop · 25 min · Serves 4 · 560 cal · 30g protein</div>
+          <div class="tag-row">
+            <span class="tag">Gnocchi</span>
+            <span class="tag">Ground beef</span>
+            <span class="tag">Spicy</span>
+            <span class="tag">25 minutes</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>potato gnocchi</li>
+            <li><span class="ing-amount">½ lb</span>ground beef</li>
+            <li><span class="ing-amount">2 tbsp</span>gochujang</li>
+            <li><span class="ing-amount">½ cup</span>cream or half-and-half</li>
+            <li><span class="ing-amount">¼ cup</span>grated parmesan</li>
+            <li><span class="ing-amount">3 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>soy sauce</li>
+            <li>Scallions + red pepper flakes, to finish</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Brown the ground beef with the garlic over medium-high heat until deeply crisp, then set a portion aside for topping.</li>
+            <li>Stir the gochujang and soy sauce into the beef and let it cook for a minute so the paste mellows and deepens.</li>
+            <li>Pour in the cream and parmesan, stirring into a smooth, glossy sauce.</li>
+            <li>Boil the gnocchi until they float to the top, then drain and fold them straight into the sauce.</li>
+            <li>Toss everything to coat, then top with the reserved crispy beef, scallions, and a pinch of red pepper flakes.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Crisp the beef hard and set some aside for the top — that crunchy contrast against the creamy sauce is what makes the dish. Cook the gnocchi just until they float; a minute too long turns them soft and gummy in the sauce.</div>
+      </div>
+    </div>
+
+    <!-- 4. High-Protein Blender Pancakes -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">High-Protein Blender Pancakes</div>
+          <div class="recipe-meta">Social save · Blender + oven · 25 min · Serves 4–6</div>
+          <div class="tag-row">
+            <span class="tag">Protein powder</span>
+            <span class="tag">Kid approved</span>
+            <span class="tag">Blender</span>
+            <span class="tag">Breakfast for dinner</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 cup</span>whole milk <em style="color:var(--text-tertiary);">(Fairlife for extra protein)</em></li>
+            <li><span class="ing-amount">6</span>eggs</li>
+            <li><span class="ing-amount">½ cup</span>vanilla protein powder <em style="color:var(--text-tertiary);">(Clean Simple Eats recommended)</em></li>
+            <li><span class="ing-amount">½ cup</span>all-purpose flour</li>
+            <li><span class="ing-amount">¼ tsp</span>salt</li>
+            <li><span class="ing-amount">1 tsp</span>vanilla extract</li>
+            <li><span class="ing-amount">1 tsp</span>baking powder</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F.</li>
+            <li>Add all ingredients to a blender and blend until smooth.</li>
+            <li>Pour into a greased baking dish or sheet pan.</li>
+            <li>Bake 15–20 minutes until golden brown and set in the center.</li>
+            <li>Slice and serve with syrup.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Joey and Kit approved with Uncle Bob's Butter Country syrup. Fairlife milk bumps the protein even higher. These bake up more like a Dutch baby / sheet pancake than individual flapjacks — easy to slice and serve for a crowd.</div>
+      </div>
+    </div>
+
+    <!-- 2. Melon-Prosciutto Salad -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Melon-Prosciutto Salad</div>
+          <div class="recipe-meta">Experience Life · No-cook · 15 min · Serves 2</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Summer</span>
+            <span class="tag">15 minutes</span>
+            <span class="tag">Gluten free</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">½</span>cantaloupe, scooped with a melon baller</li>
+            <li><span class="ing-amount">½</span>honeydew melon, scooped with a melon baller</li>
+            <li><span class="ing-amount">8 oz</span>small fresh mozzarella balls</li>
+            <li><span class="ing-amount">3 tbsp</span>minced fresh parsley</li>
+            <li><span class="ing-amount">3 tbsp</span>chopped fresh basil</li>
+            <li><span class="ing-amount">3 tbsp</span>chopped fresh mint</li>
+            <li>Flaky salt, to taste</li>
+            <li><span class="ing-amount">4 oz</span>prosciutto, sliced or torn into pieces</li>
+            <li><span class="ing-amount">¼ cup</span>extra-virgin olive oil <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tsp</span>dried oregano <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">2 tbsp</span>white balsamic or apple-cider vinegar <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>lemon juice <em style="color:var(--text-tertiary);">(dressing)</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a large bowl, mix the melon balls, mozzarella, and herbs.</li>
+            <li>In a smaller bowl, whisk the dressing ingredients together.</li>
+            <li>Drizzle the dressing over the salad and toss to coat.</li>
+            <li>Sprinkle the salt over the fruit, then top with the prosciutto and serve immediately.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and fast — great for a hot summer night. Toss right before serving so the melon doesn't sit in the dressing and get watery.</div>
+      </div>
+    </div>
+
+    <!-- 2. Mediterranean Smashed Chickpeas -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mediterranean Smashed Chickpeas</div>
+          <div class="recipe-meta">Experience Life · No-cook · 15 min · Serves 2</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">15 minutes</span>
+            <span class="tag">High protein</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 can</span>chickpeas (15 oz), drained and rinsed</li>
+            <li><span class="ing-amount">½</span>red onion, diced</li>
+            <li><span class="ing-amount">1</span>medium cucumber, diced</li>
+            <li><span class="ing-amount">2 tbsp</span>minced fresh dill</li>
+            <li><span class="ing-amount">3 tbsp</span>minced Castelvetrano olives</li>
+            <li><span class="ing-amount">¼ cup</span>canned artichoke hearts, roughly chopped</li>
+            <li><span class="ing-amount">2 tbsp</span>chopped dried cranberries or cherries</li>
+            <li><span class="ing-amount">¼ cup</span>crumbled feta cheese</li>
+            <li><span class="ing-amount">¼ cup</span>loosely packed parsley, minced</li>
+            <li><span class="ing-amount">⅓ cup</span>plain full-fat Greek yogurt <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tsp</span>dried oregano <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">½ tsp</span>ground coriander <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 clove</span>garlic, finely minced <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">3 tbsp</span>lemon juice <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li><span class="ing-amount">1 tbsp</span>extra-virgin olive oil <em style="color:var(--text-tertiary);">(dressing)</em></li>
+            <li>Sea salt + black pepper, to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a medium bowl, use a fork or potato masher to roughly mash half the chickpeas. Leave the rest whole.</li>
+            <li>Add the remaining salad ingredients except the parsley, and mix thoroughly.</li>
+            <li>In a small bowl, whisk the dressing ingredients. If the dressing seems too thick, add a splash of water.</li>
+            <li>Dress the salad and top with the reserved parsley. Add more salt and pepper to taste, and serve.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and meal-prep friendly — holds well in the fridge for a few days, making it an easy lunchbox or quick-lunch option.</div>
+      </div>
+    </div>
+
+    <!-- 3. Crab-Avocado Wraps -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Crab-Avocado Wraps</div>
+          <div class="recipe-meta">Experience Life · No-cook · 20 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">No cook</span>
+            <span class="tag">Lettuce wraps</span>
+            <span class="tag">20 minutes</span>
+            <span class="tag">Seafood</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1</span>ripe avocado</li>
+            <li><span class="ing-amount">⅓ cup</span>mayonnaise</li>
+            <li><span class="ing-amount">1 tbsp</span>lemon juice, plus more for serving</li>
+            <li><span class="ing-amount">1 tsp</span>Old Bay seasoning</li>
+            <li><span class="ing-amount">2 tbsp</span>finely diced red bell pepper</li>
+            <li><span class="ing-amount">1 rib</span>celery, finely diced</li>
+            <li><span class="ing-amount">½ cup</span>drained canned sweet corn</li>
+            <li><span class="ing-amount">1 cup</span>lump crabmeat</li>
+            <li><span class="ing-amount">1 head</span>butter lettuce, leaves washed and patted dry</li>
+            <li><span class="ing-amount">3 tbsp</span>minced green onion</li>
+            <li>Flaky salt, to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>In a food processor, purée half the avocado with the mayonnaise, lemon juice, and Old Bay. Dice the other half of the avocado.</li>
+            <li>In a large bowl, mix the avocado mayo with the diced avocado, bell pepper, celery, and sweet corn. Fold in the crabmeat gently, to keep it in large pieces.</li>
+            <li>Wrap the crab mixture in the lettuce leaves and top with the green onions, a squeeze of lemon, and a sprinkle of flaky salt, and serve.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 No-cook and ready in 20 minutes — a great light dinner or lunch on a hot day. Keep the crab folded in gently so it stays in big, satisfying lumps.</div>
+      </div>
+    </div>
+
+    <!-- 4. Beefy Skillet Lasagna -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Beefy Skillet Lasagna</div>
+          <div class="recipe-meta">One pan · ~30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Ground beef</span>
+            <span class="tag">One pan</span>
+            <span class="tag">30 minutes</span>
+            <span class="tag">Kid approved</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>ground beef</li>
+            <li><span class="ing-amount">½</span>yellow onion, diced</li>
+            <li><span class="ing-amount">2</span>garlic cloves, minced</li>
+            <li><span class="ing-amount">24 oz</span>jarred marinara sauce</li>
+            <li><span class="ing-amount">1½ cups</span>water or chicken broth</li>
+            <li><span class="ing-amount">8</span>lasagna noodles, broken into pieces</li>
+            <li><span class="ing-amount">1 tsp</span>Italian seasoning</li>
+            <li><span class="ing-amount">½ tsp</span>salt</li>
+            <li><span class="ing-amount">¼ tsp</span>black pepper</li>
+            <li><span class="ing-amount">¾ cup</span>plain whole-milk Greek yogurt <em style="color:var(--text-tertiary);">(swapped for ricotta)</em></li>
+            <li><span class="ing-amount">1½ cups</span>shredded mozzarella</li>
+            <li><span class="ing-amount">¼ cup</span>parmesan, grated <em style="color:var(--text-tertiary);">(plus extra for the yogurt)</em></li>
+            <li><span class="ing-amount">2 tbsp</span>fresh basil or parsley, chopped (optional)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Brown the ground beef with onion and garlic over medium-high heat, breaking it up as it cooks, about 6–8 minutes until no longer pink. Drain excess grease if needed.</li>
+            <li>Stir in marinara, water or broth, Italian seasoning, salt, and pepper. Bring to a simmer.</li>
+            <li>Add the broken lasagna noodles directly into the simmering sauce, stirring to submerge them. Cover and simmer, stirring occasionally, until noodles are tender, about 12–15 min.</li>
+            <li>Reduce heat to low. Dollop spoonfuls of the parmesan-stirred yogurt over the top, then sprinkle with mozzarella and parmesan. Cover and let sit 3–5 min until melted.</li>
+            <li>Garnish with basil or parsley if using. Serve hot straight from the pan.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Yogurt swap: stir a spoonful of parmesan into the Greek yogurt before dolloping it on — rounds out the tang so it reads more like a cheese filling. Add off the heat so it doesn't split. Leave out the yogurt dollops entirely if your kids prefer it more "saucy."</div>
+      </div>
+    </div>
+
+    <!-- 5. TMP Mini Meatloaf -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">TMP Mini Italian-Style Meatloaf</div>
+          <div class="recipe-meta"><a href="https://themodernproper.com/mini-italian-style-meatloaf-sheet-pan" target="_blank">The Modern Proper ↗</a> · Sheet pan · ~30 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Ground beef + pork</span>
+            <span class="tag">Sheet pan dinner</span>
+            <span class="tag">Freezer friendly</span>
+            <span class="tag">Kid approved</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>ground beef (80/20)</li>
+            <li><span class="ing-amount">½ lb</span>ground pork</li>
+            <li><span class="ing-amount">½ cup</span>breadcrumbs</li>
+            <li><span class="ing-amount">2</span>eggs</li>
+            <li><span class="ing-amount">¼ cup</span>milk</li>
+            <li><span class="ing-amount">1 tsp</span>Italian seasoning</li>
+            <li><span class="ing-amount">1 tsp</span>garlic powder</li>
+            <li><span class="ing-amount">1 tsp</span>onion powder</li>
+            <li><span class="ing-amount">½ tsp</span>salt + pepper</li>
+            <li><span class="ing-amount">4 tbsp</span>ketchup, divided</li>
+            <li><span class="ing-amount">1 tbsp</span>brown sugar</li>
+            <li><span class="ing-amount">1 tsp</span>Worcestershire sauce</li>
+            <li>Small potatoes + broccoli (for sheet pan)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F. Grease a large rimmed sheet pan.</li>
+            <li>Combine beef, pork, and breadcrumbs in a large bowl.</li>
+            <li>Whisk eggs, milk, salt, Italian seasoning, pepper, garlic powder, onion powder. Pour into meat with 3 tbsp ketchup. Mix with hands.</li>
+            <li>Form into 6–8 mini loaves and place on pan.</li>
+            <li>Mix remaining ketchup, brown sugar, Worcestershire + 1 tsp water. Spread on top of loaves.</li>
+            <li>Add potatoes and broccoli around loaves with olive oil and salt.</li>
+            <li>Bake 25–30 min until internal temp hits 165°F.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 TMP tip: mini loaves cook much faster than a full meatloaf — check temp at 25 min. These freeze beautifully. Double batch and freeze half for a future easy weeknight dinner.</div>
+      </div>
+    </div>
+
+    <!-- 6. Homemade Mac and Cheese -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Homemade Mac & Cheese</div>
+          <div class="recipe-meta">Family classic · Stovetop · ~25 min · Serves 6</div>
+          <div class="tag-row">
+            <span class="tag">Kids love it</span>
+            <span class="tag">Stovetop</span>
+            <span class="tag">Comfort food</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>elbow macaroni or shells</li>
+            <li><span class="ing-amount">4 tbsp</span>butter</li>
+            <li><span class="ing-amount">¼ cup</span>all-purpose flour</li>
+            <li><span class="ing-amount">2½ cups</span>whole milk, warmed</li>
+            <li><span class="ing-amount">½ cup</span>heavy cream</li>
+            <li><span class="ing-amount">2 cups</span>sharp cheddar, shredded</li>
+            <li><span class="ing-amount">1 cup</span>gruyère or mozzarella, shredded</li>
+            <li><span class="ing-amount">1 tsp</span>Dijon mustard</li>
+            <li><span class="ing-amount">½ tsp</span>garlic powder</li>
+            <li><span class="ing-amount">½ tsp</span>paprika</li>
+            <li>Salt + white pepper to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook pasta in well-salted water until al dente. Reserve ½ cup pasta water. Drain.</li>
+            <li>Melt butter in the same pot over medium heat. Whisk in flour and cook 1–2 min until golden.</li>
+            <li>Slowly whisk in warm milk and cream. Cook, stirring, until thickened — about 4 min.</li>
+            <li>Remove from heat. Stir in Dijon, garlic powder, paprika, salt + pepper.</li>
+            <li>Add cheese in handfuls, stirring until melted and smooth.</li>
+            <li>Fold in drained pasta. Loosen with pasta water if needed.</li>
+            <li>Serve immediately, or pour into a buttered baking dish, top with breadcrumbs and extra cheese, and broil 3–4 min until golden.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Always shred your own cheese — pre-shredded has anti-caking agents that make the sauce grainy. Gruyère gives it a grown-up depth; mozzarella keeps it kid-friendly and stretchy. Both work.</div>
+      </div>
+    </div>
+
+    <!-- 7. The Kitchn Stovetop Mac & Cheese -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Best Stovetop Mac & Cheese</div>
+          <div class="recipe-meta"><a href="https://www.thekitchn.com/how-to-make-the-best-macaroni-and-cheese-on-the-stove-82588" target="_blank">The Kitchn ↗</a> · Stovetop · 20 min · Serves 4 · Just 5 ingredients</div>
+          <div class="tag-row">
+            <span class="tag">5 ingredients</span>
+            <span class="tag">No roux</span>
+            <span class="tag">Kid favorite</span>
+            <span class="tag">20 minutes</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>elbow macaroni</li>
+            <li><span class="ing-amount">3 tbsp</span>unsalted butter</li>
+            <li><span class="ing-amount">3 tbsp</span>all-purpose flour</li>
+            <li><span class="ing-amount">3 cups</span>whole milk, warmed</li>
+            <li><span class="ing-amount">3 cups</span>sharp cheddar, freshly shredded</li>
+            <li>Salt + black pepper to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook macaroni in well-salted boiling water until al dente. Reserve ½ cup pasta water, then drain.</li>
+            <li>Melt butter in the same pot over medium heat. Whisk in flour and cook 1–2 min until lightly golden.</li>
+            <li>Slowly whisk in warm milk. Cook, stirring constantly, until thickened — about 4–5 min.</li>
+            <li>Remove from heat. Add cheese in handfuls, stirring until completely smooth.</li>
+            <li>Season well with salt and pepper. Fold in drained pasta.</li>
+            <li>Loosen with reserved pasta water as needed. Serve immediately.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The Kitchn's clever trick: always use freshly shredded cheese — pre-shredded bags contain anti-caking starch that makes the sauce grainy. Warming the milk first prevents lumps. This is the recipe that "tastes like childhood."</div>
+      </div>
+    </div>
+
+    <!-- 8. Creamy Sun-Dried Tomato Vinaigrette -->
+    <div class="recipe-card" data-category="sauce">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-sauce">Sauce</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Creamy Sun-Dried Tomato Vinaigrette</div>
+          <div class="recipe-meta">Family recipe · Blender · 5 min · Makes ~1 cup</div>
+          <div class="tag-row">
+            <span class="tag">5 minutes</span>
+            <span class="tag">Salad dressing</span>
+            <span class="tag">Gluten free</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">¼ cup</span>oil-packed sun-dried tomatoes</li>
+            <li><span class="ing-amount">¼ cup</span>mayonnaise or Greek yogurt</li>
+            <li><span class="ing-amount">2 tbsp</span>red wine vinegar</li>
+            <li><span class="ing-amount">1 tsp</span>Dijon mustard</li>
+            <li><span class="ing-amount">1 small</span>garlic clove</li>
+            <li><span class="ing-amount">⅓ cup</span>olive oil</li>
+            <li><span class="ing-amount">2–3 tbsp</span>water (to thin)</li>
+            <li>Salt + black pepper to taste</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Add sun-dried tomatoes, mayo (or Greek yogurt), red wine vinegar, Dijon, and garlic to a blender or food processor.</li>
+            <li>Blend until smooth.</li>
+            <li>With blender running, slowly drizzle in olive oil until emulsified.</li>
+            <li>Add water 1 tbsp at a time to reach desired consistency.</li>
+            <li>Season with salt and pepper. Taste and adjust.</li>
+            <li>Store in a jar in the fridge up to 1 week.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Greek yogurt makes it tangier and lighter; mayo makes it richer and creamier. Great on salads, grain bowls, roasted veggies, or as a dip for crusty bread.</div>
+      </div>
+    </div>
+
+    <!-- 9. Romesco -->
+    <div class="recipe-card" data-category="sauce">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-sauce">Sauce</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Romesco Sauce</div>
+          <div class="recipe-meta"><a href="https://www.bonappetit.com" target="_blank">Bon Appétit ↗</a> · Food processor · 10 min · Makes ~1½ cups</div>
+          <div class="tag-row">
+            <span class="tag">Roasted red pepper</span>
+            <span class="tag">Almonds</span>
+            <span class="tag">Gluten free</span>
+            <span class="tag">Great on everything</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 large</span>roasted red bell pepper (from jar)</li>
+            <li><span class="ing-amount">1</span>garlic clove, smashed</li>
+            <li><span class="ing-amount">½ cup</span>slivered almonds, toasted</li>
+            <li><span class="ing-amount">¼ cup</span>tomato purée</li>
+            <li><span class="ing-amount">2 tbsp</span>chopped flat-leaf parsley</li>
+            <li><span class="ing-amount">2 tbsp</span>sherry vinegar</li>
+            <li><span class="ing-amount">1 tsp</span>smoked paprika</li>
+            <li><span class="ing-amount">½ tsp</span>cayenne pepper</li>
+            <li><span class="ing-amount">½ cup</span>extra-virgin olive oil</li>
+            <li>Fine sea salt + freshly ground black pepper</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Pulse roasted pepper, garlic, almonds, tomato purée, parsley, sherry vinegar, smoked paprika, and cayenne in a food processor until very finely chopped.</li>
+            <li>With motor running, slowly drizzle in olive oil until emulsified and smooth.</li>
+            <li>Season generously with salt and pepper. Taste and adjust.</li>
+            <li>Store in an airtight jar in the fridge up to 5 days.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Incredible on grilled chicken, turkey sandwiches, roasted veggies, or simply spread on crusty bread. The smoked paprika is key — don't skip it. Use jarred roasted peppers for ease.</div>
+      </div>
+    </div>
+
+    <!-- 10. Whole30 Zuppa Toscana -->
+    <div class="recipe-card" data-category="soup">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-soup">Soup</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Whole30 Zuppa Toscana</div>
+          <div class="recipe-meta"><a href="https://40aprons.com/whole30-zuppa-toscana/" target="_blank">40 Aprons ↗</a> · One pot · ~35 min · Serves 6</div>
+          <div class="tag-row">
+            <span class="tag">Whole30</span>
+            <span class="tag">Dairy free</span>
+            <span class="tag">Gluten free</span>
+            <span class="tag">Italian sausage</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 lb</span>Italian sausage, casings removed</li>
+            <li><span class="ing-amount">4 strips</span>bacon, chopped</li>
+            <li><span class="ing-amount">1</span>yellow onion, diced</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">3–4</span>medium Yukon Gold potatoes, sliced thin</li>
+            <li><span class="ing-amount">4 cups</span>chicken broth</li>
+            <li><span class="ing-amount">2 cups</span>water</li>
+            <li><span class="ing-amount">1 can</span>full-fat coconut milk (13.5 oz)</li>
+            <li><span class="ing-amount">3 cups</span>kale, stems removed, chopped</li>
+            <li>Red pepper flakes, salt + pepper</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook bacon in a large pot over medium heat until crispy. Remove and set aside, leaving drippings in pot.</li>
+            <li>Brown sausage in the same pot, breaking it up. Remove and set aside.</li>
+            <li>Sauté onion in the drippings until softened, ~4 min. Add garlic and cook 1 min more.</li>
+            <li>Add potatoes, chicken broth, and water. Bring to a boil, reduce heat and simmer ~10 min until potatoes are tender.</li>
+            <li>Stir in coconut milk, sausage, and bacon. Season with red pepper flakes, salt + pepper.</li>
+            <li>Add kale and simmer 3–5 min until wilted.</li>
+            <li>Taste, adjust seasoning, and serve hot.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Coconut milk replaces the heavy cream for a Whole30-compliant version — you genuinely can't tell the difference once the soup is seasoned. Full-fat coconut milk only; light will make it watery.</div>
+      </div>
+    </div>
+
+    <!-- 11. Paleo Chocolate Chip Cookies -->
+    <div class="recipe-card" data-category="dessert">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dessert">Dessert</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Paleo Chocolate Chip Cookies</div>
+          <div class="recipe-meta"><a href="https://www.bakerita.com/paleo-chocolate-chip-cookies/" target="_blank">Bakerita ↗</a> · ~20 min · Makes ~16 cookies</div>
+          <div class="tag-row">
+            <span class="tag">Paleo</span>
+            <span class="tag">Gluten free</span>
+            <span class="tag">Dairy free option</span>
+            <span class="tag">No one guesses!</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 cups</span>almond flour (blanched)</li>
+            <li><span class="ing-amount">¼ tsp</span>baking soda</li>
+            <li><span class="ing-amount">¼ tsp</span>fine sea salt</li>
+            <li><span class="ing-amount">¼ cup</span>coconut oil, melted</li>
+            <li><span class="ing-amount">¼ cup</span>pure maple syrup</li>
+            <li><span class="ing-amount">1</span>egg (or flax egg for vegan)</li>
+            <li><span class="ing-amount">1 tsp</span>vanilla extract</li>
+            <li><span class="ing-amount">¾ cup</span>dark chocolate chips (dairy-free if needed)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F. Line a baking sheet with parchment.</li>
+            <li>Whisk together almond flour, baking soda, and salt in a bowl.</li>
+            <li>In a separate bowl, mix melted coconut oil, maple syrup, egg, and vanilla.</li>
+            <li>Stir wet into dry until a dough forms. Fold in chocolate chips.</li>
+            <li>Scoop ~1.5 tbsp rounds onto parchment, spacing 2 inches apart. Flatten slightly.</li>
+            <li>Bake 9–11 min until edges are golden. Centers will look underdone — that's right.</li>
+            <li>Cool on pan 10 min before moving — they firm up as they cool.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Bakerita says "no one guesses these are gluten-free" — and it's true. The key is not overbaking; pull them when edges are just golden. They'll seem too soft but firm up perfectly. Store in fridge up to a week.</div>
+      </div>
+    </div>
+
+  </div><!-- end recipe grid -->
+
+  <div class="footer">LaRosa Family Recipes · Last updated June 2026</div>
+
+</div>
+
+<script>
+  function toggleRecipe(header) {
+    const card = header.closest('.recipe-card');
+    card.classList.toggle('open');
+  }
+
+  function filterRecipes(cat, btn) {
+    const cards = document.querySelectorAll('.recipe-card');
+    cards.forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+    });
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
