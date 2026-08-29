@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinner Plan · Aug 30 – Sep 5</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Geist', sans-serif;
+    background: #f0ece4;
+    color: #2c2a25;
+    min-height: 100vh;
+    padding: 32px 20px 48px;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid #c5b89a;
+  }
+  .header-left {}
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #9a8e7a;
+    margin-bottom: 5px;
+  }
+  .week-title {
+    font-family: 'Newsreader', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #2c2a25;
+    letter-spacing: -.3px;
+    line-height: 1.1;
+  }
+  .week-sub {
+    font-size: 13px;
+    color: #7a7468;
+    margin-top: 5px;
+  }
+  .legend {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-end;
+  }
+  .leg {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #7a7468;
+  }
+  .leg-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Day cards ── */
+  .day-card {
+    background: #faf8f3;
+    border: 0.5px solid #ddd6c8;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .day-card.today {
+    border-color: #b07d3a;
+    box-shadow: 0 0 0 2px rgba(176,125,58,.12);
+  }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px 12px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 0.5px solid transparent;
+    transition: background .15s;
+  }
+  .day-card.open .day-header {
+    border-bottom-color: #e8e1d5;
+    background: #f5f1e8;
+  }
+  .day-header:hover { background: #f5f1e8; }
+
+  .day-date {
+    font-size: 11px;
+    color: #9a8e7a;
+    min-width: 68px;
+    line-height: 1.3;
+  }
+  .day-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #2c2a25;
+    display: block;
+  }
+
+  .night-badge {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .b-family  { background: #e6f1fb; color: #0c447c; }
+  .b-med     { background: #e1f5ee; color: #0f6e56; }
+  .b-italian { background: #eeedfe; color: #3c3489; }
+  .b-brinner { background: #faeeda; color: #633806; }
+  .b-mexican { background: #fce4ec; color: #72243e; }
+  .b-pizza   { background: #faece7; color: #712b13; }
+  .b-yumm    { background: #eaf3de; color: #27500a; }
+
+  .meal-title {
+    font-family: 'Newsreader', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #2c2a25;
+    flex: 1;
+    line-height: 1.3;
+  }
+
+  .alert-pill {
+    font-size: 9.5px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: #faeeda;
+    color: #633806;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .alert-pill.school { background: #e6f1fb; color: #0c447c; }
+  .alert-pill.picnic { background: #fce4ec; color: #72243e; }
+
+  .chevron {
+    font-size: 13px;
+    color: #b5a98a;
+    flex-shrink: 0;
+    transition: transform .2s;
+  }
+  .day-card.open .chevron { transform: rotate(180deg); }
+
+  /* ── Expanded body ── */
+  .day-body {
+    display: none;
+    padding: 14px 16px 16px;
+  }
+  .day-card.open .day-body { display: block; }
+
+  .body-description {
+    font-size: 13px;
+    color: #3a3830;
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .mod-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .mod {
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 7px;
+    padding: 7px 11px;
+  }
+  .mod-kit    { background: #f0ece4; color: #5a5348; }
+  .mod-justin { background: #eaf3de; color: #27500a; }
+  .mod-tip    { background: #faeeda; color: #633806; }
+
+  .mod strong {
+    font-weight: 500;
+    margin-right: 4px;
+  }
+
+  .tag-row {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: 500;
+    background: #ede9e0;
+    color: #6a6358;
+  }
+  .tag.green  { background: #eaf3de; color: #27500a; }
+  .tag.blue   { background: #e6f1fb; color: #0c447c; }
+  .tag.amber  { background: #faeeda; color: #633806; }
+
+  /* ── Footnote ── */
+  .footnote {
+    margin-top: 24px;
+    padding-top: 14px;
+    border-top: 0.5px solid #ddd6c8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footnote-left {
+    font-size: 11px;
+    color: #9a8e7a;
+    line-height: 1.6;
+  }
+  .cottage-note {
+    font-size: 11px;
+    background: #e1f5ee;
+    color: #0f6e56;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-weight: 500;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { background: white; padding: 0.3in; }
+    .day-body { display: block !important; }
+    .chevron { display: none; }
+    @page { size: A4; margin: .4in; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="eyebrow">LaRosa Family</div>
+      <div class="week-title">Dinner Plan</div>
+      <div class="week-sub">Aug 30 – Sep 5 · First week of school 🎒</div>
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:#4a8c4a"></div>Low cholesterol / Justin</div>
+      <div class="leg"><div class="leg-dot" style="background:#6a7aaa"></div>Vegetarian / Kit + Katie</div>
+      <div class="leg"><div class="leg-dot" style="background:#b07d3a"></div>Timing flag</div>
+    </div>
+  </div>
+
+  <!-- SUN AUG 30 -->
+  <div class="day-card open" id="d0">
+    <div class="day-header" onclick="tog('d0')">
+      <div class="day-date"><span class="day-name">Sunday</span>Aug 30</div>
+      <span class="night-badge b-family">Family Recipe</span>
+      <div class="meal-title">Sunday Roast Chicken with Preserved Lemon</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Whole chicken stuffed with preserved lemon, garlic, and herbs — rubbed with herbes de Provence and olive oil, roasted on a bed of potatoes, carrots, fennel, and red onion at 425°F for 75 min. Classic Sunday dinner to send the kids into the week on a high.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Separate sheet pan with the same roasted veg, a can of white beans, and crumbled feta. Same oven, same time.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> White meat chicken + olive oil base — excellent low-cholesterol Sunday roast. Skip the buttered potatoes, load up on the veg.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Low cholesterol</span>
+        <span class="tag blue">Kit + Katie: veg pan</span>
+        <span class="tag">1 hr 20 min</span>
+        <span class="tag amber">Preserved lemon — Fred Meyer specialty aisle</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MON AUG 31 -->
+  <div class="day-card" id="d1">
+    <div class="day-header" onclick="tog('d1')">
+      <div class="day-date"><span class="day-name">Monday</span>Aug 31</div>
+      <span class="night-badge b-med">Mediterranean</span>
+      <div class="meal-title">Miso Salmon Rice Bowls</div>
+      <span class="alert-pill school">First Day of School!</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Salmon glazed with white miso, soy sauce, mirin, and sesame oil — roasted at 425°F for 12 min. Served over steamed rice with cucumber, avocado, and snap peas. Quick enough for a school night. Celebratory enough for a milestone.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Same bowl with crispy tofu — same miso glaze, roasted alongside the salmon. Full meal, identical setup.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Miso salmon is one of the best heart-healthy dinners around — omega-3s, no saturated fat, and it tastes like a restaurant.</div>
+        <div class="mod mod-tip"><strong>Tip:</strong> Make the miso glaze in the morning before school drop-off. Brush on the salmon (or tofu) when you get home — 12 min in the oven, done.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Omega-3s · heart healthy</span>
+        <span class="tag blue">Kit + Katie: tofu version</span>
+        <span class="tag">25 min</span>
+        <span class="tag amber">Celebrate first day of school!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUE SEP 1 -->
+  <div class="day-card" id="d2">
+    <div class="day-header" onclick="tog('d2')">
+      <div class="day-date"><span class="day-name">Tuesday</span>Sep 1</div>
+      <span class="night-badge b-italian">Italian</span>
+      <div class="meal-title">Lentil Bolognese with Pappardelle</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Green lentils slow-cooked with soffritto (onion, carrot, celery), red wine, crushed tomatoes, and herbs until thick and deeply savory. Tastes so much like meat bolognese that the kids won't notice. Everyone eats the same meal — zero modifications needed.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> This IS the vegetarian meal. Lentils are the protein for everyone at the table tonight.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Lentil bolognese has virtually zero saturated fat — high fiber and plant protein, one of the best cholesterol-lowering pasta nights possible.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Low cholesterol · high fiber</span>
+        <span class="tag blue">Everyone eats the same</span>
+        <span class="tag">45 min</span>
+        <span class="tag amber">Iron-rich — great for Kit</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WED SEP 2 -->
+  <div class="day-card" id="d3">
+    <div class="day-header" onclick="tog('d3')">
+      <div class="day-date"><span class="day-name">Wednesday</span>Sep 2</div>
+      <span class="night-badge b-brinner">Brinner Night</span>
+      <div class="meal-title">High-Protein Blender Pancakes + Scrambled Eggs</div>
+      <span class="alert-pill">Literary Arts 7pm</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">The blender pancake recipe from the file — Fairlife milk, Clean Simple Eats vanilla protein powder, 6 eggs, baked at 350°F for 15–20 min. Plus scrambled eggs on the side. Full brinner spread on the table in 25 minutes.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Fully vegetarian — pancakes and eggs are both on the menu. Perfect meal for Kit's protein and iron goals.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Eggs are moderate-cholesterol — fine occasionally, especially with a high-protein payoff. Keep the syrup light.</div>
+        <div class="mod mod-tip"><strong>Timing:</strong> Literary Arts is at 7pm. Mix the batter at 5:45, bake at 6:00, on the table by 6:20. You've got plenty of time.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">High protein</span>
+        <span class="tag blue">Kit + Katie: veg</span>
+        <span class="tag">25 min</span>
+        <span class="tag amber">Must eat by 6:30pm</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THU SEP 3 -->
+  <div class="day-card" id="d4">
+    <div class="day-header" onclick="tog('d4')">
+      <div class="day-date"><span class="day-name">Thursday</span>Sep 3</div>
+      <span class="night-badge b-mexican">Mexican</span>
+      <div class="meal-title">Fish Tacos with Mango Salsa</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Grilled cod or tilapia with chili powder and cumin. Topped with fresh mango salsa (mango, red onion, cilantro, lime), crunchy cabbage slaw, and a Greek yogurt crema. Build-your-own taco night — everyone loads their own at the table.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Same taco setup with grilled halloumi instead of fish — sear 2–3 min per side in a dry pan until golden. The mango salsa is the star for everyone.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> White fish is one of the lowest-cholesterol proteins you can eat. Greek yogurt crema instead of sour cream keeps it clean.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Low cholesterol · omega-3s</span>
+        <span class="tag blue">Kit + Katie: halloumi</span>
+        <span class="tag">20 min</span>
+        <span class="tag">Build your own</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRI SEP 4 -->
+  <div class="day-card" id="d5">
+    <div class="day-header" onclick="tog('d5')">
+      <div class="day-date"><span class="day-name">Friday</span>Sep 4</div>
+      <span class="night-badge b-pizza">Pizza Night</span>
+      <div class="meal-title">FAIS Picnic = Dinner · Optional flatbread after</div>
+      <span class="alert-pill picnic">FAIS Picnic 5pm</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">The Back-to-School Picnic starts at 5pm — that's dinner time. Don't double-cook. Enjoy it, let the kids run around with their new classmates, and if anyone's still hungry after, flatbreads take 10 minutes.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Mediterranean flatbread — olive oil, tomatoes, mozzarella, fresh basil. Fully vegetarian and done in 10 min if needed.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Olive oil base, light on the cheese — heart-healthy flatbread if the picnic wasn't enough.</div>
+        <div class="mod mod-tip"><strong>Tip:</strong> Keep flatbreads, mozzarella, and cherry tomatoes stocked. If you need them, you've got a 10-min backup. If you don't, enjoy the free Friday night.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag amber">Picnic IS dinner</span>
+        <span class="tag">10 min backup only</span>
+        <span class="tag blue">Free Friday night</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAT SEP 5 -->
+  <div class="day-card" id="d6">
+    <div class="day-header" onclick="tog('d6')">
+      <div class="day-date"><span class="day-name">Saturday</span>Sep 5</div>
+      <span class="night-badge b-yumm">Healthy Bowl</span>
+      <div class="meal-title">Café Yumm Bowls</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Brown rice, warm black beans, sliced avocado, cherry tomatoes, shredded cheddar, olives, sour cream, cilantro, and fresh salsa — topped with a generous pour of homemade Yumm Sauce. Make the sauce on Sunday or Thursday so Saturday is pure assembly.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> This is fully vegetarian as-is — everyone eats the same bowl. High protein from beans, great iron from the black beans + rice combo.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Plant-based Yumm Sauce (chickpeas, almonds, nutritional yeast, lemon, olive oil), beans for fiber — excellent cholesterol profile.</div>
+        <div class="mod mod-tip"><strong>Make ahead:</strong> Yumm Sauce keeps in the fridge all week. If you make it Sunday after the roast chicken, Saturday is pure assembly — 10 min max.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Plant-based · cholesterol friendly</span>
+        <span class="tag blue">Everyone eats the same</span>
+        <span class="tag">10 min assembly if sauce is made</span>
+        <span class="tag amber">Make Yumm Sauce on Sunday!</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <div class="footnote-left">
+      All recipes in the family recipe file · family-stuff.netlify.app<br>
+      Vegetarian options for Kit &amp; Katie on every night · Low cholesterol throughout for Justin
+    </div>
+    <div class="cottage-note">🏡 Labor Day at Maggie's — Monday Sep 7</div>
+  </div>
+
+</div>
+
+<script>
+function tog(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+</script>
+</body>
+</html>
