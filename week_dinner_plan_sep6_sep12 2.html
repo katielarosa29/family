@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinner Plan · Sep 6–12</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=Geist:wght@400;500&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Geist', sans-serif; background: #f0ece4; color: #2c2a25; min-height: 100vh; padding: 32px 20px 48px; }
+  .page { max-width: 780px; margin: 0 auto; }
+
+  .header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1.5px solid #c5b89a; }
+  .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: #9a8e7a; margin-bottom: 5px; }
+  .week-title { font-family: 'Newsreader', serif; font-size: 28px; font-weight: 600; color: #2c2a25; letter-spacing: -.3px; line-height: 1.1; }
+  .week-sub { font-size: 13px; color: #7a7468; margin-top: 5px; }
+  .legend { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+  .leg { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #7a7468; }
+  .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .day-card { background: #faf8f3; border: 0.5px solid #ddd6c8; border-radius: 14px; margin-bottom: 10px; overflow: hidden; }
+  .day-card.away-card { opacity: .75; }
+
+  .day-header { display: flex; align-items: center; gap: 12px; padding: 13px 16px 12px; cursor: pointer; user-select: none; border-bottom: 0.5px solid transparent; transition: background .15s; }
+  .day-card.open .day-header { border-bottom-color: #e8e1d5; background: #f5f1e8; }
+  .day-header:hover { background: #f5f1e8; }
+  .day-card.away-card .day-header { cursor: default; }
+
+  .day-date { font-size: 11px; color: #9a8e7a; min-width: 68px; line-height: 1.3; }
+  .day-name { font-size: 13px; font-weight: 500; color: #2c2a25; display: block; }
+  .night-badge { font-size: 10px; font-weight: 500; padding: 2px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+  .b-family  { background: #e6f1fb; color: #0c447c; }
+  .b-away    { background: #ede9e0; color: #7a7468; }
+  .b-italian { background: #eeedfe; color: #3c3489; }
+  .b-wild    { background: #faeeda; color: #633806; }
+  .b-mexican { background: #fce4ec; color: #72243e; }
+  .b-pizza   { background: #faece7; color: #712b13; }
+  .b-bowl    { background: #eaf3de; color: #27500a; }
+
+  .meal-title { font-family: 'Newsreader', serif; font-size: 15px; font-weight: 500; color: #2c2a25; flex: 1; line-height: 1.3; }
+  .alert-pill { font-size: 9.5px; font-weight: 500; padding: 2px 7px; border-radius: 4px; background: #faeeda; color: #633806; white-space: nowrap; flex-shrink: 0; }
+  .alert-pill.yumm { background: #eaf3de; color: #27500a; }
+  .chevron { font-size: 13px; color: #b5a98a; flex-shrink: 0; transition: transform .2s; }
+  .day-card.open .chevron { transform: rotate(180deg); }
+
+  .day-body { display: none; padding: 14px 16px 16px; }
+  .day-card.open .day-body { display: block; }
+  .body-description { font-size: 13px; color: #3a3830; line-height: 1.65; margin-bottom: 12px; }
+
+  .mod-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .mod { font-size: 12px; line-height: 1.5; border-radius: 7px; padding: 7px 11px; }
+  .mod-kit    { background: #f0ece4; color: #5a5348; }
+  .mod-justin { background: #eaf3de; color: #27500a; }
+  .mod-tip    { background: #faeeda; color: #633806; }
+
+  .mod strong { font-weight: 500; margin-right: 4px; }
+
+  .tag-row { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
+  .tag { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 500; background: #ede9e0; color: #6a6358; }
+  .tag.green  { background: #eaf3de; color: #27500a; }
+  .tag.blue   { background: #e6f1fb; color: #0c447c; }
+  .tag.amber  { background: #faeeda; color: #633806; }
+
+  .away-body { padding: 12px 16px; font-size: 13px; color: #7a7468; font-style: italic; }
+
+  .footnote { margin-top: 24px; padding-top: 14px; border-top: 0.5px solid #ddd6c8; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .footnote-left { font-size: 11px; color: #9a8e7a; line-height: 1.6; }
+  .note-pill { font-size: 11px; background: #faeeda; color: #633806; border-radius: 6px; padding: 5px 10px; font-weight: 500; }
+
+  @media print {
+    body { background: white; padding: 0.3in; }
+    .day-body { display: block !important; }
+    .chevron { display: none; }
+    @page { size: A4; margin: .4in; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div>
+      <div class="eyebrow">LaRosa Family</div>
+      <div class="week-title">Dinner Plan</div>
+      <div class="week-sub">Sep 6–12 · All vegetarian · Low cholesterol for Justin</div>
+    </div>
+    <div class="legend">
+      <div class="leg"><div class="leg-dot" style="background:#4a8c4a"></div>Low cholesterol / Justin</div>
+      <div class="leg"><div class="leg-dot" style="background:#6a7aaa"></div>Vegetarian / Kit + Katie</div>
+      <div class="leg"><div class="leg-dot" style="background:#b07d3a"></div>Tip / make ahead</div>
+    </div>
+  </div>
+
+  <!-- SUN SEP 6 -->
+  <div class="day-card open" id="d0">
+    <div class="day-header" onclick="tog('d0')">
+      <div class="day-date"><span class="day-name">Sunday</span>Sep 6</div>
+      <span class="night-badge b-family">Family Recipe</span>
+      <div class="meal-title">Mushroom & Lentil Shepherd's Pie</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Green lentils and cremini mushrooms slow-cooked with carrots, celery, rosemary, and a splash of Worcestershire, topped with creamy parmesan-laced mashed potatoes and baked until the top is golden and crispy. Proper Sunday comfort food.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Fully vegetarian — lentils and mushrooms are everyone's protein tonight. No modifications needed.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> UV-exposed mushrooms provide vitamin D. Lentils are outstanding for cholesterol — high fiber, high plant protein, zero saturated fat in the filling.</div>
+        <div class="mod mod-tip"><strong>Tip:</strong> Make the Yumm Sauce today too while you're in the kitchen — it takes 10 min and Wednesday becomes pure assembly.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Low cholesterol</span>
+        <span class="tag blue">Everyone eats the same</span>
+        <span class="tag">Vitamin D · iron</span>
+        <span class="tag">60 min</span>
+        <span class="tag amber">Make Yumm Sauce today!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MON SEP 7 -->
+  <div class="day-card" id="d1">
+    <div class="day-header" onclick="tog('d1')">
+      <div class="day-date"><span class="day-name">Monday</span>Sep 7</div>
+      <span class="night-badge b-italian" style="background:#e1f5ee;color:#0f6e56">Asian</span>
+      <div class="meal-title">Thai Fresh Salad Rolls with Peanut Sauce</div>
+
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Rice paper wrappers filled with rice vermicelli, cucumber, carrot, avocado, fresh mango, mint, and basil — served with a ginger-lime peanut dipping sauce. No cooking, no heat, everyone rolls their own at the table. Perfect relaxed Labor Day dinner.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Tofu instead of shrimp — same fillings, same peanut sauce. Kit can build her own rolls which makes it way more fun for her.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Shrimp is very low cholesterol and high protein. Peanut sauce is olive-oil adjacent in fat profile — all healthy fats.</div>
+        <div class="mod mod-tip"><strong>Tip:</strong> Soak rice paper 10 seconds only — it keeps softening as you roll. Set everything out assembly-line style and let everyone build their own. Best Labor Day dinner activity.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">No cooking · heart healthy</span>
+        <span class="tag blue">Kit: tofu version</span>
+        <span class="tag">30 min prep · no heat</span>
+        <span class="tag amber">Fresh mango + peanut sauce = 🤌</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUE SEP 8 -->
+  <div class="day-card" id="d2">
+    <div class="day-header" onclick="tog('d2')">
+      <div class="day-date"><span class="day-name">Tuesday</span>Sep 8</div>
+      <span class="night-badge b-italian">Italian</span>
+      <div class="meal-title">Ribollita — Tuscan Kale & White Bean Soup</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Lacinato kale, cannellini beans, and stale bread slow-cooked together in a rosemary-garlic tomato broth until thick and deeply comforting. A Blue Zone centenarian staple from the mountains of Tuscany. Gets even better the next day.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Fully vegetarian. Lacinato kale is one of the richest plant calcium sources — more bioavailable than spinach.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> White beans + kale + olive oil = outstanding cholesterol profile. High fiber supports LDL reduction.</div>
+        <div class="mod mod-tip"><strong>Bread tip:</strong> Leave a loaf out overnight on Monday so it's genuinely stale by Tuesday. Stale bread is what makes ribollita thick and silky — fresh bread turns gluey.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Blue Zone · low cholesterol</span>
+        <span class="tag blue">Everyone eats the same</span>
+        <span class="tag amber">Calcium (kale) · iron</span>
+        <span class="tag">45 min</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WED SEP 9 -->
+  <div class="day-card" id="d3">
+    <div class="day-header" onclick="tog('d3')">
+      <div class="day-date"><span class="day-name">Wednesday</span>Sep 9</div>
+      <span class="night-badge b-wild">Wildcard</span>
+      <div class="meal-title">Café Yumm Bowls</div>
+
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Brown rice, warm black beans, avocado, cherry tomatoes, shredded cheddar, Kalamata olives, sour cream, fresh cilantro, and salsa — all topped with a generous pour of the Yumm Sauce you made on Sunday. Pure assembly tonight.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Fully vegetarian — everyone eats the same bowl. Black beans are a great iron source for Kit.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Plant-based Yumm Sauce (chickpeas, almonds, nutritional yeast, lemon, olive oil) + black beans + avocado = excellent cholesterol meal.</div>
+        <div class="mod mod-tip"><strong>Tonight is 10 min</strong> if the Yumm Sauce is made and rice is cooked. Start the rice when you walk in and dinner is on the table before anyone notices it started.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Plant-based · cholesterol friendly</span>
+        <span class="tag blue">Everyone eats the same</span>
+        <span class="tag">10 min (sauce made ahead)</span>
+        <span class="tag amber">Iron-rich (black beans)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- THU SEP 10 -->
+  <div class="day-card" id="d4">
+    <div class="day-header" onclick="tog('d4')">
+      <div class="day-date"><span class="day-name">Thursday</span>Sep 10</div>
+      <span class="night-badge b-mexican">Mexican</span>
+      <div class="meal-title">Sweet Potato & Black Bean Enchiladas</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Sweet potato and black beans roasted with cumin and smoked paprika, rolled in corn tortillas, smothered in enchilada sauce and melted Monterey Jack. Kit's cheese-only section bakes right in the same dish — one pan, everyone happy.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Katie eats the full enchilada. Kit gets a cheese-only section in the same baking dish — same sauce, same melted cheese on top.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Sweet potatoes for magnesium, black beans for iron and plant protein. No meat, no saturated fat — great Thursday night.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Low cholesterol · magnesium</span>
+        <span class="tag blue">Kit: cheese section same pan</span>
+        <span class="tag amber">Iron-rich (black beans)</span>
+        <span class="tag">45 min</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRI SEP 11 -->
+  <div class="day-card" id="d5">
+    <div class="day-header" onclick="tog('d5')">
+      <div class="day-date"><span class="day-name">Friday</span>Sep 11</div>
+      <span class="night-badge b-pizza">Pizza</span>
+      <div class="meal-title">Butternut Squash, Sage & Ricotta Pizza</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Olive oil base with roasted garlic, whole-milk ricotta mixed with nutmeg spread across the dough, caramelized butternut squash, mozzarella, and fresh sage leaves that crisp beautifully in the oven. Finished with a drizzle of honey and red pepper flakes.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Fully vegetarian — the sweetness from the squash makes this very kid-friendly. Kit will love it.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Ricotta is lower in saturated fat than mozzarella. Olive oil base, lots of vegetable — the healthiest pizza on the rotation.</div>
+        <div class="mod mod-tip"><strong>Roast the squash ahead</strong> while making enchiladas Thursday — it stores in the fridge and makes Friday a 15-min dinner.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Lower sat fat</span>
+        <span class="tag blue">Fully vegetarian</span>
+        <span class="tag">35 min · 15 min if squash pre-roasted</span>
+        <span class="tag amber">Calcium · magnesium (squash)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAT SEP 12 -->
+  <div class="day-card" id="d6">
+    <div class="day-header" onclick="tog('d6')">
+      <div class="day-date"><span class="day-name">Saturday</span>Sep 12</div>
+      <span class="night-badge b-bowl">Healthy Bowl</span>
+      <div class="meal-title">Roasted Beet, Walnut & Farro Bowl</div>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="day-body">
+      <div class="body-description">Farro base with roasted beet wedges, toasted walnuts, arugula, fresh orange segments, pickled red onion, and crumbled goat cheese — dressed with a bright lemon-Dijon vinaigrette. Stunning to look at and one of the best perimenopause meals on the list.</div>
+      <div class="mod-row">
+        <div class="mod mod-kit"><strong>Kit + Katie:</strong> Kit gets white rice base instead of farro, extra goat cheese, arugula on the side (it's bitter). The beets and oranges she'll enjoy.</div>
+        <div class="mod mod-justin"><strong>Justin:</strong> Walnuts are specifically linked to reduced cardiovascular risk. Beets support blood pressure regulation. Olive oil dressing — excellent cholesterol profile.</div>
+        <div class="mod mod-tip"><strong>Roast beets ahead:</strong> Wrap whole beets in foil and roast while making Thursday's enchiladas. They keep in the fridge 3–4 days and make Saturday pure assembly.</div>
+      </div>
+      <div class="tag-row">
+        <span class="tag green">Omega-3s (walnuts) · low cholesterol</span>
+        <span class="tag blue">Kit: rice base + goat cheese</span>
+        <span class="tag amber">Perimenopause friendly · iron</span>
+        <span class="tag">40 min · less if beets pre-roasted</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <div class="footnote-left">
+      All recipes in the family recipe file · Every dinner this week is fully vegetarian or has a veg option<br>
+      Make Yumm Sauce Sunday · Leave bread out Monday night · Pre-roast squash + beets Thursday
+    </div>
+    <div class="note-pill">🏡 Maggie's — canceled, staying home!</div>
+  </div>
+
+</div>
+<script>
+function tog(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
+</body>
+</html>
