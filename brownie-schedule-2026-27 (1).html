@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brownie Troop Schedule 2026–27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9f8f6;
+    --text-primary: #1a1915;
+    --text-secondary: #6b6960;
+    --text-tertiary: #9a9890;
+    --border-light: rgba(26,25,21,0.1);
+    --border-mid: rgba(26,25,21,0.18);
+    --purple-50: #eeedfe;
+    --purple-600: #534ab7;
+    --purple-800: #3c3489;
+    --teal-50: #e1f5ee;
+    --teal-800: #085041;
+    --amber-50: #faeeda;
+    --amber-100: #fac775;
+    --amber-400: #ef9f27;
+    --amber-600: #854f0b;
+    --amber-800: #633806;
+    --amber-900: #412402;
+    --pink-50: #fbeaf0;
+    --pink-800: #72243e;
+    --blue-50: #e6f1fb;
+    --blue-800: #0c447c;
+    --gray-50: #f1efe8;
+    --gray-600: #5f5e5a;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 2.5rem 1rem 4rem;
+    font-size: 16px;
+  }
+
+  .page { max-width: 740px; margin: 0 auto; }
+
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.5px solid var(--border-mid);
+  }
+  .troop-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 0.3rem;
+  }
+  .page-title {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .year-badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--purple-50);
+    color: var(--purple-800);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 0.5rem;
+  }
+
+  .intro-card {
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border-light);
+    border-left: 3px solid var(--purple-600);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+  .intro-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--teal-50);
+    color: var(--teal-800);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .intro-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.35;
+  }
+  .intro-body {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  .summary-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 1.75rem;
+  }
+  .summary-card {
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    user-select: none;
+  }
+  .summary-card:hover { border-color: var(--border-mid); box-shadow: 0 0 0 2px rgba(83,74,183,0.08); }
+  .summary-card.active { border-color: var(--purple-600); box-shadow: 0 0 0 2px rgba(83,74,183,0.15); }
+  .summary-card.active .summary-label { color: var(--purple-800); }
+  .summary-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: color 0.15s;
+  }
+  .summary-value { font-size: 24px; font-weight: 500; color: var(--text-primary); }
+  .filter-hint { font-size: 10px; color: var(--text-tertiary); margin-top: 2px; }
+
+  .filter-bar {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    padding: 0.6rem 1rem;
+    background: var(--purple-50);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    color: var(--purple-800);
+  }
+  .filter-bar.visible { display: flex; }
+  .filter-clear {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--purple-600);
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin-bottom: 1.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border-light);
+    border-radius: var(--radius-md);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
+  .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+  .month-section { margin-bottom: 1.5rem; }
+  .month-section.hidden { display: none; }
+  .month-header {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    padding: 0.4rem 0;
+    border-bottom: 0.5px solid var(--border-mid);
+    margin-bottom: 0.25rem;
+  }
+
+  .meeting-row {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 10px;
+    align-items: start;
+    padding: 0.55rem 0;
+    border-bottom: 0.5px solid var(--border-light);
+  }
+  .meeting-row:last-child { border-bottom: none; }
+  .meeting-row.skip-row { opacity: 0.5; }
+  .meeting-row.hidden { display: none; }
+
+  .meeting-date { font-size: 13px; color: var(--text-tertiary); padding-top: 3px; font-variant-numeric: tabular-nums; }
+  .meeting-content { display: flex; flex-direction: column; gap: 4px; }
+  .meeting-title { font-size: 15px; color: var(--text-primary); line-height: 1.4; font-weight: 400; }
+  .meeting-note { font-size: 13px; color: var(--text-tertiary); line-height: 1.5; }
+  .event-tag { text-align: right; padding-top: 3px; white-space: nowrap; }
+
+  .pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 20px;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+  .pill-badge   { background: var(--teal-50);   color: var(--teal-800); }
+  .pill-party   { background: var(--pink-50);   color: var(--pink-800); }
+  .pill-special { background: var(--blue-50);   color: var(--blue-800); }
+  .pill-cookie  { background: var(--amber-50);  color: var(--amber-800); }
+  .pill-choice  { background: var(--purple-50); color: var(--purple-800); }
+  .pill-dream   { background: var(--amber-100); color: var(--amber-900); }
+
+  .dream-box {
+    background: var(--amber-50);
+    border: 0.5px solid var(--amber-400);
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 0.85rem;
+    margin-top: 6px;
+  }
+  .dream-box-title { font-size: 12px; font-weight: 500; color: var(--amber-800); margin-bottom: 3px; }
+  .dream-box-body { font-size: 12px; color: var(--amber-600); line-height: 1.55; }
+
+  .no-results { display: none; padding: 2rem 0; text-align: center; color: var(--text-tertiary); font-size: 14px; }
+  .no-results.visible { display: block; }
+
+  .cal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--purple-800);
+    background: var(--purple-50);
+    border: 0.5px solid var(--purple-600);
+    border-radius: var(--radius-md);
+    padding: 8px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, box-shadow 0.15s;
+    margin-top: 0.5rem;
+  }
+  .cal-btn:hover { background: var(--purple-100); box-shadow: 0 0 0 2px rgba(83,74,183,0.12); }
+  .cal-btn:active { transform: scale(0.98); }
+
+  .year-plan-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--teal-800);
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+  .year-plan-link:hover { opacity: 1; text-decoration: underline; text-underline-offset: 2px; }
+
+  @media print {
+    .cal-btn { display: none; }
+    body { background: white; padding: 1rem; }
+    .page { max-width: 100%; }
+    .meeting-row { break-inside: avoid; }
+    .month-section { break-inside: avoid; }
+    .filter-bar, .filter-hint, .summary-card { cursor: default; }
+    .filter-bar { display: none !important; }
+  }
+  @media (max-width: 540px) {
+    .summary-strip { grid-template-columns: repeat(2, 1fr); }
+    .meeting-row { grid-template-columns: 90px 1fr; }
+    .event-tag { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div style="margin-bottom:0.75rem;">
+      <a href="#" class="year-plan-link" style="font-size:13px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </a>
+    </div>
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
+      <div>
+        <div class="troop-label">Girl Scouts</div>
+        <div class="page-title">Brownie Troop Year Plan</div>
+        <div class="year-badge">2026 – 2027</div>
+      </div>
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px; margin-top:0.5rem;">
+        <button onclick="downloadICS()" class="cal-btn" title="Download .ics — imports into Google Calendar, Apple Calendar, Outlook">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Add all to calendar
+        </button>
+        <a href="https://www.girlscouts.org/content/dam/gsusa/forms-and-documents/members/troop-year-planner/GSUSA_Troop-Year-Planner_Brownie_Year-1.pdf" target="_blank" rel="noopener" class="year-plan-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Brownie Year 1 Plan
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="intro-card">
+    <div class="intro-eyebrow">Welcome, Brownies!</div>
+    <div class="intro-title">We are Brownies now — and this year belongs to us.</div>
+    <div class="intro-body">This is a big year. As Brownies, the girls step into a new level of Girl Scouting — one where their voices lead the way. They'll have more say in what we do, where we go, and how we grow together. From voting on badges to dreaming up our biggest adventures, this troop year is theirs to shape. We can't wait to see what they choose, create, and become. Here's to an incredible year ahead!</div>
+  </div>
+
+  <div class="summary-strip">
+    <div class="summary-card" data-filter="meeting" onclick="toggleFilter(this)">
+      <div class="summary-label">Meetings</div>
+      <div class="summary-value">22</div>
+      <div class="filter-hint">click to filter</div>
+    </div>
+    <div class="summary-card" data-filter="badge" onclick="toggleFilter(this)">
+      <div class="summary-label">Badges</div>
+      <div class="summary-value">16</div>
+      <div class="filter-hint">click to filter</div>
+    </div>
+    <div class="summary-card" data-filter="special" onclick="toggleFilter(this)">
+      <div class="summary-label">Special events</div>
+      <div class="summary-value">16</div>
+      <div class="filter-hint">click to filter</div>
+    </div>
+    <div class="summary-card" data-filter="choice" onclick="toggleFilter(this)">
+      <div class="summary-label">Girls' vote</div>
+      <div class="summary-value">4</div>
+      <div class="filter-hint">click to filter</div>
+    </div>
+  </div>
+
+  <div class="filter-bar" id="filterBar">
+    Showing: <strong id="filterLabel"></strong>
+    <span class="filter-clear" onclick="clearFilter()">Show all</span>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#085041"></div> Badge meeting</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#72243e"></div> Party / celebration</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0c447c"></div> Special event</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#633806"></div> Cookie program</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3c3489"></div> Girls' choice</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ef9f27"></div> Dream Box</div>
+    <div class="legend-item" style="width:100%;font-size:12px;color:var(--text-tertiary);padding-top:4px;">🎒 <strong>Field trips:</strong> Daisy / Brownie Playday (May 1), STEM Day Salem (Nov 7), Low Ropes Late-over (Mar 26)</div>
+  </div>
+
+  <div class="no-results" id="noResults">No events match this filter.</div>
+
+  <!-- SEPTEMBER -->
+  <div class="month-section" id="month-sep">
+    <div class="month-header">September 2026</div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon Sep 7</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — Labor Day</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="special badge">
+      <div class="meeting-date">Sat Sep 12</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Family Welcome Party at State Park</div>
+        <div class="meeting-note">Earns Girl Scouts Love State Parks Patch</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">patch</span></div>
+    </div>
+  </div>
+
+  <!-- OCTOBER -->
+  <div class="month-section" id="month-oct">
+    <div class="month-header">October 2026</div>
+    <div class="meeting-row" data-category="meeting special">
+      <div class="meeting-date">Mon Oct 5</div>
+      <div class="meeting-content">
+        <div class="meeting-title">First meeting of the year — welcome + Dream Box</div>
+        <div class="meeting-note">Talk about the year, rules and expectations, parent sign-up</div>
+        <div class="dream-box">
+          <div class="dream-box-title">Dream Box</div>
+          <div class="dream-box-body">This year the girls will visualize troop goals for the year. We will decorate the box for the girls to store notes, drawings, flyers they collect for activities they want to do. We will bring the box to each meeting, and if the girls have an idea, they can add it to the box. Some ideas of what to add: overnight camping trip, waterfall hike, science museum sleepover, beach bonfire, cooking class, kayak, attend a WNBA game, travel somewhere new, see The Nutcracker...</div>
+        </div>
+      </div>
+      <div class="event-tag"><span class="pill pill-dream">Dream Box</span></div>
+    </div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Oct 12</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Outdoor Art Creator — Parts 1 &amp; 2</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon Oct 19</div>
+      <div class="meeting-content">
+        <div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — ACE Week</div>
+        <div class="meeting-note" style="color:var(--amber-600);">🎟️ Optional: Timbers Girl Scout Night — Sat Oct 17</div>
+      </div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="meeting special choice">
+      <div class="meeting-date">Mon Oct 26</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Fun Patch or Halloween Party</div>
+        <div class="meeting-note">Girls will vote for two holiday parties</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-choice">girls' vote</span></div>
+    </div>
+  </div>
+
+  <!-- NOVEMBER -->
+  <div class="month-section" id="month-nov">
+    <div class="month-header">November 2026</div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Nov 2</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Create and Innovate</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge</span></div>
+    </div>
+    <div class="meeting-row" data-category="special badge">
+      <div class="meeting-date">Sat Nov 7</div>
+      <div class="meeting-content">
+        <div class="meeting-title">STEM Day — Salem</div>
+        <div class="meeting-note">All-day STEM event in Salem — Fun Patch</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-special">special</span></div>
+    </div>
+    <div class="meeting-row" data-category="meeting special choice">
+      <div class="meeting-date">Mon Nov 16</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Fun Patch or Friendsgiving</div>
+        <div class="meeting-note">Girls will vote for two holiday parties</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-choice">girls' vote</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon Nov 23</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — Parent-Teacher Conferences</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="meeting badge choice">
+      <div class="meeting-date">Mon Nov 30</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Service Project (Girls' Choice)</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-choice">girls' choice</span></div>
+    </div>
+  </div>
+
+  <!-- DECEMBER -->
+  <div class="month-section" id="month-dec">
+    <div class="month-header">December 2026</div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Dec 7</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Resilient. Ready. Strong.</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge</span></div>
+    </div>
+    <div class="meeting-row" data-category="meeting special choice">
+      <div class="meeting-date">Mon Dec 14</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Fun Patch or Holiday Party</div>
+        <div class="meeting-note">Girls will vote for two holiday parties</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-choice">girls' vote</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Dec 21 – Jan 1</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">Winter Break — no meetings</div></div>
+      <div class="event-tag"></div>
+    </div>
+  </div>
+
+  <!-- JANUARY -->
+  <div class="month-section" id="month-jan">
+    <div class="month-header">January 2027</div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Jan 4</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Cookie Kickoff — My Cookie Customers Badge Part 1</div>
+        <div class="meeting-note">Cookie Entrepreneur Family Pin info, goals, booth sign-ups</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-cookie">cookies</span></div>
+    </div>
+    <div class="meeting-row" data-category="special">
+      <div class="meeting-date">Sat Jan 9</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Cookie Parent Online Meeting</div>
+        <div class="meeting-note">Virtual meeting for parents — cookie program overview</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-cookie">cookies</span></div>
+    </div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Jan 11</div>
+      <div class="meeting-content">
+        <div class="meeting-title">My Cookie Customers Badge — Part 2</div>
+        <div class="meeting-note">Practice pitches, Cookie Entrepreneur Family Pin... Should we cancel early?</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-cookie">cookies</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon Jan 18</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — MLK Day</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="meeting">
+      <div class="meeting-date">Mon Jan 25</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Cookie Entrepreneur Family Pin</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-cookie">cookies</span></div>
+    </div>
+    <div class="meeting-row" data-category="special">
+      <div class="meeting-date">Sat Jan 30</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Cookie Rally</div>
+        <div class="meeting-note">Last Saturday in January — council event</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-cookie">cookies</span></div>
+    </div>
+  </div>
+
+  <!-- FEBRUARY -->
+  <div class="month-section" id="month-feb">
+    <div class="month-header">February 2027</div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Feb 1</div>
+      <div class="meeting-content">
+        <div class="meeting-title">My Great Day — Parts 1 &amp; 2</div>
+        <div class="meeting-note">Plan for World Thinking Day event</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge</span></div>
+    </div>
+    <div class="meeting-row" data-category="meeting badge special">
+      <div class="meeting-date">Mon Feb 8</div>
+      <div class="meeting-content">
+        <div class="meeting-title">World Thinking Day Event — complete My Great Day badge — Fun Patch</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge complete</span></div>
+    </div>
+    <div class="meeting-row" data-category="special">
+      <div class="meeting-date">Sat Feb 13</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Cookie Depot Day</div>
+        <div class="meeting-note">Pick up cookie orders</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-cookie">cookies</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Fri Feb 12</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — In-Service Day</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon Feb 15</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — Presidents' Day</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon Feb 22</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — ACE Week (Feb 22–26)</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Sat Feb 27</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--amber-600);">🍪 Potential Cookie Booth</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Sun Feb 28</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--amber-600);">🍪 Potential Cookie Booth</div></div>
+      <div class="event-tag"></div>
+    </div>
+  </div>
+
+  <!-- MARCH -->
+  <div class="month-section" id="month-mar">
+    <div class="month-header">March 2027</div>
+
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Mar 1</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Girl Scout Way — Part 1</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Sat Mar 6</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--amber-600);">🍪 Potential Cookie Booth</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Sun Mar 7</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--amber-600);">🍪 Potential Cookie Booth</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Mar 8</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Girl Scout Way — Part 2</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Sat Mar 13</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--amber-600);">🍪 Potential Cookie Booth</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Sun Mar 14</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--amber-600);">🍪 Potential Cookie Booth</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon Mar 15</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No meeting</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Mar 22</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Fun Patch (Girls' Choice)</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge complete</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon Mar 29</div>
+      <div class="meeting-content">
+        <div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — In-Service Day</div>
+        <div class="meeting-note" style="color:var(--amber-600);">🧗 Tentative: Low Ropes Late-over — Fri Mar 26</div>
+      </div>
+      <div class="event-tag"></div>
+    </div>
+  </div>
+
+  <!-- APRIL -->
+  <div class="month-section" id="month-apr">
+    <div class="month-header">April 2027</div>
+    <div class="meeting-row" data-category="meeting badge special">
+      <div class="meeting-date">Mon Apr 5</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Eco Friend — Part 1</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge</span></div>
+    </div>
+    <div class="meeting-row" data-category="meeting badge">
+      <div class="meeting-date">Mon Apr 12</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Eco Friend — Part 2</div>
+        <div class="meeting-note">Service Project Plan</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-badge">badge</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Apr 19–23</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">Spring Break — no meetings</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="meeting">
+      <div class="meeting-date">Mon Apr 26</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Outdoor Service Project Planning</div>
+      </div>
+      <div class="event-tag"></div>
+    </div>
+  </div>
+
+  <!-- MAY -->
+  <div class="month-section" id="month-may">
+    <div class="month-header">May 2027</div>
+    <div class="meeting-row" data-category="special">
+      <div class="meeting-date">Sat May 1</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Daisy / Brownie Playday</div>
+        <div class="meeting-note">First Saturday in May — council event</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-special">special</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon May 3</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No meeting</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="meeting special">
+      <div class="meeting-date">Mon May 10</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Vote on Fun Patch (Girls' Choice) or Badge</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-choice">girls' vote</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon May 14</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No school — In-Service Day</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="meeting special">
+      <div class="meeting-date">Mon May 17</div>
+      <div class="meeting-content">
+        <div class="meeting-title">End of year crafts + memory-making</div>
+        <div class="meeting-note">Scrapbook pages, friendship bracelets, notes to each other</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-special">special</span></div>
+    </div>
+    <div class="meeting-row skip-row" data-category="skip">
+      <div class="meeting-date">Mon May 24</div>
+      <div class="meeting-content"><div class="meeting-title" style="color:var(--text-tertiary);font-style:italic;">No meeting</div></div>
+      <div class="event-tag"></div>
+    </div>
+    <div class="meeting-row" data-category="special">
+      <div class="meeting-date">Sat May 29</div>
+      <div class="meeting-content">
+        <div class="meeting-title">Beach Party — Award Ceremony &amp; Bridging Send-off!</div>
+        <div class="meeting-note">Present all badges, celebrate the year, official bridging send-off for families</div>
+      </div>
+      <div class="event-tag"><span class="pill pill-party">closing celebration</span></div>
+    </div>
+  </div>
+
+  <!-- FUN PATCHES -->
+  <div style="margin-top:2.5rem; padding-top:1.5rem; border-top:0.5px solid var(--border-mid);">
+    <div style="font-size:18px;font-weight:500;color:var(--text-primary);margin-bottom:0.4rem;">Fun Patches</div>
+    <div style="font-size:14px;color:var(--text-secondary);line-height:1.65;margin-bottom:1.25rem;">Fun patches go on the <strong>back</strong> of the vest or sash. Girls vote on which one to earn!</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+
+      <div style="border:1.5px solid var(--purple-600);border-radius:var(--radius-lg);padding:1rem;background:var(--bg-primary);">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:0.6rem;">🎨 Arts &amp; Crafts</div>
+        <ul style="list-style:disc;padding-left:1.1rem;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="font-size:13px;color:var(--text-secondary);">Bubble Blast</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Arts and Crafts</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Card Making</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Crafting</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Camp Girl Scouts Tie Dye</li>
+        </ul>
+      </div>
+
+      <div style="border:1.5px solid var(--purple-600);border-radius:var(--radius-lg);padding:1rem;background:var(--bg-primary);">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:0.6rem;">🧶 Fiber Arts</div>
+        <ul style="list-style:disc;padding-left:1.1rem;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="font-size:13px;color:var(--text-secondary);">Love to Knit</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Learn to Knit Sock Monkey</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Love to Crochet</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Love to Crochet Heart</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Love to Cross Stitch</li>
+        </ul>
+      </div>
+
+      <div style="border:1.5px solid var(--purple-600);border-radius:var(--radius-lg);padding:1rem;background:var(--bg-primary);">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:0.6rem;">🌻 Nature &amp; Wellness</div>
+        <ul style="list-style:disc;padding-left:1.1rem;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="font-size:13px;color:var(--text-secondary);">I Love to Garden</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Gardening Barn</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Flower Arranging Elephant</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Spa Day</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Fun In Nature</li>
+        </ul>
+      </div>
+
+      <div style="border:1.5px solid var(--purple-600);border-radius:var(--radius-lg);padding:1rem;background:var(--bg-primary);">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:0.6rem;">🎭 Performance &amp; Adventure</div>
+        <ul style="list-style:disc;padding-left:1.1rem;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="font-size:13px;color:var(--text-secondary);">I Love to Dance</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Tap Dancing</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Jazz</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Talent Show</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Escape Room</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- GIRLS CHOOSE -->
+  <div style="margin-top:2.5rem; padding-top:1.5rem; border-top:0.5px solid var(--border-mid);">
+    <div style="font-size:18px;font-weight:500;color:var(--text-primary);margin-bottom:0.4rem;">Girls Scout Choose</div>
+    <div style="font-size:14px;color:var(--text-secondary);line-height:1.65;margin-bottom:1.25rem;">If one of the recommended badges is not the right fit, or if you want to give your Girl Scouts the chance to shape their own experience, have them vote to choose a different badge within the same focus area.</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+
+      <div style="border:1.5px solid var(--amber-400);border-radius:var(--radius-lg);padding:1rem;background:var(--bg-primary);">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:0.6rem;">STEM</div>
+        <ul style="list-style:disc;padding-left:1.1rem;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="font-size:13px;color:var(--text-secondary);">Fling Flyer Design</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Brownie Inventor</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Brownie Letterbox</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Digital Leadership</li>
+        </ul>
+      </div>
+
+      <div style="border:1.5px solid var(--amber-400);border-radius:var(--radius-lg);padding:1rem;background:var(--bg-primary);">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:0.6rem;">Outdoors</div>
+        <ul style="list-style:disc;padding-left:1.1rem;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="font-size:13px;color:var(--text-secondary);">Hiker</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Senses</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Cabin Camper</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Brownie Trail Adventure</li>
+        </ul>
+      </div>
+
+      <div style="border:1.5px solid var(--amber-400);border-radius:var(--radius-lg);padding:1rem;background:var(--bg-primary);">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:0.6rem;">Life Skills</div>
+        <ul style="list-style:disc;padding-left:1.1rem;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="font-size:13px;color:var(--text-secondary);">First Aid</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Painting</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Pets</li>
+        </ul>
+      </div>
+
+      <div style="border:1.5px solid var(--amber-400);border-radius:var(--radius-lg);padding:1rem;background:var(--bg-primary);">
+        <div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:0.6rem;">Entrepreneurship</div>
+        <ul style="list-style:disc;padding-left:1.1rem;margin:0;display:flex;flex-direction:column;gap:5px;">
+          <li style="font-size:13px;color:var(--text-secondary);">Cookie Decision Maker</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Budget Builder</li>
+          <li style="font-size:13px;color:var(--text-secondary);">My Own Budget</li>
+          <li style="font-size:13px;color:var(--text-secondary);">Budding Entrepreneur</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<script>
+  function downloadICS() {
+    const events = [
+      { date:'20260912', time:'100000', title:'Family Welcome Party at State Park', desc:'Dream Box kickoff — families welcome! Earns Girl Scouts Love State Parks Patch.', duration:120 },
+      { date:'20261005', time:'151500', title:'Brownie Meeting — Welcome + Dream Box', desc:'First meeting of the year. Introductions, troop agreements, Dream Box activity.', duration:75 },
+      { date:'20261012', time:'151500', title:'Brownie Meeting — Outdoor Art Creator Parts 1 & 2', desc:'Badge: Outdoor Art Creator', duration:75 },
+      { date:'20261026', time:'151500', title:'Brownie Meeting — Fun Patch or Halloween Party (Girls Vote)', desc:"Girls vote on the activity.", duration:75 },
+      { date:'20261102', time:'151500', title:'Brownie Meeting — Create and Innovate', desc:'Badge: Create and Innovate', duration:75 },
+      { date:'20261107', time:'090000', title:'STEM Day — Salem', desc:'All-day STEM event in Salem — Fun Patch', duration:480 },
+      { date:'20261116', time:'151500', title:'Brownie Meeting — Fun Patch or Friendsgiving (Girls Vote)', desc:"Girls vote on the activity.", duration:75 },
+      { date:'20261130', time:'151500', title:'Brownie Meeting — Service Project (Girls Choice)', desc:"Girls choose the service project.", duration:75 },
+      { date:'20261207', time:'151500', title:'Brownie Meeting — Resilient. Ready. Strong.', desc:'Badge: Resilient. Ready. Strong.', duration:75 },
+      { date:'20261214', time:'151500', title:'Brownie Meeting — Fun Patch or Holiday Party (Girls Vote)', desc:"Girls vote on the activity.", duration:75 },
+      { date:'20270104', time:'151500', title:'Brownie Meeting — Cookie Kickoff: My Cookie Customers Badge Part 1', desc:'Cookie Entrepreneur Family Pin info, goals, booth sign-ups', duration:75 },
+      { date:'20270109', time:'100000', title:'Cookie Parent Online Meeting', desc:'Virtual meeting for parents — cookie program overview', duration:60 },
+      { date:'20270111', time:'151500', title:'Brownie Meeting — My Cookie Customers Badge Part 2', desc:'Practice pitches, Cookie Entrepreneur Family Pin... Should we cancel early?', duration:75 },
+      { date:'20270125', time:'151500', title:'Brownie Meeting — Cookie Entrepreneur Family Pin', desc:'Cookie Entrepreneur Family Pin celebration', duration:75 },
+      { date:'20270130', time:'100000', title:'Cookie Rally', desc:'Last Saturday in January — council event', duration:120 },
+      { date:'20270201', time:'151500', title:'Brownie Meeting — My Great Day Parts 1 & 2', desc:'Badge: My Great Day. Plan for World Thinking Day event.', duration:75 },
+      { date:'20270208', time:'151500', title:'Brownie Meeting — World Thinking Day Event + Fun Patch', desc:'Complete My Great Day badge — Fun Patch', duration:75 },
+      { date:'20270213', time:'100000', title:'Cookie Depot Day', desc:'Pick up cookie orders', duration:120 },
+      { date:'20270301', time:'151500', title:'Brownie Meeting — Girl Scout Way Part 1', desc:'Badge: Girl Scout Way', duration:75 },
+      { date:'20270308', time:'151500', title:'Brownie Meeting — Girl Scout Way Part 2', desc:'Badge: Girl Scout Way', duration:75 },
+      { date:'20270322', time:'151500', title:'Brownie Meeting — Fun Patch (Girls Choice)', desc:"Girls choose a fun patch.", duration:75 },
+      { date:'20270326', time:'170000', title:'Tentative: Low Ropes Late-over', desc:'Tentative late-over — no school next Monday (In-Service Day)', duration:240 },
+      { date:'20270405', time:'151500', title:'Brownie Meeting — Eco Friend Part 1', desc:'Badge: Eco Friend', duration:75 },
+      { date:'20270412', time:'151500', title:'Brownie Meeting — Eco Friend Part 2 + Service Project Plan', desc:'Badge: Eco Friend — Service Project Plan', duration:75 },
+      { date:'20270426', time:'151500', title:'Brownie Meeting — Outdoor Service Project Planning', desc:'Plan the outdoor service project', duration:75 },
+      { date:'20270501', time:'090000', title:'Daisy / Brownie Playday', desc:'First Saturday in May — council event', duration:180 },
+      { date:'20270510', time:'151500', title:'Brownie Meeting — Vote on Fun Patch or Badge (Girls Vote)', desc:"Girls vote on the activity.", duration:75 },
+      { date:'20270517', time:'151500', title:'Brownie Meeting — End of Year Crafts + Memory-Making', desc:'Scrapbook pages, friendship bracelets, notes to each other', duration:75 },
+      { date:'20270529', time:'100000', title:'Beach Party — Award Ceremony & Bridging Send-off!', desc:'Present all badges, celebrate the year, official bridging send-off for families', duration:180 },
+    ];
+
+    function pad(n) { return String(n).padStart(2,'0'); }
+    function uid(i) { return 'brownie-2026-' + i + '@troop'; }
+    function stamp() {
+      const n = new Date();
+      return n.getUTCFullYear()+pad(n.getUTCMonth()+1)+pad(n.getUTCDate())+'T'+pad(n.getUTCHours())+pad(n.getUTCMinutes())+pad(n.getUTCSeconds())+'Z';
+    }
+    function dtend(dateStr, timeStr, mins) {
+      const y = parseInt(dateStr.slice(0,4));
+      const m = parseInt(dateStr.slice(4,6))-1;
+      const d = parseInt(dateStr.slice(6,8));
+      const h = parseInt(timeStr.slice(0,2));
+      const min = parseInt(timeStr.slice(2,4));
+      const end = new Date(y,m,d,h+Math.floor((min+mins)/60),(min+mins)%60,0);
+      return end.getFullYear()+pad(end.getMonth()+1)+pad(end.getDate())+'T'+pad(end.getHours())+pad(end.getMinutes())+'00';
+    }
+
+    let ics = ['BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','PRODID:-//Brownie Troop//Schedule 2026-27//EN','X-WR-CALNAME:Brownie Troop 2026–27','X-WR-TIMEZONE:America/Los_Angeles'];
+    events.forEach((e,i) => {
+      const start = e.date + 'T' + (e.time || '100000');
+      const end = dtend(e.date, e.time || '100000', e.duration);
+      ics.push('BEGIN:VEVENT');
+      ics.push('UID:' + uid(i));
+      ics.push('DTSTAMP:' + stamp());
+      ics.push('DTSTART;TZID=America/Los_Angeles:' + start);
+      ics.push('DTEND;TZID=America/Los_Angeles:' + end);
+      ics.push('SUMMARY:' + e.title);
+      ics.push('DESCRIPTION:' + e.desc.replace(/,/g,'\\,'));
+      ics.push('END:VEVENT');
+    });
+    ics.push('END:VCALENDAR');
+
+    const blob = new Blob([ics.join('\r\n')], { type:'text/calendar;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'brownie-troop-2026-27.ics';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  let activeFilter = null;
+  const labels = { meeting:'Meetings', badge:'Badge meetings', special:'Special events', choice:"Girls' vote" };
+
+  function toggleFilter(card) {
+    const f = card.dataset.filter;
+    if (activeFilter === f) { clearFilter(); return; }
+    activeFilter = f;
+    document.querySelectorAll('.summary-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    document.getElementById('filterLabel').textContent = labels[f];
+    document.getElementById('filterBar').classList.add('visible');
+    applyFilter(f);
+  }
+
+  function clearFilter() {
+    activeFilter = null;
+    document.querySelectorAll('.summary-card').forEach(c => c.classList.remove('active'));
+    document.getElementById('filterBar').classList.remove('visible');
+    document.querySelectorAll('.meeting-row').forEach(r => r.classList.remove('hidden'));
+    document.querySelectorAll('.month-section').forEach(s => s.classList.remove('hidden'));
+    document.getElementById('noResults').classList.remove('visible');
+  }
+
+  function applyFilter(f) {
+    document.querySelectorAll('.meeting-row').forEach(row => {
+      const cats = (row.dataset.category || '').split(' ');
+      row.classList.toggle('hidden', !cats.includes(f));
+    });
+    let any = false;
+    document.querySelectorAll('.month-section').forEach(sec => {
+      const visible = sec.querySelectorAll('.meeting-row:not(.hidden):not(.skip-row)').length > 0;
+      sec.classList.toggle('hidden', !visible);
+      if (visible) any = true;
+    });
+    document.getElementById('noResults').classList.toggle('visible', !any);
+  }
+</script>
+</body>
+</html>
