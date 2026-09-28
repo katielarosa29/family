@@ -298,10 +298,10 @@
   <!-- Filter buttons -->
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterRecipes('all', this)">
-      <div class="dot" style="background:#a09d98"></div> All <span class="filter-count">56</span>
+      <div class="dot" style="background:#a09d98"></div> All <span class="filter-count">68</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('dinner', this)">
-      <div class="dot" style="background:#e8924a"></div> Dinner <span class="filter-count">50</span>
+      <div class="dot" style="background:#e8924a"></div> Dinner <span class="filter-count">61</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('sauce', this)">
       <div class="dot" style="background:#4aad6e"></div> Sauces & Dressings <span class="filter-count">2</span>
@@ -310,7 +310,7 @@
       <div class="dot" style="background:#6878e0"></div> Soups <span class="filter-count">2</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('dessert', this)">
-      <div class="dot" style="background:#e0688a"></div> Desserts <span class="filter-count">1</span>
+      <div class="dot" style="background:#e0688a"></div> Desserts <span class="filter-count">2</span>
     </button>
   </div>
 
@@ -320,7 +320,489 @@
 
 
 
-    <!-- VEG-1. Ginger Miso Tofu Ramen (newest) -->
+
+
+
+
+    <!-- Chickpea Chocolate Chip Cookies (newest) -->
+    <div class="recipe-card open" data-category="desserts">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-desserts">Desserts</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Chickpea Chocolate Chip Cookies</div>
+          <div class="recipe-meta">Gluten-free · Makes 4 cookies · 20 min</div>
+          <div class="tag-row">
+            <span class="tag">Desserts</span>
+            <span class="tag">Gluten-free</span>
+            <span class="tag">High protein</span>
+            <span class="tag">Kit-friendly</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">¾ cup (125g)</span>chickpeas, rinsed, drained, and patted dry</li>
+            <li><span class="ing-amount">¼ cup (65g)</span>creamy peanut butter</li>
+            <li><span class="ing-amount">2 tbsp (40g)</span>honey or maple syrup</li>
+            <li><span class="ing-amount">½ tsp</span>vanilla extract</li>
+            <li><span class="ing-amount">¼ tsp</span>baking powder</li>
+            <li><span class="ing-amount">1 pinch</span>salt (optional)</li>
+            <li><span class="ing-amount">2 tbsp (30g)</span>dark chocolate chips</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F / 175°C. Line a baking sheet with parchment paper.</li>
+            <li>Add chickpeas, peanut butter, honey, vanilla, baking powder, and salt to a blender or food processor. Blend until completely smooth, scraping down the sides as needed.</li>
+            <li>Fold in the dark chocolate chips.</li>
+            <li>Scoop into 4 equal portions on the baking sheet and gently flatten the tops.</li>
+            <li>Bake 10–12 min until the edges are golden and the tops are just set.</li>
+            <li>Cool on the sheet at least 10 minutes before eating — they firm up significantly as they cool.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 You cannot taste the chickpeas at all — this is genuinely a good cookie, not just a "healthy" one. 5g protein and 3g fiber per cookie. Credit to @marco.madewell for the original. Great for Kit: gluten-free, high protein, and the peanut butter + chocolate combo means she'll actually eat them. Double the batch easily — just make 8 instead of 4.</div>
+      </div>
+    </div>
+
+    <!-- Chicken Pozole Rojo -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Chicken Pozole Rojo</div>
+          <div class="recipe-meta">Mexican Night · Instant Pot or stovetop · 30–40 min · Serves 6</div>
+          <div class="tag-row"><span class="tag">Mexican Night</span><span class="tag">Gluten-free</span><span class="tag">Low cholesterol</span><span class="tag">Great leftovers</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">1</span>onion, diced</li>
+            <li><span class="ing-amount">4–6 cloves</span>garlic, roughly chopped</li>
+            <li><span class="ing-amount">1 can</span>diced green chilies (4 oz)</li>
+            <li><span class="ing-amount">1 tbsp</span>tomato paste</li>
+            <li><span class="ing-amount">1 tbsp</span>chili powder</li>
+            <li><span class="ing-amount">2 tsp</span>cumin + 2 tsp dried oregano + 2 tsp salt</li>
+            <li><span class="ing-amount">½ tsp</span>chipotle powder + 1 bay leaf</li>
+            <li><span class="ing-amount">2 lbs</span>chicken thighs, boneless + skinless</li>
+            <li><span class="ing-amount">4 cups</span>chicken broth (+ 2 cups more for brothier soup)</li>
+            <li><span class="ing-amount">2–3 cans</span>hominy (15 oz each), drained</li>
+            <li><span class="ing-amount">1</span>dried guajillo pepper, seeds removed</li>
+            <li><span class="ing-amount">1</span>lime, juiced</li>
+            <li><em style="color:var(--text-tertiary);">— Toppings —</em></li>
+            <li>Avocado · shredded cabbage · jalapeño · lime · radish · sour cream · tortilla chips · cilantro</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li><strong>Instant Pot:</strong> Set to Sauté. Cook onion and garlic in oil until fragrant. Add green chilies, tomato paste, and all spices — stir 1 min. Add chicken, broth, hominy, guajillo pepper (torn, seeds removed). High pressure 14 min. Natural release. Shred chicken. Add lime juice, adjust salt.</li>
+            <li><strong>Stovetop:</strong> Same steps in a Dutch oven. After adding all ingredients bring to a boil, then simmer covered 20–25 min until chicken pulls apart easily. Shred, add lime, adjust salt.</li>
+            <li>Serve in deep bowls with all the toppings. Tortilla chips or warm corn tortillas alongside.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 From Feasting at Home (feastingathome.com) — 88 five-star reviews for good reason. Leftovers taste even better the next day. Add 2 extra cups broth if you prefer it brothier. The dried guajillo pepper is at any Mexican grocery or the Latin aisle at Fred Meyer — toast it in a dry skillet first for extra depth. Kit: milder bowl with less chipotle, she picks her own toppings (avocado + chips make her happy).</div>
+      </div>
+    </div>
+
+    <!-- Japanese Curry -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Japanese Curry</div>
+          <div class="recipe-meta">Asian Night · One pot · 35 min · Serves 4–6</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">Kit-friendly</span><span class="tag">One pot</span><span class="tag">Low cholesterol option</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients"><li><span class="ing-amount">1 box</span>S&amp;B Golden Curry roux (medium hot)</li>
+<li><span class="ing-amount">2</span>carrots, chunked</li>
+<li><span class="ing-amount">2</span>Yukon Gold potatoes, cubed</li>
+<li><span class="ing-amount">1</span>large onion, sliced thick</li>
+<li><span class="ing-amount">3 cups</span>vegetable or chicken broth</li>
+<li><span class="ing-amount">1 tbsp</span>neutral oil</li>
+<li><em style="color:var(--text-tertiary);">— Protein (choose) —</em></li>
+<li><span class="ing-amount">1 lb</span>chicken thighs or pork (Justin + Joey)</li>
+<li><span class="ing-amount">14 oz</span>firm tofu or 1 can chickpeas (Kit + Katie)</li>
+<li>Steamed rice + pickled ginger</li></ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps"><li>Brown chicken or tofu in oil until golden, 3–4 min. Remove and set aside.</li>
+<li>Sauté onion in same pot 5–6 min until lightly browned.</li>
+<li>Add carrots and potatoes. Pour in broth, boil, then simmer 15 min until vegetables are just tender.</li>
+<li>Break S&amp;B roux blocks into pot, stir until dissolved — sauce thickens dramatically. Return protein, simmer 5 min.</li>
+<li>Serve over steamed rice with pickled ginger on the side.</li></ol>
+        </div>
+        <div class="note-box">💡 S&amp;B Golden Curry roux blocks are at Fred Meyer's Asian aisle — medium hot is the right level. Kit + Katie: tofu version in the same pot works beautifully. Japanese curry reheats better than almost anything; make a double batch. One of the most universally kid-loved dinners there is.</div>
+      </div>
+    </div>
+
+    <!-- Mapo Tofu -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mapo Tofu</div>
+          <div class="recipe-meta">Asian Night · Sichuan · 20 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">20 minutes</span><span class="tag">Phytoestrogens</span><span class="tag">Vegetarian-friendly</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients"><li><span class="ing-amount">2 tubes</span>soft silken tofu (12 oz each), cubed</li>
+<li><span class="ing-amount">2 tbsp</span>doubanjiang (fermented chili bean paste)</li>
+<li><span class="ing-amount">1 tbsp</span>soy sauce + 1 tsp sesame oil</li>
+<li><span class="ing-amount">1 cup</span>vegetable broth</li>
+<li><span class="ing-amount">4 cloves</span>garlic, minced + 1-inch ginger, grated</li>
+<li><span class="ing-amount">1 cup</span>shiitake mushrooms, finely chopped</li>
+<li><span class="ing-amount">½ tsp</span>Sichuan peppercorns, toasted + ground</li>
+<li><span class="ing-amount">2 tsp</span>cornstarch + 2 tbsp cold water</li>
+<li><span class="ing-amount">2 tbsp</span>neutral oil</li>
+<li>Scallions + steamed rice</li></ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps"><li>Heat oil in a wok over high heat. Add doubanjiang, fry 30 sec until oil turns red. Add garlic and ginger, cook 30 sec.</li>
+<li>Add mushrooms, cook 2–3 min. Pour in broth and soy sauce. Bring to a simmer.</li>
+<li>Gently slide in tofu cubes. Fold carefully — don't stir aggressively. Simmer 3 min.</li>
+<li>Stir cornstarch slurry, pour in while gently moving the pan. Sauce thickens in about 1 min.</li>
+<li>Finish with sesame oil and Sichuan peppercorns. Scallions on top. Serve immediately over rice.</li></ol>
+        </div>
+        <div class="note-box">💡 Doubanjiang (Lee Kum Kee) is the non-negotiable ingredient — Fred Meyer Asian aisle. Sichuan peppercorns create a unique numbing tingle; use them even if you're skeptical. Soft tofu is the best perimenopause food you can eat, and this is one of the most delicious ways to eat it. Kit mod: small portion with just ginger, garlic, soy, mushrooms — skip the doubanjiang and pepper entirely.</div>
+      </div>
+    </div>
+
+    <!-- Korean Bibimbap -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Korean Bibimbap</div>
+          <div class="recipe-meta">Asian Night · Build your own · 40 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">Build your own</span><span class="tag">Iron-rich</span><span class="tag">Vegetarian</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients"><li><span class="ing-amount">3 cups</span>cooked short-grain rice</li>
+<li><span class="ing-amount">2 cups</span>baby spinach, wilted + squeezed dry</li>
+<li><span class="ing-amount">2</span>carrots, julienned + sautéed</li>
+<li><span class="ing-amount">2 cups</span>shiitake mushrooms, sliced + sautéed</li>
+<li><span class="ing-amount">1</span>zucchini, julienned + sautéed</li>
+<li><span class="ing-amount">1 cup</span>bean sprouts, blanched</li>
+<li><span class="ing-amount">4</span>eggs, fried sunny-side up</li>
+<li><span class="ing-amount">2 tbsp</span>sesame oil + 2 tbsp soy sauce (for vegetables)</li>
+<li><span class="ing-amount">1 tbsp</span>toasted sesame seeds</li>
+<li><em style="color:var(--text-tertiary);">— Gochujang sauce —</em></li>
+<li><span class="ing-amount">2 tbsp</span>gochujang + 1 tbsp sesame oil + 1 tbsp rice vinegar + 1 tsp honey + 1 tsp soy</li></ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps"><li>Cook each vegetable separately in sesame oil and soy sauce, seasoning each individually. One pan in sequence — no washing between.</li>
+<li>Wilt spinach in dry pan, squeeze out all water, season with sesame oil, soy, and pinch of garlic.</li>
+<li>Mix gochujang sauce. Fry eggs sunny-side up in sesame oil — runny yolk essential.</li>
+<li>Build bowls: hot rice, vegetables arranged in sections, egg in center. Drizzle sauce, add sesame seeds.</li>
+<li>Mix everything together at the table before eating — breaking the yolk and mixing it all is the whole point.</li></ol>
+        </div>
+        <div class="note-box">💡 Each vegetable only takes 3–4 min. Spinach gives Kit excellent iron. Kit mod: skip gochujang, use just soy sauce and sesame oil — she can mix her own bowl. A hot stone bowl (dolsot) creates a crispy rice crust at the bottom that's extraordinary but not required.</div>
+      </div>
+    </div>
+
+    <!-- Dan Dan Noodles -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Dan Dan Noodles</div>
+          <div class="recipe-meta">Asian Night · Sichuan · 25 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">25 minutes</span><span class="tag">Perimenopause friendly</span><span class="tag">Sesame</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients"><li><span class="ing-amount">12 oz</span>thin wheat noodles or spaghetti</li>
+<li><span class="ing-amount">½ lb</span>ground pork or crumbled firm tofu</li>
+<li><span class="ing-amount">2 tbsp</span>soy sauce + 1 tsp five-spice (for pork/tofu)</li>
+<li><em style="color:var(--text-tertiary);">— Dan Dan Sauce —</em></li>
+<li><span class="ing-amount">3 tbsp</span>tahini or Chinese sesame paste</li>
+<li><span class="ing-amount">2 tbsp</span>soy sauce + 1 tbsp chili oil + 1 tbsp Chinkiang black vinegar</li>
+<li><span class="ing-amount">1 tsp</span>sesame oil + 2 cloves garlic, grated + 2 tsp sugar</li>
+<li><span class="ing-amount">3–4 tbsp</span>hot noodle water, to thin</li>
+<li>Scallions, crushed peanuts, cucumber strips</li></ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps"><li>Brown pork or crumble tofu with soy sauce and five-spice until slightly crispy. Set aside.</li>
+<li>Whisk all sauce ingredients together. Thin with hot noodle water until pourable like heavy cream.</li>
+<li>Cook noodles, reserving ½ cup cooking water. Drain.</li>
+<li>Divide sauce into bowls. Add hot noodles and toss — the heat loosens the sauce perfectly.</li>
+<li>Top with pork or tofu, scallions, crushed peanuts, and cucumber. A soft-boiled egg on top is excellent. Extra chili oil at the table.</li></ol>
+        </div>
+        <div class="note-box">💡 Chinkiang black vinegar is malty and complex — find it at any Asian grocery. Kit mod: tahini noodles with soy, sesame, a little honey, and cucumber — same sauce minus chili oil and vinegar. The sauce is also extraordinary cold as a noodle salad the next day.</div>
+      </div>
+    </div>
+
+    <!-- Filipino Adobo — Chicken or Tofu -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Filipino Adobo — Chicken or Tofu</div>
+          <div class="recipe-meta">Asian Night · One pot · 40 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">Mostly hands-off</span><span class="tag">Phytoestrogens</span><span class="tag">Low cholesterol option</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients"><li><span class="ing-amount">2 lbs</span>bone-in chicken thighs (Justin + Joey) OR</li>
+<li><span class="ing-amount">2 blocks</span>extra-firm tofu, pressed + cubed (Kit + Katie)</li>
+<li><span class="ing-amount">½ cup</span>soy sauce</li>
+<li><span class="ing-amount">½ cup</span>white or cane vinegar</li>
+<li><span class="ing-amount">1 head</span>garlic, all cloves smashed</li>
+<li><span class="ing-amount">4</span>bay leaves + 1 tbsp whole black peppercorns</li>
+<li><span class="ing-amount">1 tsp</span>sugar + 1 tbsp neutral oil</li>
+<li>Steamed rice, to serve</li></ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps"><li>Brown chicken or tofu in oil over high heat until golden. Don't skip — this is where the flavor comes from.</li>
+<li>Add garlic and cook 1 min. Pour in soy sauce and vinegar. Add bay leaves, peppercorns, and sugar.</li>
+<li>Bring to a boil, then reduce to a low simmer. Cook uncovered 25–30 min (15 min for tofu), turning once. Sauce reduces to a dark glossy glaze.</li>
+<li>Optional: broil chicken 3–4 min while sauce reduces further.</li>
+<li>Serve over rice with pan sauce poured generously over everything.</li></ol>
+        </div>
+        <div class="note-box">💡 Don't stir the vinegar before it boils — letting it cook off removes harshness. Tofu adobo absorbs the brine and becomes deeply savory all the way through. The sauce left in the pan is the best part — pour all of it over the rice. Gets better reheated the next day.</div>
+      </div>
+    </div>
+
+    <!-- Pad See Ew -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Pad See Ew</div>
+          <div class="recipe-meta">Asian Night · Thai · 20 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">20 minutes</span><span class="tag">Cruciferous</span><span class="tag">Kid-friendly</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients"><li><span class="ing-amount">12 oz</span>wide rice noodles (fresh or dried + soaked)</li>
+<li><span class="ing-amount">2 cups</span>Chinese broccoli (gai lan), cut into pieces</li>
+<li><span class="ing-amount">3</span>eggs, beaten</li>
+<li><span class="ing-amount">1 lb</span>chicken breast, sliced thin OR firm tofu, cubed</li>
+<li><span class="ing-amount">3 tbsp</span>neutral oil (high smoke point)</li>
+<li><em style="color:var(--text-tertiary);">— Sauce —</em></li>
+<li><span class="ing-amount">3 tbsp</span>dark soy sauce + 1 tbsp light soy + 1 tbsp oyster sauce + 2 tsp sugar</li></ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps"><li>Soak dried noodles in hot water 20 min until pliable (fresh: separate gently). Mix sauce.</li>
+<li>Get wok or large pan screaming hot. Add oil, cook chicken or tofu until browned, 3–4 min. Push to side.</li>
+<li>Add eggs to center, scramble until just set, mix with protein.</li>
+<li>Add Chinese broccoli and stir-fry 1–2 min. Add noodles and pour sauce over everything.</li>
+<li>Press noodles against pan, leave untouched 30–60 sec for char marks — this is the dish. Toss once and serve immediately.</li></ol>
+        </div>
+        <div class="note-box">💡 High heat and not stirring is everything — that char is the whole dish. Dark soy sauce is sweeter and thicker, giving pad see ew its glossy color. Chinese broccoli (gai lan) is in Fred Meyer's Asian produce or any Asian market. Kit: tofu version, less dark soy for milder flavor.</div>
+      </div>
+    </div>
+
+    <!-- Gyoza Night — Pan-Fried Dumplings -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Gyoza Night — Pan-Fried Dumplings</div>
+          <div class="recipe-meta">Asian Night · Family activity · 60 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">Family activity</span><span class="tag">Fun for kids</span><span class="tag">Sunday project</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients"><li><span class="ing-amount">1 pack</span>round gyoza wrappers (30–40 count, refrigerated)</li>
+<li><em style="color:var(--text-tertiary);">— Pork Filling (Justin + Joey) —</em></li>
+<li><span class="ing-amount">½ lb</span>ground pork + 1 cup napa cabbage, salted + squeezed + chopped</li>
+<li><span class="ing-amount">2 cloves</span>garlic, grated + 1 tsp ginger + 1 tbsp soy + 1 tsp sesame oil</li>
+<li><em style="color:var(--text-tertiary);">— Veggie Filling (Kit + Katie) —</em></li>
+<li><span class="ing-amount">1 cup</span>firm tofu, crumbled + squeezed dry</li>
+<li><span class="ing-amount">1 cup</span>napa cabbage, salted + squeezed + chopped</li>
+<li><span class="ing-amount">½ cup</span>shiitake mushrooms, finely chopped + 1 tbsp soy + 1 tsp sesame oil</li>
+<li><em style="color:var(--text-tertiary);">— Dipping Sauce —</em></li>
+<li><span class="ing-amount">3 tbsp</span>soy sauce + 1 tbsp rice vinegar + 1 tsp sesame oil + chili oil</li></ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps"><li>Salt cabbage for both fillings (½ tsp each), let sit 10 min, squeeze out every drop of water. Critical — wet filling = soggy gyoza. Mix each filling separately.</li>
+<li>Fold: wrapper in palm, 1 tsp filling in center, wet half the edge, fold and press to seal, pleat front edge 4–5 times. Place on floured sheet pan.</li>
+<li>Heat 1 tbsp oil in nonstick pan over medium-high. Gyoza flat-side down, cook 2–3 min until golden. Add ⅓ cup water, cover, steam 3–4 min. Remove lid, cook until water evaporates and bottoms re-crisp.</li>
+<li>Serve immediately with dipping sauce.</li></ol>
+        </div>
+        <div class="note-box">💡 Make more than you think you need — minimum 8 per person. Uncooked gyoza freeze beautifully on a sheet pan then in a bag; cook straight from frozen with 2 extra min of steaming. Mark veggie ones with a small twist at the top. The folding is a great Sunday family activity.</div>
+      </div>
+    </div>
+
+    <!-- Malaysian Laksa -->
+    <div class="recipe-card" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Malaysian Laksa</div>
+          <div class="recipe-meta">Asian Night · Weekend · 45 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Asian Night</span><span class="tag">Phytoestrogens</span><span class="tag">Weekend</span><span class="tag">Perimenopause friendly</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients"><li><span class="ing-amount">8 oz</span>rice vermicelli noodles</li>
+<li><span class="ing-amount">14 oz</span>tofu puffs or firm tofu, cubed</li>
+<li><span class="ing-amount">1 lb</span>shrimp, peeled (optional — Justin + Joey)</li>
+<li><span class="ing-amount">2 cans</span>full-fat coconut milk (14 oz each)</li>
+<li><span class="ing-amount">2 cups</span>vegetable or chicken broth</li>
+<li>Bean sprouts + 2 boiled eggs + cucumber + fresh mint + lime</li>
+<li><em style="color:var(--text-tertiary);">— Laksa Paste —</em></li>
+<li><span class="ing-amount">3 stalks</span>lemongrass, white part, sliced</li>
+<li><span class="ing-amount">4 cloves</span>garlic + 3 shallots + 1-inch galangal or ginger</li>
+<li><span class="ing-amount">2 tsp</span>turmeric + 2–3 dried red chilies, soaked</li>
+<li><span class="ing-amount">2 tsp</span>shrimp paste (skip for veg) + 2 tbsp neutral oil</li></ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps"><li>Blend all paste ingredients until smooth. Fry in oil in a large pot over medium heat, stirring constantly, 5–8 min until fragrant, darkened, and oil begins to separate. This is the foundation of the dish.</li>
+<li>Pour in coconut milk and broth. Bring to a gentle simmer — never boil or coconut milk splits. Add tofu and simmer 10 min.</li>
+<li>Add shrimp in the last 3 min. Season with salt and lime juice.</li>
+<li>Soak vermicelli in boiling water 5 min. Drain.</li>
+<li>Build bowls: noodles, broth + tofu ladled over, bean sprouts, halved egg, cucumber, fresh mint. Lime and chili oil on the side.</li></ol>
+        </div>
+        <div class="note-box">💡 Frying the paste until the oil separates is non-negotiable — raw paste tastes flat. Shortcut: Nonya brand laksa paste in a jar (Asian grocery) saves 15 min and is genuinely excellent. Turmeric is a powerful anti-inflammatory, great for perimenopause. Kit: milder bowl with extra coconut milk, skip shrimp paste and chilies.</div>
+      </div>
+    </div>
+    <!-- Italian Pasta Salad -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Italian Pasta Salad</div>
+          <div class="recipe-meta">Vegetarian option · Starter or side · 20 min + chill · Serves 6–8</div>
+          <div class="tag-row">
+            <span class="tag">Make ahead</span>
+            <span class="tag">Before dinner</span>
+            <span class="tag">Kit-friendly</span>
+            <span class="tag">Summer</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">12 oz</span>rotini or fusilli</li>
+            <li><span class="ing-amount">1 cup</span>cherry tomatoes, halved</li>
+            <li><span class="ing-amount">½ cup</span>kalamata olives, sliced</li>
+            <li><span class="ing-amount">½ cup</span>pickled onions <em style="color:var(--text-tertiary);">(or thinly sliced red onion)</em></li>
+            <li><span class="ing-amount">½ cup</span>banana peppers <em style="color:var(--text-tertiary);">(or pepperoncini)</em></li>
+            <li><span class="ing-amount">6 oz</span>fresh mozzarella or provolone, cubed</li>
+            <li><span class="ing-amount">3 oz</span>salami or pepperoni, sliced <em style="color:var(--text-tertiary);">(skip for Kit)</em></li>
+            <li><span class="ing-amount">1 can</span>chickpeas, drained <em style="color:var(--text-tertiary);">(optional — adds protein for Kit)</em></li>
+            <li><span class="ing-amount">handful</span>fresh basil, torn</li>
+            <li><em style="color:var(--text-tertiary);">— Dressing —</em></li>
+            <li><span class="ing-amount">5 tbsp</span>extra-virgin olive oil</li>
+            <li><span class="ing-amount">3 tbsp</span>red wine vinegar <em style="color:var(--text-tertiary);">(or use 1 tbsp pickle brine + 2 tbsp vinegar)</em></li>
+            <li><span class="ing-amount">1 tsp</span>dried oregano</li>
+            <li><span class="ing-amount">1 tsp</span>Dijon mustard</li>
+            <li><span class="ing-amount">½ tsp</span>garlic powder</li>
+            <li>Salt + black pepper</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Cook pasta in well-salted water until just past al dente — a little softer than you'd serve it hot, since it firms up cold. Drain and rinse under cold water until fully cool. Toss immediately with 1 tbsp olive oil so it doesn't stick.</li>
+            <li>Shake all dressing ingredients together in a jar. Taste — it should be punchy. Add a splash of pickle brine from the banana peppers or pickled onion jar for extra brightness.</li>
+            <li>Combine pasta with tomatoes, olives, pickled onions, banana peppers, mozzarella, salami (if using), and chickpeas. Pour dressing over and toss well.</li>
+            <li>Refrigerate at least 30 min, ideally 1 hour. The pasta absorbs a lot of dressing as it sits.</li>
+            <li>Before serving, taste and re-season — it almost always needs more salt and a splash more vinegar. Add fresh basil right at the end.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Pickled onions + banana peppers are better than the standard version — brighter, more complex, and Kit will eat banana peppers without complaint since they're mild and sweet. The pickle brine in the dressing is the move. Add a handful of arugula stirred in at the end for a peppery lift. Keeps in the fridge for 3 days — make it the morning before a dinner party and forget about it.</div>
+      </div>
+    </div>
+
+    <!-- 1. Egg White Sweet Potato Hash -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Egg White Sweet Potato Hash</div>
+          <div class="recipe-meta">Family recipe · Stovetop · 25 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Breakfast for dinner</span>
+            <span class="tag">High protein</span>
+            <span class="tag">Iron-rich</span>
+            <span class="tag">Perimenopause friendly</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 medium</span>sweet potatoes, diced ½-inch</li>
+            <li><span class="ing-amount">1 cup</span>liquid egg whites <em style="color:var(--text-tertiary);">(or whites from 6–8 eggs)</em></li>
+            <li><span class="ing-amount">1</span>red bell pepper, diced</li>
+            <li><span class="ing-amount">½</span>red onion, diced</li>
+            <li><span class="ing-amount">2 cups</span>baby spinach</li>
+            <li><span class="ing-amount">2 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>smoked paprika</li>
+            <li><span class="ing-amount">½ tsp</span>cumin</li>
+            <li><span class="ing-amount">¼ tsp</span>garlic powder</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li>Salt + black pepper, to taste</li>
+            <li><em style="color:var(--text-tertiary);">Optional toppings: avocado, hot sauce, cotija, fresh herbs</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Heat 1 tbsp olive oil in a large cast-iron skillet over medium-high. Add sweet potato in a single layer, season with salt, paprika, cumin, and garlic powder. Cook without stirring 4–5 min until golden on the bottom, then toss and cook another 4–5 min until tender and caramelized all over. Remove and set aside.</li>
+            <li>Add remaining olive oil to the same pan. Sauté red onion and bell pepper over medium heat 3–4 min until softened. Add garlic, cook 30 seconds.</li>
+            <li>Add spinach and toss until just wilted, 1–2 min. Return sweet potatoes to the pan and stir everything together.</li>
+            <li>Push the hash to the edges to create a clear space in the center. Pour egg whites into the center. Let them set for 30 seconds, then gently fold and scramble into the hash until just cooked through — about 2 min. Don't overcook; pull them while still slightly glossy.</li>
+            <li>Taste and season. Serve straight from the pan with avocado, hot sauce, and cotija if you like.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Don't crowd the sweet potatoes in step 1 — they need direct contact with the hot pan to caramelize rather than steam. Cast iron is ideal here. Egg whites have all the protein of whole eggs with virtually no saturated fat — great for Justin's cholesterol. The spinach wilts into the hash invisibly and adds iron for Kit. A squeeze of hot sauce or salsa verde at the end pulls everything together.</div>
+      </div>
+    </div>
+
+    <!-- VEG-1. Ginger Miso Tofu Ramen -->
     <div class="recipe-card open" data-category="dinner">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-dinner">Dinner</span>
