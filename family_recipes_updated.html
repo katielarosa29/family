@@ -135,6 +135,7 @@
     .recipe-header:hover { background: var(--surface-2); }
     .recipe-card.open .recipe-header { border-bottom: 1px solid var(--border-light); }
 
+    .cat-hominy { background: #fdf0cc; color: #7a5c00; }
     .cat-pill {
       font-size: 10px;
       font-weight: 600;
@@ -298,19 +299,22 @@
   <!-- Filter buttons -->
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterRecipes('all', this)">
-      <div class="dot" style="background:#a09d98"></div> All <span class="filter-count">68</span>
+      <div class="dot" style="background:#a09d98"></div> All <span class="filter-count">78</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('dinner', this)">
-      <div class="dot" style="background:#e8924a"></div> Dinner <span class="filter-count">61</span>
+      <div class="dot" style="background:#e8924a"></div> Dinner <span class="filter-count">68</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('sauce', this)">
       <div class="dot" style="background:#4aad6e"></div> Sauces & Dressings <span class="filter-count">2</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('soup', this)">
-      <div class="dot" style="background:#6878e0"></div> Soups <span class="filter-count">2</span>
+      <div class="dot" style="background:#6878e0"></div> Soups <span class="filter-count">3</span>
     </button>
     <button class="filter-btn" onclick="filterRecipes('dessert', this)">
-      <div class="dot" style="background:#e0688a"></div> Desserts <span class="filter-count">2</span>
+      <div class="dot" style="background:#e0688a"></div> Desserts <span class="filter-count">4</span>
+    </button>
+    <button class="filter-btn" onclick="filterRecipes('hominy', this)">
+      <div class="dot" style="background:#d4a017"></div> Hominy <span class="filter-count">10</span>
     </button>
   </div>
 
@@ -324,7 +328,400 @@
 
 
 
-    <!-- Chickpea Chocolate Chip Cookies (newest) -->
+
+
+    <!-- Green Chile & Cheese Hominy Casserole (newest) -->
+    <div class="recipe-card open" data-category="dinner" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-hominy">Hominy</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Green Chile & Cheese Hominy Casserole</div>
+          <div class="recipe-meta">Vegetarian · Weeknight · 35 min · Serves 6</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Vegetarian</span><span class="tag">Kit-friendly</span><span class="tag">Weeknight</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 cans</span>hominy (15 oz each), drained</li>
+            <li><span class="ing-amount">1 can</span>diced green chiles (4 oz)</li>
+            <li><span class="ing-amount">8 oz</span>cream cheese, softened</li>
+            <li><span class="ing-amount">1 cup</span>sour cream</li>
+            <li><span class="ing-amount">1½ cups</span>sharp cheddar, shredded</li>
+            <li><span class="ing-amount">1 tsp</span>cumin</li>
+            <li><span class="ing-amount">½ tsp</span>garlic powder</li>
+            <li><span class="ing-amount">Salt + pepper</span></li>
+            <li><em style="color:var(--text-tertiary);">Optional: crushed tortilla chips on top</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 350°F. Beat cream cheese until smooth. Mix in sour cream, green chiles, cumin, garlic powder, salt, and pepper.</li>
+            <li>Fold in drained hominy and 1 cup of the cheddar. Spread into a greased 9x13 baking dish.</li>
+            <li>Top with remaining cheddar and crushed tortilla chips if using.</li>
+            <li>Bake 25–30 min until bubbling and golden on top. Rest 5 min before serving.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Think of this as a cheesy corn gratin — deeply comforting and ridiculously simple. Kit will love it. Great as a side dish alongside roast chicken or as a vegetarian main with a green salad. Leftovers reheat perfectly. Add a can of drained black beans for extra protein.</div>
+      </div>
+    </div>
+
+    <!-- Chicken & Hominy Enchilada Casserole -->
+    <div class="recipe-card" data-category="dinner" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-hominy">Hominy</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Chicken & Hominy Enchilada Casserole</div>
+          <div class="recipe-meta">Mexican Night · 40 min · Serves 6</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Mexican Night</span><span class="tag">Great leftovers</span><span class="tag">Rotisserie hack</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 rotisserie</span>chicken, shredded (about 3 cups meat)</li>
+            <li><span class="ing-amount">2 cans</span>hominy (15 oz each), drained</li>
+            <li><span class="ing-amount">2 cups</span>enchilada sauce (store-bought is fine)</li>
+            <li><span class="ing-amount">1 can</span>diced green chiles (4 oz)</li>
+            <li><span class="ing-amount">1 cup</span>sour cream</li>
+            <li><span class="ing-amount">2 cups</span>Monterey Jack or cheddar, shredded</li>
+            <li><span class="ing-amount">1 tsp</span>cumin + ½ tsp garlic powder</li>
+            <li>Fresh cilantro + avocado + lime to serve</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 375°F. Mix shredded chicken, hominy, green chiles, sour cream, half the enchilada sauce, cumin, and garlic powder. Season well.</li>
+            <li>Spread a thin layer of enchilada sauce on the bottom of a 9x13 dish. Add the chicken-hominy mixture. Pour remaining enchilada sauce over the top.</li>
+            <li>Cover with shredded cheese. Bake 25–30 min until bubbling and cheese is golden.</li>
+            <li>Top with cilantro, avocado, and a squeeze of lime. Serve straight from the dish.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 This is essentially pozole in casserole form — same flavors, different format. A rotisserie chicken makes this a true 15-min prep. Kit: cheese section in the same dish without the chicken. Makes outstanding leftovers for 3 days.</div>
+      </div>
+    </div>
+
+    <!-- Southwest Hominy & Black Bean Casserole -->
+    <div class="recipe-card" data-category="dinner" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-hominy">Hominy</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Southwest Hominy & Black Bean Casserole</div>
+          <div class="recipe-meta">Vegetarian · Mexican Night · 35 min · Serves 6</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Vegetarian</span><span class="tag">Iron-rich</span><span class="tag">Kit-friendly</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 cans</span>hominy (15 oz each), drained</li>
+            <li><span class="ing-amount">1 can</span>black beans (15 oz), drained</li>
+            <li><span class="ing-amount">1 cup</span>frozen corn</li>
+            <li><span class="ing-amount">1 can</span>diced tomatoes with green chiles (Rotel)</li>
+            <li><span class="ing-amount">1 cup</span>enchilada sauce</li>
+            <li><span class="ing-amount">1 tsp</span>cumin + 1 tsp smoked paprika + ½ tsp chili powder</li>
+            <li><span class="ing-amount">1½ cups</span>cheddar, shredded</li>
+            <li><span class="ing-amount">1 cup</span>crushed tortilla chips</li>
+            <li>Sour cream + cilantro + lime to serve</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Preheat oven to 375°F. Mix hominy, black beans, corn, Rotel tomatoes, enchilada sauce, and spices. Taste and season well.</li>
+            <li>Spread in a greased 9x13 dish. Top with cheddar then crushed tortilla chips.</li>
+            <li>Bake 25 min until bubbling and the chip topping is crispy. Serve with sour cream, cilantro, and lime.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Fully vegetarian, high in iron from the black beans, and the chip topping makes it feel more fun than healthy. Kit: skip or reduce the Rotel and use plain diced tomatoes for a milder version. One bowl, one pan — easy weeknight Mexican night.</div>
+      </div>
+    </div>
+
+    <!-- Hominy Breakfast Hash -->
+    <div class="recipe-card" data-category="dinner" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-hominy">Hominy</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Hominy Breakfast Hash</div>
+          <div class="recipe-meta">Vegetarian · Brinner Night · 25 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Brinner</span><span class="tag">Vegetarian</span><span class="tag">25 minutes</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 cans</span>hominy (15 oz each), drained + patted dry</li>
+            <li><span class="ing-amount">1</span>red bell pepper, diced</li>
+            <li><span class="ing-amount">½</span>red onion, diced</li>
+            <li><span class="ing-amount">3 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">1 tsp</span>smoked paprika + 1 tsp cumin</li>
+            <li><span class="ing-amount">2 tbsp</span>olive oil</li>
+            <li><span class="ing-amount">4</span>eggs</li>
+            <li>Salt + pepper + hot sauce to serve</li>
+            <li><em style="color:var(--text-tertiary);">Optional: avocado, cilantro, cotija</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Pat hominy completely dry — this is what gets it crispy. Heat olive oil in a cast iron over medium-high.</li>
+            <li>Add hominy in a single layer. Don't touch it for 3–4 min until the bottom is golden and slightly crispy. Toss and cook 3 more min.</li>
+            <li>Add bell pepper, onion, and garlic. Cook 3–4 min until softened. Add spices and toss to coat.</li>
+            <li>Push hash to the edges. Crack eggs into the center. Cover and cook until whites are set but yolks are runny, about 3 min.</li>
+            <li>Serve straight from the pan with hot sauce, avocado, and cotija.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Hominy crisps up better than potato in a hash because it has less starch — the outside gets crunchy while the inside stays chewy. This is great for brinner night and genuinely fast. Kit: skip the hot sauce, she'll eat the egg + hominy + avocado happily.</div>
+      </div>
+    </div>
+
+    <!-- Southwest Hominy Salad -->
+    <div class="recipe-card" data-category="dinner" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-hominy">Hominy</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Southwest Hominy Salad</div>
+          <div class="recipe-meta">Vegetarian · Side dish or lunch · 15 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Vegetarian</span><span class="tag">Make ahead</span><span class="tag">15 minutes</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 can</span>hominy (15 oz), drained + rinsed</li>
+            <li><span class="ing-amount">1 can</span>black beans (15 oz), drained</li>
+            <li><span class="ing-amount">1 cup</span>cherry tomatoes, halved</li>
+            <li><span class="ing-amount">1</span>avocado, diced</li>
+            <li><span class="ing-amount">¼ cup</span>red onion, finely diced</li>
+            <li><span class="ing-amount">½ cup</span>corn (fresh or frozen + thawed)</li>
+            <li><span class="ing-amount">¼ cup</span>cilantro, chopped</li>
+            <li><em style="color:var(--text-tertiary);">— Lime Dressing —</em></li>
+            <li><span class="ing-amount">3 tbsp</span>lime juice + 2 tbsp olive oil + 1 tsp cumin + salt</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Whisk dressing ingredients together.</li>
+            <li>Combine hominy, black beans, tomatoes, corn, and red onion. Toss with dressing.</li>
+            <li>Add avocado and cilantro right before serving so they don't brown.</li>
+            <li>Serve cold or at room temp as a side dish or lunch with chips.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Everything except the avocado can be made a day ahead — it actually improves as it sits. Great weekday lunch, side dish for tacos, or potluck contribution. Kit: skip red onion and cilantro, she'll eat the hominy + corn + avocado + tomato version happily.</div>
+      </div>
+    </div>
+
+    <!-- Crispy Fried Hominy -->
+    <div class="recipe-card" data-category="dinner" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-hominy">Hominy</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Crispy Fried Hominy</div>
+          <div class="recipe-meta">Snack or topping · 15 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Snack</span><span class="tag">Salad topper</span><span class="tag">15 minutes</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 can</span>hominy (15 oz), drained + very well patted dry</li>
+            <li><span class="ing-amount">2 tbsp</span>neutral oil</li>
+            <li><span class="ing-amount">1 tsp</span>smoked paprika</li>
+            <li><span class="ing-amount">½ tsp</span>cumin</li>
+            <li><span class="ing-amount">½ tsp</span>garlic powder</li>
+            <li>Flaky salt</li>
+            <li><em style="color:var(--text-tertiary);">Optional: cayenne for heat, lime zest to finish</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Drain hominy and spread on a clean kitchen towel. Pat completely dry — any moisture and it steams instead of crisps.</li>
+            <li>Heat oil in a cast iron or heavy skillet over medium-high. Add hominy in a single layer.</li>
+            <li>Cook without stirring 4–5 min until golden and blistered on the bottom. Toss and cook 3–4 min more.</li>
+            <li>Remove from heat. Toss with smoked paprika, cumin, garlic powder, and flaky salt. Serve immediately.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Addictive in a way that's genuinely surprising — the outside goes slightly crunchy while the inside stays chewy and pillowy. Eat as a snack like popcorn, use as a salad topper instead of croutons, or scatter over soup. Kids love it. Lime zest at the end is a great finishing move. Best eaten immediately — they soften as they sit.</div>
+      </div>
+    </div>
+
+    <!-- Hominy & Kale Soup -->
+    <div class="recipe-card" data-category="soup" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill" style="background:#d4e8f8;color:#1a4f7a">Soups</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Hominy & Kale Soup</div>
+          <div class="recipe-meta">Vegetarian · Italian Night · 30 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Blue Zone</span><span class="tag">Calcium (kale)</span><span class="tag">Low cholesterol</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 can</span>hominy (15 oz), drained</li>
+            <li><span class="ing-amount">1 bunch</span>lacinato kale, stems removed + torn</li>
+            <li><span class="ing-amount">1 can</span>white cannellini beans (15 oz), drained</li>
+            <li><span class="ing-amount">4 cups</span>vegetable broth</li>
+            <li><span class="ing-amount">1</span>onion, diced</li>
+            <li><span class="ing-amount">4 cloves</span>garlic, sliced</li>
+            <li><span class="ing-amount">¼ tsp</span>red pepper flakes</li>
+            <li><span class="ing-amount">3 tbsp</span>olive oil</li>
+            <li>Parmesan rind to simmer + shaved parm to finish</li>
+            <li>Good crusty bread to serve</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Warm olive oil over medium. Sauté onion 5 min until soft. Add garlic and red pepper flakes, cook 1 min.</li>
+            <li>Add broth, hominy, white beans, and parmesan rind. Bring to a simmer.</li>
+            <li>Add kale and cook 10–12 min until very tender. Remove parmesan rind.</li>
+            <li>Taste and season. Serve with a heavy drizzle of good olive oil and shaved parmesan. Crusty bread alongside.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 A lighter, quicker cousin of ribollita. The hominy adds an unexpected chewiness that makes the soup much more interesting than the standard kale-bean combo. Lacinato kale is one of the best plant sources of calcium. Parmesan rind simmered in the broth is a huge flavor move — save your rinds in the freezer.</div>
+      </div>
+    </div>
+
+    <!-- Ginataang Mais -->
+    <div class="recipe-card" data-category="desserts" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-desserts">Desserts</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Ginataang Mais — Filipino Coconut Hominy Porridge</div>
+          <div class="recipe-meta">Filipino · Dessert or snack · 20 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Filipino</span><span class="tag">Vegetarian</span><span class="tag">Kid-friendly</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 can</span>hominy (15 oz), drained</li>
+            <li><span class="ing-amount">1 can</span>full-fat coconut milk (14 oz)</li>
+            <li><span class="ing-amount">1 cup</span>whole milk or additional coconut milk</li>
+            <li><span class="ing-amount">3–4 tbsp</span>sugar (to taste)</li>
+            <li><span class="ing-amount">1 pinch</span>salt</li>
+            <li><em style="color:var(--text-tertiary);">Optional: pandan extract or vanilla for fragrance</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Combine coconut milk, whole milk, sugar, and salt in a saucepan over medium heat. Stir until sugar dissolves.</li>
+            <li>Add hominy and bring to a gentle simmer. Cook 10–12 min, stirring occasionally, until the liquid thickens slightly and the hominy is very tender.</li>
+            <li>Add a drop of pandan extract if you have it — it gives an authentic fragrant quality.</li>
+            <li>Serve warm or chilled. It thickens more as it cools — loosen with a splash of coconut milk if needed.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Essentially the Filipino version of rice pudding but with hominy instead of rice — sweet, creamy, warming. Incredibly popular as a merienda (afternoon snack) or dessert. Kids love it warm. Serve chilled in the summer. Pandan extract is at any Asian grocery and transforms the flavor completely — worth getting.</div>
+      </div>
+    </div>
+
+    <!-- Mais Con Yelo -->
+    <div class="recipe-card" data-category="desserts" data-hominy="true">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-desserts">Desserts</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Mais Con Yelo — Filipino Hominy & Shaved Ice</div>
+          <div class="recipe-meta">Filipino · Summer dessert · 5 min · Serves 4</div>
+          <div class="tag-row"><span class="tag">Hominy</span><span class="tag">Filipino</span><span class="tag">Summer</span><span class="tag">No cook</span></div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">1 can</span>hominy (15 oz), drained + chilled</li>
+            <li><span class="ing-amount">1 can</span>sweetened condensed milk or evaporated milk</li>
+            <li><span class="ing-amount">2–3 cups</span>shaved or crushed ice per serving</li>
+            <li><span class="ing-amount">2–3 tbsp</span>sugar (optional — condensed milk may be enough)</li>
+            <li><em style="color:var(--text-tertiary);">Optional: coconut milk drizzle, sweet corn kernels</em></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Chill the hominy thoroughly in the fridge.</li>
+            <li>Fill a tall glass or bowl with shaved or crushed ice.</li>
+            <li>Spoon cold hominy over the ice.</li>
+            <li>Drizzle generously with sweetened condensed milk. Add a splash of coconut milk if you like. Serve immediately with a spoon.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 Mais con yelo literally means "corn with ice" — a classic Filipino street food and summer afternoon snack. The sweetened condensed milk poured over cold hominy and shaved ice is genuinely one of the most refreshing simple desserts there is. Joey and Kit will love it. A blender makes good crushed ice if you don't have a shaved ice machine.</div>
+      </div>
+    </div>
+
+    <!-- Chanterelle, Gruyère & Thyme Hand Pies -->
+    <div class="recipe-card open" data-category="dinner">
+      <div class="recipe-header" onclick="toggleRecipe(this)">
+        <span class="cat-pill cat-dinner">Dinner</span>
+        <div class="recipe-title-block">
+          <div class="recipe-title">Chanterelle, Gruyère & Thyme Hand Pies</div>
+          <div class="recipe-meta">Vegetarian · Family Recipe Night · 45 min · Serves 4</div>
+          <div class="tag-row">
+            <span class="tag">Family Recipe</span>
+            <span class="tag">Vegetarian</span>
+            <span class="tag">Fall seasonal</span>
+            <span class="tag">Family activity</span>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="recipe-body">
+        <div>
+          <div class="col-label">Ingredients</div>
+          <ul class="ingredients">
+            <li><span class="ing-amount">2 sheets</span>puff pastry (Pepperidge Farm), thawed</li>
+            <li><span class="ing-amount">1 lb</span>fresh chanterelle mushrooms, sliced</li>
+            <li><span class="ing-amount">3 cloves</span>garlic, minced</li>
+            <li><span class="ing-amount">2 tbsp</span>butter</li>
+            <li><span class="ing-amount">3 tbsp</span>crème fraîche or sour cream</li>
+            <li><span class="ing-amount">½ cup</span>Gruyère, grated</li>
+            <li><span class="ing-amount">1 tbsp</span>fresh thyme leaves</li>
+            <li>Salt + black pepper, generously</li>
+            <li><em style="color:var(--text-tertiary);">— To finish —</em></li>
+            <li><span class="ing-amount">1</span>egg, beaten (egg wash)</li>
+            <li>Flaky salt to top</li>
+            <li>Truffle oil + fresh thyme to finish (optional but extraordinary)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">Instructions</div>
+          <ol class="steps">
+            <li>Start chanterelles in a dry pan over medium-high heat with no butter. Let them cook and release their liquid — this takes 4–5 min. Once the moisture evaporates and the pan looks dry again, add the butter. This step is critical; skipping it makes the filling watery and the pastry soggy.</li>
+            <li>Sauté in the butter until golden and fragrant, 3–4 min more. Add garlic and thyme in the last minute. Season generously — mushrooms need more salt than you think.</li>
+            <li>Remove from heat. Fold in crème fraîche and Gruyère. Taste and adjust. Let the filling cool 10 minutes — hot filling melts the pastry before it bakes.</li>
+            <li>Preheat oven to 400°F. Cut puff pastry into circles or squares, roughly 5-inch rounds. Place a generous spoonful of filling in the center. Fold over and crimp hard with a fork all the way around — chanterelles hold moisture, so seal well.</li>
+            <li>Brush with egg wash and scatter flaky salt on top. Bake 20–22 min until deeply golden.</li>
+            <li>Finish with a tiny drizzle of truffle oil and a few fresh thyme leaves straight from the oven.</li>
+          </ol>
+        </div>
+        <div class="note-box">💡 The dry-pan step first is non-negotiable — chanterelles are about 90% water and if you add butter too early the filling will be soupy. Fresh chanterelles from the Portland Farmers Market or Beaverton FM are hitting peak season right now (fall). Everyone crimps their own hand pie and marks it with a fork design to tell them apart — great family activity. Kit will love the crimping. The truffle oil finish is optional but takes these somewhere special.</div>
+      </div>
+    </div>
+
+    <!-- Chickpea Chocolate Chip Cookies -->
     <div class="recipe-card open" data-category="desserts">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-desserts">Desserts</span>
@@ -369,7 +766,7 @@
     </div>
 
     <!-- Chicken Pozole Rojo -->
-    <div class="recipe-card open" data-category="dinner">
+    <div class="recipe-card open" data-category="dinner" data-hominy="true">
       <div class="recipe-header" onclick="toggleRecipe(this)">
         <span class="cat-pill cat-dinner">Dinner</span>
         <div class="recipe-title-block">
@@ -3476,7 +3873,8 @@
   function filterRecipes(cat, btn) {
     const cards = document.querySelectorAll('.recipe-card');
     cards.forEach(card => {
-      card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+      const match = cat === 'all' || card.dataset.category === cat || (cat === 'hominy' && card.dataset.hominy === 'true');
+      card.style.display = match ? '' : 'none';
     });
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
