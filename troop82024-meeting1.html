@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Troop 82024 — Meeting 1 Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font-sans: "DM Sans", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --color-background-primary:   #ffffff;
+  --color-background-secondary: #f1efe8;
+  --color-background-tertiary:  #f9f8f5;
+  --color-background-info:      #e6f1fb;
+  --color-text-primary:   #1a1915;
+  --color-text-secondary: #5f5e5a;
+  --color-text-tertiary:  #888780;
+  --color-text-info:      #185fa5;
+  --color-border-tertiary:  rgba(26,25,21,0.12);
+  --color-border-secondary: rgba(26,25,21,0.22);
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background-primary:   #1e1e1c;
+    --color-background-secondary: #2a2a27;
+    --color-background-tertiary:  #141412;
+    --color-background-info:      #0c447c;
+    --color-text-primary:   #f0ede6;
+    --color-text-secondary: #b4b2a9;
+    --color-text-tertiary:  #888780;
+    --color-text-info:      #b5d4f4;
+    --color-border-tertiary:  rgba(240,237,230,0.10);
+    --color-border-secondary: rgba(240,237,230,0.20);
+  }
+}
+
+html { font-size: 16px; }
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--color-text-primary);
+  background: var(--color-background-tertiary);
+  padding: 2.5rem 1rem 5rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 680px; margin: 0 auto; }
+
+/* ── Page header ── */
+.page-header {
+  padding-bottom: 1.25rem;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  margin-bottom: 1.5rem;
+}
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: var(--border-radius-md);
+}
+.pill-blue  { background: var(--color-background-info); color: var(--color-text-info); }
+.pill-green { background: #eaf3de; color: #27500a; }
+@media (prefers-color-scheme: dark) {
+  .pill-green { background: #27500a; color: #c0dd97; }
+}
+h1 { font-size: 22px; font-weight: 500; line-height: 1.3; margin-bottom: 6px; }
+.subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ── Section label ── */
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin: 1.5rem 0 0.6rem;
+}
+
+/* ── Timeline ── */
+.timeline { display: flex; flex-direction: column; gap: 10px; }
+
+.block {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  border-radius: var(--border-radius-lg);
+  border: 0.5px solid var(--color-border-tertiary);
+  overflow: hidden;
+  background: var(--color-background-primary);
+}
+.block-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 6px;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.35;
+  gap: 5px;
+}
+.block-time i { font-size: 19px; }
+.block-body {
+  padding: 14px 16px;
+  border-left: 0.5px solid var(--color-border-tertiary);
+}
+.block-title {
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+.block-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.block-list {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  margin: 4px 0 8px 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.block-list li strong { font-weight: 500; color: var(--color-text-primary); }
+.supplies {
+  font-size: 12px;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+.supplies i { font-size: 13px; margin-top: 2px; flex-shrink: 0; }
+
+/* ── Color bands ── */
+.bg-teal   { background: #e1f5ee; color: #085041; }
+.bg-green  { background: #eaf3de; color: #27500a; }
+.bg-purple { background: #eeedfe; color: #3c3489; }
+.bg-amber  { background: #faeeda; color: #633806; }
+.bg-coral  { background: #faece7; color: #712b13; }
+.bg-pink   { background: #fbeaf0; color: #72243e; }
+.bg-blue   { background: #e6f1fb; color: #0c447c; }
+.bg-indigo { background: #eef0fd; color: #2d3794; }
+
+@media (prefers-color-scheme: dark) {
+  .bg-teal   { background: #085041; color: #9fe1cb; }
+  .bg-green  { background: #27500a; color: #c0dd97; }
+  .bg-purple { background: #3c3489; color: #cecbf6; }
+  .bg-amber  { background: #633806; color: #fac775; }
+  .bg-coral  { background: #712b13; color: #f5c4b3; }
+  .bg-pink   { background: #72243e; color: #f4c0d1; }
+  .bg-blue   { background: #0c447c; color: #b5d4f4; }
+  .bg-indigo { background: #2d3794; color: #c7cdfb; }
+}
+
+/* ── Station grid ── */
+.stations {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 0;
+}
+.station {
+  border-radius: var(--border-radius-lg);
+  border: 0.5px solid var(--color-border-tertiary);
+  overflow: hidden;
+  background: var(--color-background-primary);
+}
+.station-header {
+  padding: 10px 14px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.station-header i { font-size: 16px; }
+.station-body { padding: 0 14px 12px; }
+.station-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 7px;
+  line-height: 1.4;
+}
+.station-desc {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.station-supplies {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  line-height: 1.45;
+}
+.station-supplies i { font-size: 12px; margin-top: 1px; flex-shrink: 0; }
+
+@media (max-width: 560px) {
+  .stations { grid-template-columns: 1fr; }
+}
+
+/* ── Tip ── */
+.tip {
+  margin-top: 1.25rem;
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+  background: var(--color-background-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.55;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.tip i { font-size: 16px; margin-top: 2px; flex-shrink: 0; color: var(--color-text-tertiary); }
+.tip strong { font-weight: 500; color: var(--color-text-primary); }
+
+/* ── Print ── */
+@media print {
+  body { background: #fff; padding: 1rem; }
+  .block, .station { break-inside: avoid; }
+}
+
+@media (max-width: 460px) {
+  .block { grid-template-columns: 58px 1fr; }
+  .block-time { font-size: 10px; padding: 10px 4px; }
+  .block-time i { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+<main class="container">
+
+  <!-- Header -->
+  <header class="page-header">
+    <div class="meta-row">
+      <span class="pill pill-blue"><i class="ti ti-girl" aria-hidden="true"></i> Troop 82024</span>
+      <span class="pill pill-green"><i class="ti ti-star" aria-hidden="true"></i> Brownie Year 1</span>
+    </div>
+    <h1>Meeting 1 — Welcome to Brownies!</h1>
+    <p class="subtitle">
+      <i class="ti ti-clock" aria-hidden="true"></i>
+      75 min &nbsp;·&nbsp; Monday 3:15–4:30 PM &nbsp;·&nbsp; 3 activity stations
+    </p>
+  </header>
+
+  <!-- OPENING -->
+  <p class="section-label">Opening</p>
+  <div class="timeline">
+
+    <div class="block">
+      <div class="block-time bg-amber">
+        <i class="ti ti-apple" aria-hidden="true"></i>
+        3:15<br>0–15 min
+      </div>
+      <div class="block-body">
+        <div class="block-title">Arrival &amp; Snack</div>
+        <p class="block-desc">Girls arrive, settle in, and enjoy snack together. Leaders use this window to get the room ready and greet families. Snack kapers handle distribution and will clean up at the end.</p>
+        <p class="supplies"><i class="ti ti-package" aria-hidden="true"></i> Snack + napkins/cups.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-time bg-teal">
+        <i class="ti ti-users" aria-hidden="true"></i>
+        3:30<br>15–25 min
+      </div>
+      <div class="block-body">
+        <div class="block-title">Promise, Law &amp; Kapers</div>
+        <p class="block-desc">Gather girls into a friendship circle for the opening routine:</p>
+        <ul class="block-list">
+          <li><strong>Girl Scout Promise</strong> — recite together with the three-finger sign.</li>
+          <li><strong>Girl Scout Law</strong> — recite together; pause on a word or two to ask what they mean (e.g. "What does <em>considerate</em> mean?").</li>
+          <li><strong>Quick welcome</strong> — celebrate being Brownies! This is their very first official Brownie meeting.</li>
+        </ul>
+        <p class="supplies"><i class="ti ti-package" aria-hidden="true"></i> Promise &amp; Law display or printed cards.</p>
+      </div>
+    </div>
+
+  </div><!-- /opening timeline -->
+
+  <!-- ACTIVITY STATIONS -->
+  <p class="section-label">Activity Stations — 3:40–4:10 (30 min, ~10 min per rotation)</p>
+
+  <div class="stations">
+
+    <!-- Station A -->
+    <div class="station">
+      <div class="station-header bg-purple">
+        <i class="ti ti-box" aria-hidden="true"></i>
+        Station A
+      </div>
+      <div class="station-body">
+        <div class="station-name">Dream Box Decoration</div>
+        <p class="station-desc">Girls decorate the outside of their Dream Box with stickers, washi tape, markers, and their name. These boxes hold their hopes and dreams for the year — opened at the end-of-year celebration.</p>
+        <p class="station-supplies"><i class="ti ti-package" aria-hidden="true"></i> Plain boxes, stickers, markers, foam stickers, etc.</p>
+      </div>
+    </div>
+
+    <!-- Station B -->
+    <div class="station">
+      <div class="station-header bg-pink">
+        <i class="ti ti-heart" aria-hidden="true"></i>
+        Station B
+      </div>
+      <div class="station-body">
+        <div class="station-name">Dream Box Contents</div>
+        <p class="station-desc">Girls fill out a "Brownie Dreams" card (or draw a picture) answering: What do you hope to do this year? What badge do you want most? What does being a Brownie mean to you? Card goes inside the box.</p>
+        <p class="station-supplies"><i class="ti ti-package" aria-hidden="true"></i> Pre-printed dream cards or blank index cards, pencils, colored pencils.</p>
+      </div>
+    </div>
+
+    <!-- Station C -->
+    <div class="station">
+      <div class="station-header bg-coral">
+        <i class="ti ti-scale" aria-hidden="true"></i>
+        Station C
+      </div>
+      <div class="station-body">
+        <div class="station-name">Rules Activity</div>
+        <p class="station-desc">Start with a group discussion about why rules exist and what makes a good one. Then use yes/no cards to sort rule scenarios together. Finish with sticky notes — girls write any rules they think are missing and add them to the troop rules poster.</p>
+        <p class="station-supplies"><i class="ti ti-package" aria-hidden="true"></i> Yes/no cards, scenario cards, sticky notes, markers, troop rules poster.</p>
+      </div>
+    </div>
+
+  </div><!-- /stations -->
+
+  <div class="tip" style="margin-top: 10px;">
+    <i class="ti ti-rotate-clockwise" aria-hidden="true"></i>
+    <span><strong>Rotation:</strong> Split girls into 3 groups. Signal rotations with a clap pattern at ~10-minute marks (3:40 → 3:50 → 4:00 → 4:10). Leaders stay at their station; girls rotate.</span>
+  </div>
+
+  <!-- CLOSING -->
+  <p class="section-label">Closing</p>
+  <div class="timeline">
+
+    <div class="block">
+      <div class="block-time bg-indigo">
+        <i class="ti ti-box-seam" aria-hidden="true"></i>
+        4:10<br>55–65 min
+      </div>
+      <div class="block-body">
+        <div class="block-title">Dream Box seal &amp; share</div>
+        <p class="block-desc">Gather back together. Girls place their dream card inside their box and close the lid. Go around the circle — each girl shares <em>one</em> Brownie dream from her card. Leaders collect boxes for safekeeping until the end-of-year celebration.</p>
+
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-time bg-blue">
+        <i class="ti ti-music" aria-hidden="true"></i>
+        4:20<br>65–75 min
+      </div>
+      <div class="block-body">
+        <div class="block-title">"Make New Friends" &amp; friendship circle</div>
+        <p class="block-desc">Form the friendship circle with the pinky squeeze. Sing "Make New Friends" together — do the round if the group is ready. End with the Girl Scout sign. Snack cleanup kapers tidy up. Remind girls of the next meeting date.</p>
+        <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; margin: 8px 0; font-size: 12px; color: var(--color-text-secondary); font-style: italic; line-height: 1.6;">
+          🎵 Make new friends, but keep the old,<br>
+          one is silver and the other gold.<br>
+          A circle is round, it has no end,<br>
+          that's how long I want to be your friend.
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /closing timeline -->
+
+  <div class="tip">
+    <i class="ti ti-bulb" aria-hidden="true"></i>
+    <span><strong>Leader tip:</strong> Print the troop's eight rules and read them aloud together before Station C — it gives the rules activity real context. Station C works best with a leader or parent volunteer facilitating the discussion.</span>
+  </div>
+
+</main>
+</body>
+</html>
