@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaRosa Dinner Plan · Oct 12–17</title>
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --card: #ffffff;
+    --border: #e8e4dc;
+    --text: #2c2825;
+    --text-secondary: #6b6560;
+    --text-tertiary: #9e9890;
+    --accent: #b5651d;
+    --green: #4a7c59;
+    --blue: #3d6b8e;
+    --gold: #9a7d3a;
+    --tag-bg: #f0ede6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); padding: 24px 16px 48px; }
+  .page-header { max-width: 720px; margin: 0 auto 28px; }
+  .family-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; }
+  h1 { font-size: 28px; font-weight: 700; color: var(--text); }
+  .subtitle { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+  .legend { display: flex; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-green { background: var(--green); }
+  .dot-blue { background: var(--blue); }
+  .dot-gold { background: var(--gold); }
+
+  .recipe-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; max-width: 720px; margin: 0 auto 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .recipe-header { display: flex; align-items: center; gap: 12px; padding: 16px 18px; cursor: pointer; user-select: none; }
+  .recipe-header:hover { background: #faf8f4; }
+  .date-block { min-width: 52px; text-align: center; }
+  .day-name { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); }
+  .day-num { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.1; }
+  .divider { width: 1px; height: 40px; background: var(--border); }
+  .cat-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+  .cat-asian { background: #e8f0f7; color: #2d5a7a; }
+  .cat-italian { background: #f0e8e8; color: #7a2d2d; }
+  .cat-wildcard { background: #f5ede0; color: #7a5020; }
+  .cat-mexican { background: #edf5e8; color: #2d5a35; }
+  .cat-pizza { background: #f0e8f5; color: #5a2d7a; }
+  .cat-healthy { background: #e8f5ed; color: #1e5c3a; }
+  .title-block { flex: 1; }
+  .meal-title { font-size: 17px; font-weight: 600; color: var(--text); }
+  .meal-meta { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .tag { font-size: 11px; background: var(--tag-bg); color: var(--text-secondary); padding: 2px 8px; border-radius: 20px; }
+  .chevron { font-size: 12px; color: var(--text-tertiary); transition: transform 0.2s; margin-left: 4px; }
+  .open .chevron { transform: rotate(180deg); }
+
+  .recipe-body { display: none; border-top: 1px solid var(--border); padding: 18px 18px 20px; }
+  .open .recipe-body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 560px) { .open .recipe-body { grid-template-columns: 1fr; } }
+
+  .col-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px; }
+  .ingredients { list-style: none; }
+  .ingredients li { display: flex; gap: 8px; padding: 5px 0; border-bottom: 1px solid #f3f0ea; font-size: 13.5px; }
+  .ingredients li:last-child { border-bottom: none; }
+  .ing-amount { font-weight: 600; color: var(--accent); min-width: 56px; font-size: 12.5px; }
+  .steps { padding-left: 18px; }
+  .steps li { font-size: 13.5px; line-height: 1.6; padding: 4px 0; color: var(--text); }
+  .note-box { margin-top: 14px; background: #f7f5f0; border-left: 3px solid var(--border); border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 13px; color: var(--text-secondary); line-height: 1.6; grid-column: 1 / -1; }
+
+  .pantry-note { max-width: 720px; margin: 20px auto 0; background: #eef4ee; border: 1px solid #c8dfc8; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #3a5c3a; }
+  .pantry-note strong { display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="family-label">LaRosa Family</div>
+  <h1>Dinner Plan</h1>
+  <div class="subtitle">Oct 12–17 · Pantry week · Low cholesterol for Justin</div>
+  <div class="legend">
+    <div class="legend-item"><div class="dot dot-green"></div> Low cholesterol / Justin</div>
+    <div class="legend-item"><div class="dot dot-blue"></div> Vegetarian / Kit + Katie</div>
+    <div class="legend-item"><div class="dot dot-gold"></div> Tip / make ahead</div>
+  </div>
+</div>
+
+<!-- Monday -->
+<div class="recipe-card open">
+  <div class="recipe-header" onclick="toggleRecipe(this)">
+    <div class="date-block"><div class="day-name">Mon</div><div class="day-num">12</div></div>
+    <div class="divider"></div>
+    <span class="cat-pill cat-asian">Asian</span>
+    <div class="title-block">
+      <div class="meal-title">Momofuku Noodle Bowls with Mango & Cucumber</div>
+      <div class="meal-meta">Pantry · ~20 min · Serves 4</div>
+      <div class="tag-row"><span class="tag">Pantry meal</span><span class="tag">Quick</span><span class="tag">Customizable</span></div>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="recipe-body">
+    <div>
+      <div class="col-label">Ingredients</div>
+      <ul class="ingredients">
+        <li><span class="ing-amount">2 packs</span>Momofuku noodles</li>
+        <li><span class="ing-amount">1</span>mango, sliced thin</li>
+        <li><span class="ing-amount">1</span>cucumber, sliced or ribboned</li>
+        <li><span class="ing-amount">4</span>soft-boiled eggs (optional)</li>
+        <li><span class="ing-amount">Tofu or</span>edamame for extra protein</li>
+        <li><span class="ing-amount">Sesame oil,</span>soy sauce, lime if on hand</li>
+        <li><span class="ing-amount">Scallions,</span>sesame seeds to top</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Instructions</div>
+      <ol class="steps">
+        <li>Cook noodles per package. Drain and toss with the included sauce packet.</li>
+        <li>Divide into bowls. Top with mango slices, cucumber, and a soft-boiled egg if using.</li>
+        <li>Finish with a drizzle of sesame oil and a squeeze of lime.</li>
+        <li>Add tofu or edamame for extra protein — sauté tofu cubes quickly in a hot pan.</li>
+      </ol>
+      <div class="note-box">🔵 <strong>Kit:</strong> If the sauce packet is chicken-based, season her bowl with soy sauce + sesame oil instead. She'll love the mango. 🟢 <strong>Justin:</strong> Skip the egg yolk or use whites only; load up on tofu or edamame for protein.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Tuesday -->
+<div class="recipe-card">
+  <div class="recipe-header" onclick="toggleRecipe(this)">
+    <div class="date-block"><div class="day-name">Tue</div><div class="day-num">13</div></div>
+    <div class="divider"></div>
+    <span class="cat-pill cat-italian">Italian</span>
+    <div class="title-block">
+      <div class="meal-title">Spinach Ravioli with Brown Butter & Sage</div>
+      <div class="meal-meta">Pantry · ~20 min · Serves 4</div>
+      <div class="tag-row"><span class="tag">Vegetarian</span><span class="tag">Quick</span><span class="tag">Sourdough side</span></div>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="recipe-body">
+    <div>
+      <div class="col-label">Ingredients</div>
+      <ul class="ingredients">
+        <li><span class="ing-amount">1 pkg</span>spinach ravioli</li>
+        <li><span class="ing-amount">4 tbsp</span>butter</li>
+        <li><span class="ing-amount">8–10</span>fresh sage leaves (or ½ tsp dried)</li>
+        <li><span class="ing-amount">2 cloves</span>garlic, sliced thin</li>
+        <li><span class="ing-amount">Parmesan</span>to finish</li>
+        <li><span class="ing-amount">Salt, pepper,</span>pinch of nutmeg</li>
+        <li><span class="ing-amount">Sourdough</span>bread, for the side</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Instructions</div>
+      <ol class="steps">
+        <li>Cook ravioli per package; reserve ¼ cup pasta water.</li>
+        <li>In a wide pan over medium heat, melt butter. Add sage and garlic. Let butter foam, then turn golden brown and nutty — about 3–4 min. Watch closely.</li>
+        <li>Add ravioli to the brown butter, toss gently. Add a splash of pasta water to loosen.</li>
+        <li>Plate, finish with Parmesan, black pepper, and a pinch of nutmeg.</li>
+        <li>Toast sourdough slices alongside.</li>
+      </ol>
+      <div class="note-box">🔵 <strong>Kit + Katie:</strong> Fully vegetarian. 🟢 <strong>Justin:</strong> Use 2 tbsp butter instead of 4, or swap half for olive oil — same flavor, less sat fat. Plenty of Parmesan on top is fine.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Wednesday -->
+<div class="recipe-card">
+  <div class="recipe-header" onclick="toggleRecipe(this)">
+    <div class="date-block"><div class="day-name">Wed</div><div class="day-num">14</div></div>
+    <div class="divider"></div>
+    <span class="cat-pill cat-wildcard">Wildcard</span>
+    <div class="title-block">
+      <div class="meal-title">Costco Curry Night</div>
+      <div class="meal-meta">Pantry · ~15 min · Serves 4</div>
+      <div class="tag-row"><span class="tag">Easy night</span><span class="tag">5:30 dinner</span><span class="tag">Naan or rice</span></div>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="recipe-body">
+    <div>
+      <div class="col-label">Ingredients</div>
+      <ul class="ingredients">
+        <li><span class="ing-amount">1 container</span>Costco pre-made curry</li>
+        <li><span class="ing-amount">2 cups</span>jasmine or basmati rice</li>
+        <li><span class="ing-amount">Cucumber,</span>sliced for a quick side salad</li>
+        <li><span class="ing-amount">Plain yogurt</span>to serve (cooling)</li>
+        <li><span class="ing-amount">Sourdough</span>or naan to scoop, if needed</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Instructions</div>
+      <ol class="steps">
+        <li>Start rice. Warm curry in a pot over medium-low, stirring occasionally.</li>
+        <li>Slice cucumber into a simple salad — a little rice wine vinegar + sesame oil is great if you have it.</li>
+        <li>Serve curry over rice with yogurt on the side.</li>
+      </ol>
+      <div class="note-box">🔵 <strong>Kit:</strong> Check if the curry has meat — if it does, set aside plain rice + yogurt + cucumber for her, or warm up a quick egg scramble. If it's vegetarian (tikka masala, palak, etc.), she's all set. 🟢 <strong>Justin:</strong> Costco curries tend to be lower fat; skip extra cream or ghee on top. Plenty of rice is fine.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Thursday -->
+<div class="recipe-card">
+  <div class="recipe-header" onclick="toggleRecipe(this)">
+    <div class="date-block"><div class="day-name">Thu</div><div class="day-num">15</div></div>
+    <div class="divider"></div>
+    <span class="cat-pill cat-mexican">Mexican</span>
+    <div class="title-block">
+      <div class="meal-title">Burritos & Cheese Quesadillas</div>
+      <div class="meal-meta">Pantry · ~25 min · Serves 4 · Kit soccer 4–5pm</div>
+      <div class="tag-row"><span class="tag">Tortillas</span><span class="tag">Customizable</span><span class="tag">Kit-friendly</span></div>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="recipe-body">
+    <div>
+      <div class="col-label">Ingredients</div>
+      <ul class="ingredients">
+        <li><span class="ing-amount">Burrito</span>flour tortillas</li>
+        <li><span class="ing-amount">Shredded</span>cheese (cheddar or jack)</li>
+        <li><span class="ing-amount">Rice</span>leftover or fresh</li>
+        <li><span class="ing-amount">Eggs</span>scrambled, or protein of choice</li>
+        <li><span class="ing-amount">Spinach,</span>sautéed (use what's around)</li>
+        <li><span class="ing-amount">Salsa, sour</span>cream, guac if you have it</li>
+        <li><span class="ing-amount">Cucumber</span>or avocado on the side</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Instructions</div>
+      <ol class="steps">
+        <li>Warm tortillas directly on the burner or in a dry pan.</li>
+        <li><strong>Kit's quesadilla:</strong> cheese between two tortilla halves, press in pan until golden and melty. Serve with salsa and sour cream for dipping.</li>
+        <li><strong>Everyone else:</strong> load burritos with rice, scrambled eggs or protein, sautéed spinach, cheese, and whatever toppings you have.</li>
+        <li>Serve with sliced cucumber on the side.</li>
+      </ol>
+      <div class="note-box">🔵 <strong>Kit:</strong> Cheese quesadilla is the move — she'll eat it. Add scrambled egg inside if she'll go for it. 🟢 <strong>Justin:</strong> Go easy on cheese and sour cream; load up on spinach and rice. Kit soccer is 4–5pm at Chapman — dinner at 5:30.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Friday -->
+<div class="recipe-card">
+  <div class="recipe-header" onclick="toggleRecipe(this)">
+    <div class="date-block"><div class="day-name">Fri</div><div class="day-num">16</div></div>
+    <div class="divider"></div>
+    <span class="cat-pill cat-pizza">Pizza</span>
+    <div class="title-block">
+      <div class="meal-title">Sourdough Flatbread Pizzas</div>
+      <div class="meal-meta">Pantry · ~15 min · Serves 4</div>
+      <div class="tag-row"><span class="tag">Sourdough</span><span class="tag">Build your own</span><span class="tag">Vegetarian</span></div>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="recipe-body">
+    <div>
+      <div class="col-label">Ingredients</div>
+      <ul class="ingredients">
+        <li><span class="ing-amount">Sourdough</span>bread, sliced thick</li>
+        <li><span class="ing-amount">Marinara</span>or pizza sauce</li>
+        <li><span class="ing-amount">Shredded</span>mozzarella</li>
+        <li><span class="ing-amount">Parmesan</span>to finish</li>
+        <li><span class="ing-amount">Toppings:</span>spinach, olives, whatever's around</li>
+        <li><span class="ing-amount">Olive oil,</span>garlic powder, red pepper flakes</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Instructions</div>
+      <ol class="steps">
+        <li>Set oven to broil. Line a sheet pan with foil.</li>
+        <li>Lay sourdough slices on the pan. Rub with a little olive oil.</li>
+        <li>Spread sauce on each slice, top with mozzarella and any toppings.</li>
+        <li>Broil 3–5 min until cheese is bubbly and edges are toasty. Watch closely.</li>
+        <li>Finish with Parmesan, red pepper flakes, a drizzle of olive oil.</li>
+      </ol>
+      <div class="note-box">🔵 <strong>Kit:</strong> Let her build her own — just cheese is perfect for her. 🟢 <strong>Justin:</strong> Go light on cheese, load up on veggies. Sourdough is actually a better base than delivery for him — lower glycemic, more fiber. Friday pizza night, easy version! ⭐ If you'd rather just order, totally valid.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Saturday -->
+<div class="recipe-card">
+  <div class="recipe-header" onclick="toggleRecipe(this)">
+    <div class="date-block"><div class="day-name">Sat</div><div class="day-num">17</div></div>
+    <div class="divider"></div>
+    <span class="cat-pill cat-healthy">Healthy Bowl</span>
+    <div class="title-block">
+      <div class="meal-title">Rice Vermicelli Bowl with Mango, Cucumber & Tofu</div>
+      <div class="meal-meta">Pantry · ~25 min · Serves 4</div>
+      <div class="tag-row"><span class="tag">Vegetarian</span><span class="tag">Light</span><span class="tag">Fresh</span></div>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="recipe-body">
+    <div>
+      <div class="col-label">Ingredients</div>
+      <ul class="ingredients">
+        <li><span class="ing-amount">Rice</span>vermicelli noodles</li>
+        <li><span class="ing-amount">1</span>mango, diced or sliced</li>
+        <li><span class="ing-amount">1</span>cucumber, sliced thin</li>
+        <li><span class="ing-amount">1 block</span>firm tofu, cubed + pan-fried</li>
+        <li><span class="ing-amount">Fresh herbs:</span>mint, cilantro, basil if available</li>
+        <li><span class="ing-amount">Lime juice,</span>fish sauce or soy, honey</li>
+        <li><span class="ing-amount">Sesame seeds,</span>chopped peanuts to top</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Instructions</div>
+      <ol class="steps">
+        <li>Soak vermicelli in hot water per package (~5 min), drain and rinse with cold water.</li>
+        <li>Pan-fry tofu cubes in a hot oiled skillet until golden on all sides. Season with soy sauce.</li>
+        <li>Quick dressing: 2 tbsp lime juice, 1 tbsp soy or fish sauce, 1 tsp honey, ½ tsp sesame oil. Whisk.</li>
+        <li>Build bowls: noodles, mango, cucumber, crispy tofu, herbs. Drizzle dressing over everything.</li>
+        <li>Top with sesame seeds and peanuts.</li>
+      </ol>
+      <div class="note-box">🔵 <strong>Kit:</strong> She can have hers deconstructed — noodles plain with a little soy sauce, mango on the side, tofu if she'll try it. 🟢 <strong>Justin:</strong> This is a great low-cholesterol bowl — tofu protein, fresh produce, light dressing. ⭐ Use fish sauce in the dressing for more depth, or keep all soy to stay vegetarian.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pantry-note">
+  🛒 <strong>Pantry wins this week — minimal shopping needed.</strong> You may want to grab: soft-boiled egg supplies (Mon), fresh sage or dried (Tue), shredded cheese + salsa (Thu), mozzarella (Fri), tofu + fresh herbs (Sat). Check if the Costco curry has meat before Wed.
+</div>
+
+<script>
+  function toggleRecipe(header) {
+    header.parentElement.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
