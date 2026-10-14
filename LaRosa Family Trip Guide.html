@@ -418,6 +418,19 @@ nav::-webkit-scrollbar { display: none; }
 .cost-table tbody tr:hover td { background: rgba(0,0,0,0.02); }
 .cost-table-wrap { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
 
+.table-scroll { overflow-x: auto; }
+.table-scroll .cost-table { min-width: 560px; margin-bottom: 0; }
+.cost-table td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-mono); font-size: 0.84rem; }
+.cost-table th.num { text-align: right; }
+.day-camp { font-size: 0.82rem; color: var(--fg); margin-top: 6px; }
+.day-camp span { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent, var(--terracotta)); margin-right: 6px; }
+.badge-status-hold { background: rgba(107,104,96,0.14); color: var(--fg-muted); }
+
+.day-meta { display:flex; flex-wrap:wrap; gap:6px 14px; font-family: var(--font-mono); font-size:0.7rem; letter-spacing:0.04em; color: var(--fg-muted); margin: 2px 0 10px; }
+.day-meta b { color: var(--color-accent, var(--terracotta)); font-weight:400; }
+.stop-group { margin-top: 8px; }
+.stop-tag { display:inline-block; font-family: var(--font-mono); font-size:0.62rem; letter-spacing:0.08em; text-transform:uppercase; color: var(--color-accent, var(--terracotta)); border:1px solid var(--border); border-radius:4px; padding:1px 6px; margin-bottom:4px; background: var(--surface); }
+.menu-card h4 { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 6px; color: var(--fg); }
 /* NOTES */
 .trip-notes {
   background: var(--surface);
@@ -514,444 +527,436 @@ footer em { font-family: var(--font-display); font-style: italic; }
 <nav>
   <div class="nav-logo">LaRosa Trips</div>
   <ul class="nav-links">
+    <li><a href="#pch">🚐 PCH Road Trip</a></li>
+    <li><a href="#parkcity">⛷️ Jackson Hole</a></li>
     <li><a href="#sf">🌉 San Francisco</a></li>
     <li><a href="#williams">🏜️ Grand Canyon</a></li>
-    <li><a href="#pch">🚐 PCH Road Trip</a></li>
-    <li><a href="#parkcity">⛷️ Park City</a></li>
   </ul>
 </nav>
 
 <div class="hero">
   <div class="hero-eyebrow">Family Travel Planning · 2026–2027</div>
   <h1>LaRosa Family<br><em>Trip Guide</em></h1>
-  <div class="hero-sub">Four adventures for Joey, Kit, Katie & Justin</div>
+  <div class="hero-sub">Adventures for Joey, Kit, Katie & Justin</div>
 </div>
 
 <!-- ===========================
-     TRIP 1: SAN FRANCISCO
-     =========================== -->
-<div class="trip-section" id="sf" style="--color-accent: var(--sf-accent)">
-  <div class="trip-header">
-    <div>
-      <div class="trip-label">City Trip · Kids</div>
-      <div class="trip-title">San Francisco</div>
-    </div>
-    <div class="trip-meta">
-      <span class="badge badge-status-planned">📋 Being Planned</span>
-      <span class="badge" style="background:rgba(74,127,165,0.1);color:var(--sf-accent)">✈️ Fly from PDX</span>
-    </div>
-  </div>
-
-  <p class="trip-desc">A family city trip to SF — museums, waterfront, neighborhoods, and great food. Good Marriott Bonvoy options in the city make it a strong points redemption opportunity.</p>
-
-  <div class="stat-row">
-    <div class="stat">
-      <div class="stat-label">Duration</div>
-      <div class="stat-value">~4–5 nights</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Best for</div>
-      <div class="stat-value">Joey & Kit</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Points hotels</div>
-      <div class="stat-value">Several Bonvoy</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Est. Hotel</div>
-      <div class="stat-value">$800–1,000</div>
-    </div>
-  </div>
-
-  <div class="section-label">Hotel Options (Marriott Bonvoy)</div>
-  <div class="info-grid">
-    <div class="info-card">
-      <div class="info-card-label">The Jay</div>
-      <ul>
-        <li>Embarcadero / Financial District</li>
-        <li>Close to Ferry Building & waterfront</li>
-        <li>Marriott Bonvoy property</li>
-        <li>Good for family of 4</li>
-      </ul>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Other Bonvoy Options</div>
-      <ul>
-        <li>Book all hotels on Bonvoy to earn points</li>
-        <li>Target $800–1,000 for 5 nights</li>
-        <li>Use Marriott Boundless card for 6.26x points</li>
-        <li>Check for free cancellation rates</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section-label">Activities & Neighborhoods</div>
-  <div class="info-grid">
-    <div class="info-card">
-      <div class="info-card-label">With the Kids</div>
-      <ul>
-        <li>California Academy of Sciences (Golden Gate Park)</li>
-        <li>Exploratorium (Pier 15 — great for Joey)</li>
-        <li>Ferry Building Marketplace</li>
-        <li>Fisherman's Wharf & sea lions at Pier 39</li>
-        <li>Cable car ride</li>
-        <li>Baker Beach or Crissy Field walk</li>
-      </ul>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Neighborhoods to Explore</div>
-      <ul>
-        <li>Mission District (murals, taquerias for Kit)</li>
-        <li>Haight-Ashbury (vintage shops)</li>
-        <li>North Beach (City Lights, Italian food)</li>
-        <li>Chinatown</li>
-        <li>Noe Valley or Cole Valley for morning coffee</li>
-      </ul>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Food Highlights</div>
-      <ul>
-        <li>Tartine Bakery (worth the line)</li>
-        <li>Flour + Water (pasta, Mission)</li>
-        <li>Gracias Madre (upscale vegan — Kit-friendly)</li>
-        <li>Bernal Cutlery area for neighborhood vibes</li>
-        <li>Ferry Building Sat farmers market (if timing works)</li>
-      </ul>
-    </div>
-    <div class="info-card">
-      <div class="info-card-label">Day Trip Option</div>
-      <ul>
-        <li>Muir Woods (book timed entry in advance)</li>
-        <li>Sausalito ferry over, walk around</li>
-        <li>Alcatraz (book tickets way ahead)</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section-label">To-Do Before Booking</div>
-  <div class="todo-list" id="sf-todos">
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Pick dates (school calendar + soccer schedule)</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Check Bonvoy availability at The Jay or comparable property</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Book flights PDX → SFO (check Delta miles)</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Pre-book Muir Woods timed entry (recreation.gov)</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Reserve Alcatraz if going (book 2–4 weeks ahead)</div>
-    </div>
-  </div>
-</div>
-
-<!-- ===========================
-     TRIP 2: GRAND CANYON / WILLIAMS AZ
-     =========================== -->
-<div class="trip-section" id="williams" style="--color-accent: var(--williams-accent)">
-  <div class="trip-header">
-    <div>
-      <div class="trip-label">Thanksgiving 2026 · Nov 23–27</div>
-      <div class="trip-title">Grand Canyon &<br>Williams, AZ</div>
-    </div>
-    <div class="trip-meta">
-      <span class="badge badge-status-booked">✅ Hotel Booked</span>
-      <span class="badge" style="background:rgba(181,97,58,0.1);color:var(--terracotta)">✈️ PDX → PHX</span>
-    </div>
-  </div>
-
-  <p class="trip-desc">Thanksgiving week at Trailborn Grand Canyon in Williams, AZ. Junior Ranger badges, Bearizona, the Canyon Coaster, Route 66, Bedrock City, and stargazing. Joey's Every Kid Outdoors pass gets the whole car in free.</p>
-
-  <div class="stat-row">
-    <div class="stat">
-      <div class="stat-label">Dates</div>
-      <div class="stat-value">Nov 23–27</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Hotel</div>
-      <div class="stat-value">$471.57 total</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Flights + Car</div>
-      <div class="stat-value">~$1,600</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Trip Total Est.</div>
-      <div class="stat-value">~$3,059–3,188</div>
-    </div>
-  </div>
-
-  <div class="section-label">Day-by-Day Itinerary</div>
-  <div class="itinerary">
-    <div class="day-block">
-      <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Monday, Nov 23</div>
-      <div class="day-title">Fly PDX → PHX, Drive to Williams</div>
-      <ul class="day-activities">
-        <li>Fly Portland to Phoenix</li>
-        <li>Drive north via Flagstaff (~2.5 hrs to Williams)</li>
-        <li>Check in to Trailborn Grand Canyon</li>
-        <li>Route 66 stroll in Williams, dinner in town</li>
-        <li>Canyon Coaster at night (928-707-7729 to confirm hours)</li>
-      </ul>
-    </div>
-    <div class="day-block">
-      <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Tuesday, Nov 24</div>
-      <div class="day-title">Bearizona + Grand Canyon South Rim</div>
-      <ul class="day-activities">
-        <li>Bearizona Wildlife Park (928-635-2289 to confirm hours) — ~$100 family</li>
-        <li>Drive to Grand Canyon South Rim (~1 hr)</li>
-        <li>Mather Point — first view of the Canyon</li>
-        <li>Rim walk toward Yavapai Point</li>
-        <li>Pick up Junior Ranger booklets at Visitor Center</li>
-        <li>Joey's 4th-grade Every Kid Outdoors pass = FREE entry for whole vehicle</li>
-        <li>Stargazing back in Williams (Gold Star Dark Sky Park nearby)</li>
-      </ul>
-    </div>
-    <div class="day-block">
-      <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Wednesday, Nov 25</div>
-      <div class="day-title">Bedrock City + Desert View + Glow Tubing</div>
-      <ul class="day-activities">
-        <li>Bedrock City at Raptor Ranch — $48 family (Flintstones theme park!)</li>
-        <li>Grand Canyon Desert View Watchtower (easternmost rim point)</li>
-        <li>Glow Tubing at Elk Ridge ski area — ~$60 family</li>
-        <li>Dinner in Williams</li>
-      </ul>
-    </div>
-    <div class="day-block">
-      <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Thursday, Nov 26 — Thanksgiving</div>
-      <div class="day-title">Junior Ranger Badges + Cozy Thanksgiving</div>
-      <ul class="day-activities">
-        <li>Return to Grand Canyon — get Junior Ranger badges sworn in by a ranger</li>
-        <li>Drive to Flagstaff Whole Foods — pick up pre-ordered Thanksgiving spread</li>
-        <li>Cozy Thanksgiving dinner at Trailborn (in-room or common areas)</li>
-        <li>Stargazing — some of the darkest skies in the country</li>
-        <li>Pre-order Whole Foods pickup in late October when available online</li>
-      </ul>
-    </div>
-    <div class="day-block">
-      <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Friday, Nov 27</div>
-      <div class="day-title">Canyon Coaster or Kaibab Lake, Fly Home</div>
-      <ul class="day-activities">
-        <li>Morning: Canyon Coaster if missed, or Kaibab Lake walk</li>
-        <li>Drive Phoenix (~2.5 hrs)</li>
-        <li>Fly home PDX</li>
-        <li>Note: Joey's soccer tournament is Nov 29 (2 days after return)</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section-label">Budget Breakdown</div>
-  <div class="cost-table-wrap">
-    <table class="cost-table">
-      <thead>
-        <tr><th>Item</th><th>Notes</th><th>Cost</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Flights PDX ↔ PHX</td><td>Family of 4</td><td>~$1,100</td></tr>
-        <tr><td>Car rental PHX</td><td>5 days</td><td>~$500</td></tr>
-        <tr><td>Trailborn Grand Canyon</td><td>Standard rate, 3 nights</td><td>$471.57</td></tr>
-        <tr><td>Bearizona</td><td>Family of 4</td><td>~$100</td></tr>
-        <tr><td>Bedrock City / Raptor Ranch</td><td>Family of 4</td><td>$48</td></tr>
-        <tr><td>Canyon Coaster + Glow Tubing</td><td>Family of 4</td><td>~$150</td></tr>
-        <tr><td>Whole Foods Thanksgiving</td><td>Flagstaff pickup</td><td>~$100–150</td></tr>
-        <tr><td>Dog sitting (Scruffy)</td><td>4 days × $60</td><td>$240</td></tr>
-        <tr><td>Meals + gas</td><td>Estimate</td><td>~$350–400</td></tr>
-        <tr><td colspan="2"><strong>Total Estimate</strong></td><td><strong>~$3,059–3,188</strong></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="trip-notes">
-    <p><strong>Grand Canyon entry is FREE</strong> — Joey's 4th-grade Every Kid Outdoors pass (get at everykidoutdoors.gov) covers the whole vehicle. Save $35!</p>
-    <p><strong>Optional add:</strong> Grand Canyon Railway (~$360 for family of 4) — scenic train from Williams to the South Rim. Keep as a treat if weather is bad for driving.</p>
-    <p><strong>Nearby:</strong> Sedona (1.5 hrs south), Lowell Observatory in Flagstaff (30 min), Jerome ghost town (1 hr).</p>
-  </div>
-
-  <div class="section-label">To-Do</div>
-  <div class="todo-list" id="williams-todos">
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Get Joey's Every Kid Outdoors pass at everykidoutdoors.gov</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Pre-order Whole Foods Flagstaff Thanksgiving spread (opens late October)</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Call Canyon Coaster to confirm Thanksgiving hours: 928-707-7729</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Call Bearizona to confirm Thanksgiving hours: 928-635-2289</div>
-    </div>
-    <div class="todo-item" onclick="toggleTodo(this)">
-      <div class="todo-box"></div>
-      <div class="todo-text">Confirm Joey's Nov 29 soccer tournament doesn't require Friday return</div>
-    </div>
-  </div>
-</div>
-
-<!-- ===========================
-     TRIP 3: PCH RV ROAD TRIP
+     TRIP 1: PCH CAMPER VAN — REDWOODS TO MENDOCINO (OPTION A)
      =========================== -->
 <div class="trip-section" id="pch" style="--color-accent: var(--pchrv-accent)">
   <div class="trip-header">
     <div>
-      <div class="trip-label">Alternative / Future Trip · ~7 Days</div>
-      <div class="trip-title">PCH Camper Van<br>Road Trip</div>
+      <div class="trip-label">Thanksgiving 2026 · Nov 22–28</div>
+      <div class="trip-title">Redwoods to Mendocino<br>Camper Van Trip</div>
     </div>
     <div class="trip-meta">
-      <span class="badge badge-status-option">💭 Option for Future</span>
-      <span class="badge" style="background:rgba(45,122,91,0.1);color:var(--pchrv-accent)">🚐 Portland → Carmel</span>
+      <span class="badge badge-status-planned">📋 Being Planned</span>
+      <span class="badge" style="background:rgba(45,122,91,0.1);color:var(--pchrv-accent)">🚐 20.5 ft Cruise America van</span>
     </div>
   </div>
 
-  <p class="trip-desc">Seven days driving the California coast in a camper van — Portland to Carmel and back. Redwoods, Bodega Bay vintage shops, Point Reyes, Santa Cruz skate park for Kit, and a Thanksgiving beach picnic in Carmel. This was the other Thanksgiving contender before Grand Canyon won.</p>
+  <p class="trip-desc">Six nights down the Northern California coast and back: Oregon cheese country, Fern Canyon and elk at Gold Bluffs, oysters and Victorian Ferndale, a night on the Lost Coast, the biggest redwoods on earth, and a Thanksgiving picnic on the Mendocino Headlands. Short driving days, 7am starts, and every afternoon free to explore.</p>
 
   <div class="stat-row">
-    <div class="stat">
-      <div class="stat-label">Duration</div>
-      <div class="stat-value">7 days</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">RV Rental</div>
-      <div class="stat-value">~$220/night</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Best Rental</div>
-      <div class="stat-value">Cruise America</div>
-    </div>
-    <div class="stat">
-      <div class="stat-label">Est. Total</div>
-      <div class="stat-value">~$2,870–2,970</div>
-    </div>
+    <div class="stat"><div class="stat-label">Dates</div><div class="stat-value">Nov 22–28</div></div>
+    <div class="stat"><div class="stat-label">Total Miles</div><div class="stat-value">~1,280</div></div>
+    <div class="stat"><div class="stat-label">Longest Drive</div><div class="stat-value">~5¾ hrs</div></div>
+    <div class="stat"><div class="stat-label">Nights</div><div class="stat-value">6</div></div>
   </div>
 
-  <div class="section-label">Route & Stops</div>
+  <div class="section-label">Day-by-Day Plan</div>
   <div class="itinerary">
     <div class="day-block">
       <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Day 1 — Portland → Eugene/Roseburg Area</div>
-      <div class="day-title">Departure Day</div>
-      <ul class="day-activities">
-        <li>Pick up Cruise America Class C van in Portland</li>
-        <li>McMenamins Edgefield (Troutdale) — fueling stop, walk the grounds</li>
-        <li>Drive south through Willamette Valley</li>
-        <li>Camp Eugene/Roseburg area</li>
-      </ul>
+      <div class="day-name">Sun, Nov 22</div>
+      <div class="day-title">Portland → Rogue Valley</div>
+      <div class="day-meta"><span><b>Leave</b> 7:00am</span> <span><b>Arrive</b> ~1:30pm</span> <span><b>Drive</b> ~5 hrs</span> <span><b>~290 mi</b></span> <span>⛺ Valley of the Rogue SP</span></div>
+      <div class="stop-group"><span class="stop-tag">Eat</span>
+        <ul class="day-activities">
+          <li>Lunch at <strong>Rogue Creamery</strong>, Central Point (I-5 exit 33, ~12 mi past camp) — grilled cheese with tomato soup, open daily 10–5</li>
+          <li>Buy a wedge of Rogue River Blue or Caveman Blue for the Thanksgiving board</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Kid fun</span>
+        <ul class="day-activities">
+          <li>Peek through the windows into the cheddar room (cheese is made a few mornings a week)</li>
+          <li>Afternoon walk along the Rogue River right at camp</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Grill</span>
+        <ul class="day-activities">
+          <li>Burgers or brats + Rogue Creamery cheese curds by the fire</li>
+        </ul>
+      </div>
     </div>
     <div class="day-block">
       <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Day 2 — Redwoods</div>
-      <div class="day-title">Into California, Big Trees</div>
-      <ul class="day-activities">
-        <li>Cross into California — Crescent City</li>
-        <li>Prairie Creek Redwoods State Park — Fern Canyon hike (like Jurassic Park)</li>
-        <li>Avenue of the Giants drive (tallest trees on earth)</li>
-        <li>Camp in or near Humboldt Redwoods</li>
-      </ul>
+      <div class="day-name">Mon, Nov 23</div>
+      <div class="day-title">Smith River Redwoods → Gold Bluffs Beach</div>
+      <div class="day-meta"><span><b>Leave</b> 7:00am</span> <span><b>Arrive</b> ~3:00pm</span> <span><b>Drive</b> ~3½ hrs</span> <span><b>~150 mi</b></span> <span>⛺ Gold Bluffs Beach</span></div>
+      <div class="stop-group"><span class="stop-tag">Hike</span>
+        <ul class="day-activities">
+          <li><strong>Stout Grove</strong> (Jedediah Smith) — short, flat loop through giant old growth right off Hwy 199</li>
+          <li><strong>Fern Canyon</strong> loop (~1 mi) — 50-ft fern walls; wear shoes that can get wet. Campers at Gold Bluffs don't need a separate day-use permit</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Kid fun</span>
+        <ul class="day-activities">
+          <li><strong>Battery Point Lighthouse</strong>, Crescent City — tidal island, walk across only at low tide, 10am–4pm tide permitting</li>
+          <li><strong>Trees of Mystery</strong>, Klamath — giant Paul Bunyan & Babe, SkyTrail gondola over the canopy (~$30 adult / $15 kid; confirm)</li>
+          <li>Roosevelt elk often graze near Gold Bluffs camp — keep 75+ ft away</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Shop</span>
+        <ul class="day-activities">
+          <li>Stock up in Crescent City — last big grocery stores for a few days</li>
+          <li>Look for Rumiano cheese (made in Crescent City) for the kids' cheese board</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Grill</span>
+        <ul class="day-activities">
+          <li>Tacos or grilled chicken; s'mores on the beach-side fire ring</li>
+        </ul>
+      </div>
     </div>
     <div class="day-block">
       <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Day 3 — Bodega Bay + Point Reyes</div>
-      <div class="day-title">Coastal Vibes, Vintage Finds</div>
-      <ul class="day-activities">
-        <li>Bodega Bay — Eclectic Amanda vintage shop</li>
-        <li>Oysters at The Tides Wharf if mood strikes</li>
-        <li>Point Reyes National Seashore — Elephant seal overlook (fall migration!)</li>
-        <li>Drakes Beach or Limantour Beach walk</li>
-        <li>Camp at Point Reyes or continue toward SF</li>
-      </ul>
+      <div class="day-name">Tue, Nov 24</div>
+      <div class="day-title">Humboldt Bay → Ferndale → Lost Coast</div>
+      <div class="day-meta"><span><b>Leave</b> 8:00am</span> <span><b>Arrive</b> ~3:30pm</span> <span><b>Drive</b> ~3¼ hrs</span> <span><b>~100 mi</b></span> <span>⛺ Mattole (BLM)</span></div>
+      <div class="stop-group"><span class="stop-tag">Eat</span>
+        <ul class="day-activities">
+          <li><strong>Humboldt Bay Provisions</strong>, Old Town Eureka — all-local oyster tasting room; buy 2–3 dozen Humboldt Bay oysters to keep on ice for Thanksgiving</li>
+          <li>Ferndale: <strong>Cat Shack</strong> ice cream, <strong>Ferndale Pizza Co.</strong>, or Valley Grocery deli for a picnic lunch</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Kid fun</span>
+        <ul class="day-activities">
+          <li><strong>Blue Ox Millworks</strong>, Eureka — Victorian woodworking shop with working antique machines and two blue oxen (call ahead for hours)</li>
+          <li>Ferndale: <strong>Hadley Gardens</strong> (hobbit doors, dollhouse) and <strong>Firemen's Park</strong> playground on Main St</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Shop</span>
+        <ul class="day-activities">
+          <li>Ferndale's Victorian Main Street — Golden Gait Mercantile is a great old-time general store</li>
+          <li>Pick up <strong>Humboldt Fog</strong> (Cypress Grove, made in Arcata) and a good loaf at an Arcata/Eureka market</li>
+          <li>⛽ Fill gas and water in Ferndale — nothing out at Mattole</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Hike</span>
+        <ul class="day-activities">
+          <li>Beach walk south from Mattole toward Punta Gorda — the lighthouse is a longer low-tide-only trek, so just go as far as the kids want</li>
+        </ul>
+      </div>
     </div>
     <div class="day-block">
       <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Day 4 — San Francisco Day</div>
-      <div class="day-title">City Stop</div>
-      <ul class="day-activities">
-        <li>Cross Golden Gate into the city</li>
-        <li>Park van at RV-friendly lot, explore by transit/foot</li>
-        <li>Mission District tacos (Kit-friendly), Dolores Park</li>
-        <li>Ferry Building — grab provisions for the road</li>
-        <li>Continue south toward Santa Cruz</li>
-      </ul>
+      <div class="day-name">Wed, Nov 25</div>
+      <div class="day-title">Avenue of the Giants → Mendocino</div>
+      <div class="day-meta"><span><b>Leave</b> 7:30am</span> <span><b>Arrive</b> ~2:30pm</span> <span><b>Drive</b> ~4 hrs</span> <span><b>~140 mi</b></span> <span>⛺ Van Damme SP</span></div>
+      <div class="stop-group"><span class="stop-tag">Hike</span>
+        <ul class="day-activities">
+          <li><strong>Rockefeller Loop / Bull Creek Flats</strong> — the Mattole Road drops you right into the world's largest old-growth redwood forest</li>
+          <li><strong>Founders Grove</strong> loop — the fallen Dyerville Giant is a kid favorite</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Kid fun</span>
+        <ul class="day-activities">
+          <li>Avenue of the Giants roadside trees and the Honeydew Store on the way out</li>
+          <li><strong>Noyo Center Discovery Center</strong>, downtown Fort Bragg — interactive marine exhibits and a giant killer whale skeleton (check hours)</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Shop</span>
+        <ul class="day-activities">
+          <li><strong>Thanksgiving shopping day</strong> — most things close Thursday: bread, a pie, salad greens, sweet potatoes, cranberry sauce, ice</li>
+          <li>Fort Bragg's Noyo Harbor for fresh fish if the boats are in</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Eat</span>
+        <ul class="day-activities">
+          <li>Dinner in Mendocino: <strong>The Brickery</strong> (wood-fired pizza in a garden) or <strong>Trillium Cafe</strong> (family-friendly, covered patio)</li>
+        </ul>
+      </div>
     </div>
     <div class="day-block">
       <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Day 5 — Santa Cruz</div>
-      <div class="day-title">Skate Park for Kit, Bakery Stop</div>
-      <ul class="day-activities">
-        <li>Santa Cruz Skate Park — Kit's highlight</li>
-        <li>Gayle's Bakery (Capitola) — legendary pastries</li>
-        <li>Santa Cruz Wharf for lunch</li>
-        <li>Continue south on PCH toward Carmel</li>
-        <li>Camp at Pfeiffer Big Sur State Park</li>
-      </ul>
+      <div class="day-name">Thu, Nov 26 — Thanksgiving</div>
+      <div class="day-title">Mendocino Headlands Picnic</div>
+      <div class="day-meta"><span><b>Drive</b> ~1 hr</span> <span><b>~30 mi</b></span> <span>⛺ Van Damme SP (2nd night)</span></div>
+      <div class="stop-group"><span class="stop-tag">Hike</span>
+        <ul class="day-activities">
+          <li><strong>Mendocino Headlands</strong> loop — sea arches, blowholes, tidepools at low tide</li>
+          <li><strong>Van Damme Fern Canyon trail</strong> along the Little River, right from camp</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Sea glass</span>
+        <ul class="day-activities">
+          <li><strong>Glass Beach</strong>, Fort Bragg (MacKerricher SP) — go at low tide; #1 is easiest, #2 often has more glass</li>
+          <li>Collecting is illegal here — make it a spotting game (who finds the rarest color?) and take photos</li>
+          <li>Laguna Point boardwalk at MacKerricher for harbor seals</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Eat</span>
+        <ul class="day-activities">
+          <li>Thanksgiving feast at camp — see menu below</li>
+        </ul>
+      </div>
     </div>
     <div class="day-block">
       <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Day 6 — Carmel (Thanksgiving)</div>
-      <div class="day-title">Beach Picnic Thanksgiving</div>
-      <ul class="day-activities">
-        <li>Carmel-by-the-Sea — white sand beach Thanksgiving picnic</li>
-        <li>Cannery Row Antiques Mall (Katie's pick)</li>
-        <li>17-Mile Drive — Lone Cypress, Pebble Beach views</li>
-        <li>Whole Foods Carmel or Monterey for picnic provisions</li>
-        <li>Head north for the return leg</li>
-      </ul>
+      <div class="day-name">Fri, Nov 27</div>
+      <div class="day-title">Coast Hwy North → Smith River</div>
+      <div class="day-meta"><span><b>Leave</b> 7:00am</span> <span><b>Arrive</b> ~2:00pm</span> <span><b>Drive</b> ~5¼ hrs</span> <span><b>~245 mi</b></span> <span>⛺ Jedediah Smith SP</span></div>
+      <div class="stop-group"><span class="stop-tag">Eat</span>
+        <ul class="day-activities">
+          <li>Pastries for the road from a Mendocino bakery (buy Wed if they're closed early)</li>
+          <li>Lunch in Arcata or Eureka on the way north</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Hike</span>
+        <ul class="day-activities">
+          <li>Afternoon in the grove at camp — Smith River gravel bars, Simpson-Reed trail, Stout Grove at golden hour</li>
+        </ul>
+      </div>
+      <div class="stop-group"><span class="stop-tag">Grill</span>
+        <ul class="day-activities">
+          <li>Leftover-turkey quesadillas + last of the cheese; final campfire</li>
+        </ul>
+      </div>
     </div>
     <div class="day-block">
       <div class="day-marker"><div class="day-marker-inner"></div></div>
-      <div class="day-name">Day 7 — Return via Ashland</div>
-      <div class="day-title">MÄS Restaurant, Home</div>
-      <ul class="day-activities">
-        <li>Drive north via Hwy 101 / I-5</li>
-        <li>Ashland, OR stop — MÄS restaurant for dinner</li>
-        <li>Wake early, drive Ashland → Portland (~5 hrs), home by noon</li>
-        <li>Return RV after arrival</li>
+      <div class="day-name">Sat, Nov 28</div>
+      <div class="day-title">Home</div>
+      <div class="day-meta"><span><b>Leave</b> 7:00am</span> <span><b>Arrive</b> ~1:30pm</span> <span><b>Drive</b> ~5¾ hrs</span> <span><b>~325 mi</b></span> <span>🏠 Portland</span></div>
+      <div class="stop-group"><span class="stop-tag">Road</span>
+        <ul class="day-activities">
+          <li>Hwy 199 → I-5 north; return the van</li>
+          <li>Joey's soccer tournament is the next day (Nov 29)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Thanksgiving Menu — Simple & Local</div>
+  <div class="info-grid">
+    <div class="info-card menu-card">
+      <h4>To Start</h4>
+      <ul>
+        <li>Humboldt Bay oysters (from Eureka Tuesday) — grilled with garlic-herb butter until they pop open, plus a few raw with lemon for the grown-ups</li>
+        <li>Cheese board: Rogue River Blue (Oregon), Humboldt Fog (Arcata), Rumiano cheddar for the kids, with local bread and apples</li>
+      </ul>
+    </div>
+    <div class="info-card menu-card">
+      <h4>The Feast</h4>
+      <ul>
+        <li>Turkey breast or tenderloin on the grill (or a deli-roasted breast, warmed in foil)</li>
+        <li>Sweet potatoes roasted in foil in the coals</li>
+        <li>Cranberry sauce, green salad, warm crusty bread & butter</li>
+        <li>Fresh local fish from Noyo Harbor if the boats are in</li>
+      </ul>
+    </div>
+    <div class="info-card menu-card">
+      <h4>Dessert</h4>
+      <ul>
+        <li>A pie from a Mendocino bakery (buy Wednesday)</li>
+        <li>Grilled apples with a little blue cheese and honey</li>
+        <li>Hot cocoa and s'mores by the fire</li>
+      </ul>
+    </div>
+  </div>
+  <div class="trip-notes">
+    <p><strong>Shop ahead:</strong> cheese Sun & Mon, oysters + bread Tue, everything else Wed — most shops close Thursday. Live oysters keep a few days on ice, cup side down.</p>
+    <p><strong>No local Dungeness crab, probably:</strong> the Northern California commercial season normally can't open before December and has been delayed in recent years.</p>
+  </div>
+
+  <div class="section-label">Crafts & Skills to Learn</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-label">Family Trip Sketchbook</div>
+      <ul>
+        <li>One watercolor postcard a day — a fern, an elk, a lighthouse</li>
+        <li>Pack small watercolor pads, a travel palette and water brushes</li>
+        <li>Mail a few home from Ferndale or Mendocino</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Oyster Shucking & Grilling</div>
+      <ul>
+        <li>Grab an oyster knife and glove in Eureka</li>
+        <li>Grown-ups shuck, kids run the grill-until-they-pop method</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Old-Time Woodworking</div>
+      <ul>
+        <li>Blue Ox Millworks demos (Eureka, call ahead)</li>
+        <li>Mendocino Art Center has no classes Thanksgiving week, but check for a short workshop Wed</li>
       </ul>
     </div>
   </div>
 
-  <div class="section-label">Budget Breakdown</div>
+  <div class="section-label">Campsites, Miles & Mileage Overage</div>
+  <div class="cost-table-wrap table-scroll">
+    <table class="cost-table">
+      <thead><tr><th>Night</th><th>Campsite</th><th>Notes</th><th class="num">Fee</th><th class="num">Miles</th><th class="num">Over 200</th></tr></thead>
+      <tbody>
+        <tr><td>Sun 11/22</td><td>Valley of the Rogue SP</td><td>Off I-5 exit 45B; full hookups; reservable; highway noise</td><td class="num">~$37</td><td class="num">~290</td><td class="num">90</td></tr>
+        <tr><td>Mon 11/23</td><td>Gold Bluffs Beach</td><td>Primitive, steps from the beach; 24 ft limit on Davison Rd; confirm open: 707-464-6101</td><td class="num">~$35</td><td class="num">~150</td><td class="num">0</td></tr>
+        <tr><td>Tue 11/24</td><td>Mattole (BLM)</td><td>14 sites at the beach; first-come; vault toilets, likely no water</td><td class="num">~$15</td><td class="num">~100</td><td class="num">0</td></tr>
+        <tr><td>Wed 11/25</td><td>Van Damme SP</td><td>Across Hwy 1 from the beach; reservable; water + dump, no hookups</td><td class="num">$45</td><td class="num">~140</td><td class="num">0</td></tr>
+        <tr><td>Thu 11/26</td><td>Van Damme SP</td><td>Second night</td><td class="num">$45</td><td class="num">~30</td><td class="num">0</td></tr>
+        <tr><td>Fri 11/27</td><td>Jedediah Smith SP</td><td>Old growth on the Smith River; first-come in Nov; 25 ft limit</td><td class="num">$35</td><td class="num">~245</td><td class="num">45</td></tr>
+        <tr><td>Sat 11/28</td><td>—</td><td>Home</td><td class="num">—</td><td class="num">~325</td><td class="num">125</td></tr>
+        <tr><td colspan="4"><strong>Total</strong></td><td class="num"><strong>~1,280</strong></td><td class="num"><strong>260</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="trip-notes" style="margin-top:12px">
+    <p><strong>Mileage is approximate</strong> (road-distance estimates). Overage at $0.35/mi is ~$91 if counted per day, or ~$28 if pooled over 6 nights × 200 mi.</p>
+  </div>
+
+  <div class="section-label">Budget</div>
   <div class="cost-table-wrap">
     <table class="cost-table">
-      <thead>
-        <tr><th>Item</th><th>Notes</th><th>Cost</th></tr>
-      </thead>
+      <thead><tr><th>Item</th><th>Notes</th><th>Cost</th></tr></thead>
       <tbody>
-        <tr><td>Cruise America Class C RV</td><td>~7 nights × $220</td><td>~$1,540</td></tr>
-        <tr><td>Gas</td><td>~1,800 mi, 10 mpg, ~$5/gal</td><td>~$900</td></tr>
-        <tr><td>Campgrounds</td><td>7 nights × ~$35–50</td><td>~$245–350</td></tr>
-        <tr><td>Thanksgiving picnic + groceries</td><td>Road provisions</td><td>~$150</td></tr>
-        <tr><td>Activities + entry fees</td><td>Parks, skate parks, etc.</td><td>~$100</td></tr>
-        <tr><td colspan="2"><strong>Total Estimate</strong></td><td><strong>~$2,870–2,970</strong></td></tr>
+        <tr><td>Cruise America van (20.5 ft)</td><td>6 nights — prorated from $1,900 / 7 nights; swap in real quote</td><td>~$1,630</td></tr>
+        <tr><td>Mileage overage</td><td>$0.35/mi; pooled vs. 200 mi each day</td><td>~$25–100</td></tr>
+        <tr><td>Gas</td><td>~1,280 mi, ~10 mpg, ~$5/gal</td><td>~$650</td></tr>
+        <tr><td>Campsites</td><td>6 nights + reservation fees</td><td>~$230</td></tr>
+        <tr><td>Dog sitting (Scruffy)</td><td>6 days × $60</td><td>$360</td></tr>
+        <tr><td>Groceries & camp cooking</td><td>Breakfasts, lunches, grill nights, ice</td><td>~$350</td></tr>
+        <tr><td>Restaurants & treats</td><td>Rogue Creamery, Ferndale, Mendocino dinner, ice cream, bakeries</td><td>~$450</td></tr>
+        <tr><td>Thanksgiving specialties</td><td>Oysters, local cheeses, bread, pie</td><td>~$150</td></tr>
+        <tr><td>Activities</td><td>Trees of Mystery (~$90), Noyo Center, optional Skunk Train (~$200)</td><td>~$100–300</td></tr>
+        <tr><td>Shopping & souvenirs</td><td>Ferndale, Mendocino</td><td>~$200</td></tr>
+        <tr><td>Camp extras</td><td>Firewood, dump fees, propane, showers</td><td>~$75</td></tr>
+        <tr><td colspan="2"><strong>Total Estimate</strong></td><td><strong>~$4,220–4,495</strong></td></tr>
       </tbody>
     </table>
   </div>
 
+  <div class="trip-notes" style="margin-top:24px">
+    <p><strong>Check hours before you go:</strong> everything here is from published listings; small-town hours shift in November and around Thanksgiving.</p>
+    <p><strong>Sunset is ~4:50pm.</strong> Every day arrives before dark. On the Davison Road and Mattole Road, drive slowly — watch for elk and cows.</p>
+    <p><strong>Point Reyes</strong> fits better on the SF trip (about an hour from the city), ideally Jan–Feb when the elephant seals and whales are there.</p>
+  </div>
+
+  <div class="section-label">Packing List</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-label">🔥 Cooking & Fire</div>
+      <div class="todo-list" id="pack-fire" style="margin-bottom:0">
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Gas stove + 2–3 fuel canisters</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Snow Peak Takibi + grill bridge</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Charcoal (small bag) + fire starters</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Long lighter + waterproof matches</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Fire gloves, long tongs, spatula</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Cast iron pan or grill basket</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Heavy-duty foil + foil pans</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Oyster knife + shucking glove</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Meat thermometer</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Cutting board + good knife</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Collapsible sink, dish soap, sponge</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Trash + recycling bags, paper towels</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Coffee setup + mugs</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Plates, bowls, cutlery for 4</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Cooler / extra ice packs</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">2 water jugs (no water at Mattole)</div></div>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">🚐 Van & Camp</div>
+      <div class="todo-list" id="pack-camp" style="margin-bottom:0">
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Camp chairs + small table</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Headlamps for everyone + lantern</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">String lights (Thanksgiving!)</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Bedding/sleeping bags (check what Cruise America includes)</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Leveling blocks</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Doormat + small broom</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Clothesline + clips</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Quarters for showers</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Cash for Mattole fee box</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Paper map + offline maps downloaded</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Printed tide tables</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Phone chargers + power bank</div></div>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">🧥 Clothes (45–60°F, rain likely)</div>
+      <div class="todo-list" id="pack-clothes" style="margin-bottom:0">
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Rain jackets for all</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Rain pants for the kids</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Fleece + warm mid-layers</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Beanies + gloves</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Waterproof boots</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Shoes that can get wet (Fern Canyon creek)</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Extra socks — lots</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Warm sleep layers</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">One nicer outfit for Mendocino dinner</div></div>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">🌊 Beach, Hikes & Kids</div>
+      <div class="todo-list" id="pack-kids" style="margin-bottom:0">
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Binoculars (elk, seals, whales)</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Magnifier / bug viewer for tidepools</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Daypacks + water bottles</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Trail snacks</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Beach towels</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Kite or frisbee</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Card games + books for evenings</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Redwood NP Junior Ranger booklets (pick up at a visitor center)</div></div>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">🎨 Craft & Thanksgiving</div>
+      <div class="todo-list" id="pack-craft" style="margin-bottom:0">
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Watercolor postcard pads</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Travel palette + water brushes</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Pencils, pens, small clipboards</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Stamps for mailing postcards</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Tablecloth or picnic blanket</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Serving board for the cheese</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Candles or lantern for the table</div></div>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">🩹 Safety & Docs</div>
+      <div class="todo-list" id="pack-docs" style="margin-bottom:0">
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">First-aid kit + any meds</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Hand warmers</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Sunscreen + lip balm</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">IDs + van rental confirmation</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Campground confirmations</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Insurance cards</div></div>
+        <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Dog sitter's contact info</div></div>
+      </div>
+    </div>
+  </div>
   <div class="trip-notes">
-    <p><strong>Cruise America</strong> recommended for first-timers — reliable, straightforward rental process, many pickup locations including Portland.</p>
-    <p><strong>Kit's highlights:</strong> Santa Cruz Skate Park, Gayle's Bakery, Fern Canyon. <strong>Joey's highlights:</strong> Redwoods, RV living, Ferry Building.</p>
-    <p><strong>Fall timing bonus:</strong> Elephant seal pupping season begins at Point Reyes in late November — the best time to see them on the beach.</p>
+    <p><strong>Fires:</strong> At California state parks, wood fires usually have to stay in the provided fire ring, so plan to use the Takibi with charcoal for grilling and ask each campground before lighting wood in it. Check for any burn restrictions that week.</p>
+    <p><strong>Firewood:</strong> Don't bring firewood from Oregon. Buy it where you burn it (camp hosts and stores along the way sell it), and expect a California agriculture inspection stop on Hwy 199 that asks about wood and produce.</p>
+    <p><strong>Stove fuel:</strong> Pack all the canisters you need — small coastal stores may not carry your size.</p>
+  </div>
+
+  <div class="section-label">To-Do</div>
+  <div class="todo-list" id="pch-a-todos">
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Cancel or move the Trailborn Grand Canyon booking (Nov 23–26)</div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Reserve the 20.5 ft van; ask how the 200 mi/day allowance is counted and pickup time Sunday</div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Book Valley of the Rogue SP (Oregon State Parks)</div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Call Gold Bluffs Beach (707-464-6101) — open that week? reservable?</div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Book Van Damme SP for Wed & Thu (ReserveCalifornia)</div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Book Scruffy's dog sitter (6 days)</div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Check tide tables for Battery Point (Mon), Glass Beach & Headlands (Thu)</div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Call Blue Ox Millworks and the Noyo Center for Thanksgiving-week hours</div></div>
+    <div class="todo-item" onclick="toggleTodo(this)"><div class="todo-box"></div><div class="todo-text">Pack: watercolor kit, oyster knife/glove, cooler space, headlamps, rain gear</div></div>
   </div>
 </div>
 
 <!-- ===========================
-     TRIP 4: PARK CITY / JACKSON HOLE SKI
+     TRIP 2: JACKSON HOLE SKI
      =========================== -->
 <div class="trip-section" id="parkcity" style="--color-accent: var(--parkcity-accent)">
   <div class="trip-header">
@@ -1122,6 +1127,285 @@ footer em { font-family: var(--font-display); font-style: italic; }
     <div class="todo-item" onclick="toggleTodo(this)">
       <div class="todo-box"></div>
       <div class="todo-text">Arrange dog sitting for Scruffy (6 nights)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     TRIP 3: SAN FRANCISCO
+     =========================== -->
+<div class="trip-section" id="sf" style="--color-accent: var(--sf-accent)">
+  <div class="trip-header">
+    <div>
+      <div class="trip-label">City Trip · Kids</div>
+      <div class="trip-title">San Francisco</div>
+    </div>
+    <div class="trip-meta">
+      <span class="badge badge-status-planned">📋 Being Planned</span>
+      <span class="badge" style="background:rgba(74,127,165,0.1);color:var(--sf-accent)">✈️ Fly from PDX</span>
+    </div>
+  </div>
+
+  <p class="trip-desc">A family city trip to SF — museums, waterfront, neighborhoods, and great food. Good Marriott Bonvoy options in the city make it a strong points redemption opportunity.</p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="stat-label">Duration</div>
+      <div class="stat-value">~4–5 nights</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Best for</div>
+      <div class="stat-value">Joey & Kit</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Points hotels</div>
+      <div class="stat-value">Several Bonvoy</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Est. Hotel</div>
+      <div class="stat-value">$800–1,000</div>
+    </div>
+  </div>
+
+  <div class="section-label">Hotel Options (Marriott Bonvoy)</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-label">The Jay</div>
+      <ul>
+        <li>Embarcadero / Financial District</li>
+        <li>Close to Ferry Building & waterfront</li>
+        <li>Marriott Bonvoy property</li>
+        <li>Good for family of 4</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Other Bonvoy Options</div>
+      <ul>
+        <li>Book all hotels on Bonvoy to earn points</li>
+        <li>Target $800–1,000 for 5 nights</li>
+        <li>Use Marriott Boundless card for 6.26x points</li>
+        <li>Check for free cancellation rates</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Activities & Neighborhoods</div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-label">With the Kids</div>
+      <ul>
+        <li>California Academy of Sciences (Golden Gate Park)</li>
+        <li>Exploratorium (Pier 15 — great for Joey)</li>
+        <li>Ferry Building Marketplace</li>
+        <li>Fisherman's Wharf & sea lions at Pier 39</li>
+        <li>Cable car ride</li>
+        <li>Baker Beach or Crissy Field walk</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Neighborhoods to Explore</div>
+      <ul>
+        <li>Mission District (murals, taquerias for Kit)</li>
+        <li>Haight-Ashbury (vintage shops)</li>
+        <li>North Beach (City Lights, Italian food)</li>
+        <li>Chinatown</li>
+        <li>Noe Valley or Cole Valley for morning coffee</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Food Highlights</div>
+      <ul>
+        <li>Tartine Bakery (worth the line)</li>
+        <li>Flour + Water (pasta, Mission)</li>
+        <li>Gracias Madre (upscale vegan — Kit-friendly)</li>
+        <li>Bernal Cutlery area for neighborhood vibes</li>
+        <li>Ferry Building Sat farmers market (if timing works)</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="info-card-label">Day Trip Option</div>
+      <ul>
+        <li>Muir Woods (book timed entry in advance)</li>
+        <li>Sausalito ferry over, walk around</li>
+        <li>Alcatraz (book tickets way ahead)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">To-Do Before Booking</div>
+  <div class="todo-list" id="sf-todos">
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Pick dates (school calendar + soccer schedule)</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Check Bonvoy availability at The Jay or comparable property</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Book flights PDX → SFO (check Delta miles)</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Pre-book Muir Woods timed entry (recreation.gov)</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Reserve Alcatraz if going (book 2–4 weeks ahead)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     GRAND CANYON / WILLIAMS AZ (SAVED FOR LATER)
+     =========================== -->
+<div class="trip-section" id="williams" style="--color-accent: var(--williams-accent)">
+  <div class="trip-header">
+    <div>
+      <div class="trip-label">Saved for Later · Originally Thanksgiving 2026</div>
+      <div class="trip-title">Grand Canyon &<br>Williams, AZ</div>
+    </div>
+    <div class="trip-meta">
+      <span class="badge badge-status-hold">⏸️ Saved for Later</span>
+      <span class="badge" style="background:rgba(181,97,58,0.1);color:var(--terracotta)">✈️ PDX → PHX</span>
+    </div>
+  </div>
+
+  <p class="trip-desc">Postponed — Thanksgiving 2026 is now the PCH camper van trip. The plan below was built for Nov 23–27 and is kept for a future trip. Trailborn Grand Canyon in Williams, AZ, with Junior Ranger badges, Bearizona, the Canyon Coaster, Route 66, Bedrock City, and stargazing. Joey's Every Kid Outdoors pass gets the whole car in free.</p>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="stat-label">Dates</div>
+      <div class="stat-value">TBD</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Hotel</div>
+      <div class="stat-value">$471.57 total</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Flights + Car</div>
+      <div class="stat-value">~$1,600</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Trip Total Est.</div>
+      <div class="stat-value">~$3,059–3,188</div>
+    </div>
+  </div>
+
+  <div class="section-label">Day-by-Day Itinerary</div>
+  <div class="itinerary">
+    <div class="day-block">
+      <div class="day-marker"><div class="day-marker-inner"></div></div>
+      <div class="day-name">Monday, Nov 23</div>
+      <div class="day-title">Fly PDX → PHX, Drive to Williams</div>
+      <ul class="day-activities">
+        <li>Fly Portland to Phoenix</li>
+        <li>Drive north via Flagstaff (~2.5 hrs to Williams)</li>
+        <li>Check in to Trailborn Grand Canyon</li>
+        <li>Route 66 stroll in Williams, dinner in town</li>
+        <li>Canyon Coaster at night (928-707-7729 to confirm hours)</li>
+      </ul>
+    </div>
+    <div class="day-block">
+      <div class="day-marker"><div class="day-marker-inner"></div></div>
+      <div class="day-name">Tuesday, Nov 24</div>
+      <div class="day-title">Bearizona + Grand Canyon South Rim</div>
+      <ul class="day-activities">
+        <li>Bearizona Wildlife Park (928-635-2289 to confirm hours) — ~$100 family</li>
+        <li>Drive to Grand Canyon South Rim (~1 hr)</li>
+        <li>Mather Point — first view of the Canyon</li>
+        <li>Rim walk toward Yavapai Point</li>
+        <li>Pick up Junior Ranger booklets at Visitor Center</li>
+        <li>Joey's 4th-grade Every Kid Outdoors pass = FREE entry for whole vehicle</li>
+        <li>Stargazing back in Williams (Gold Star Dark Sky Park nearby)</li>
+      </ul>
+    </div>
+    <div class="day-block">
+      <div class="day-marker"><div class="day-marker-inner"></div></div>
+      <div class="day-name">Wednesday, Nov 25</div>
+      <div class="day-title">Bedrock City + Desert View + Glow Tubing</div>
+      <ul class="day-activities">
+        <li>Bedrock City at Raptor Ranch — $48 family (Flintstones theme park!)</li>
+        <li>Grand Canyon Desert View Watchtower (easternmost rim point)</li>
+        <li>Glow Tubing at Elk Ridge ski area — ~$60 family</li>
+        <li>Dinner in Williams</li>
+      </ul>
+    </div>
+    <div class="day-block">
+      <div class="day-marker"><div class="day-marker-inner"></div></div>
+      <div class="day-name">Thursday, Nov 26 — Thanksgiving</div>
+      <div class="day-title">Junior Ranger Badges + Cozy Thanksgiving</div>
+      <ul class="day-activities">
+        <li>Return to Grand Canyon — get Junior Ranger badges sworn in by a ranger</li>
+        <li>Drive to Flagstaff Whole Foods — pick up pre-ordered Thanksgiving spread</li>
+        <li>Cozy Thanksgiving dinner at Trailborn (in-room or common areas)</li>
+        <li>Stargazing — some of the darkest skies in the country</li>
+        <li>Pre-order Whole Foods pickup in late October when available online</li>
+      </ul>
+    </div>
+    <div class="day-block">
+      <div class="day-marker"><div class="day-marker-inner"></div></div>
+      <div class="day-name">Friday, Nov 27</div>
+      <div class="day-title">Canyon Coaster or Kaibab Lake, Fly Home</div>
+      <ul class="day-activities">
+        <li>Morning: Canyon Coaster if missed, or Kaibab Lake walk</li>
+        <li>Drive Phoenix (~2.5 hrs)</li>
+        <li>Fly home PDX</li>
+        <li>Note: Joey's soccer tournament is Nov 29 (2 days after return)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-label">Budget Breakdown</div>
+  <div class="cost-table-wrap">
+    <table class="cost-table">
+      <thead>
+        <tr><th>Item</th><th>Notes</th><th>Cost</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Flights PDX ↔ PHX</td><td>Family of 4</td><td>~$1,100</td></tr>
+        <tr><td>Car rental PHX</td><td>5 days</td><td>~$500</td></tr>
+        <tr><td>Trailborn Grand Canyon</td><td>Standard rate, 3 nights</td><td>$471.57</td></tr>
+        <tr><td>Bearizona</td><td>Family of 4</td><td>~$100</td></tr>
+        <tr><td>Bedrock City / Raptor Ranch</td><td>Family of 4</td><td>$48</td></tr>
+        <tr><td>Canyon Coaster + Glow Tubing</td><td>Family of 4</td><td>~$150</td></tr>
+        <tr><td>Whole Foods Thanksgiving</td><td>Flagstaff pickup</td><td>~$100–150</td></tr>
+        <tr><td>Dog sitting (Scruffy)</td><td>4 days × $60</td><td>$240</td></tr>
+        <tr><td>Meals + gas</td><td>Estimate</td><td>~$350–400</td></tr>
+        <tr><td colspan="2"><strong>Total Estimate</strong></td><td><strong>~$3,059–3,188</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="trip-notes">
+    <p><strong>Action needed:</strong> The Trailborn Grand Canyon booking for Nov 23–26 ($471.57) is still on the books — cancel or move it before its cancellation deadline.</p>
+    <p><strong>Grand Canyon entry is FREE</strong> — Joey's 4th-grade Every Kid Outdoors pass (get at everykidoutdoors.gov) covers the whole vehicle. Save $35!</p>
+    <p><strong>Optional add:</strong> Grand Canyon Railway (~$360 for family of 4) — scenic train from Williams to the South Rim. Keep as a treat if weather is bad for driving.</p>
+    <p><strong>Nearby:</strong> Sedona (1.5 hrs south), Lowell Observatory in Flagstaff (30 min), Jerome ghost town (1 hr).</p>
+  </div>
+
+  <div class="section-label">To-Do</div>
+  <div class="todo-list" id="williams-hold-todos">
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Cancel or move the Trailborn Grand Canyon booking (Nov 23–26) — check the cancellation deadline</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Get Joey's Every Kid Outdoors pass at everykidoutdoors.gov</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Pick new dates</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Call Canyon Coaster to confirm hours for new dates: 928-707-7729</div>
+    </div>
+    <div class="todo-item" onclick="toggleTodo(this)">
+      <div class="todo-box"></div>
+      <div class="todo-text">Call Bearizona to confirm hours for new dates: 928-635-2289</div>
     </div>
   </div>
 </div>
